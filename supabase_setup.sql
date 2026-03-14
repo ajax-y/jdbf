@@ -1,14 +1,19 @@
 -- GfG Club Central Security & Cloud Sync Procedure
--- Run this in the Supabase SQL Editor
+-- FINAL VERSION: Decoupled from Auth for Demo Hub
 
 -- 1. Ensure Extensions
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
--- 2. Repair Profiles Table & Remove Restrictive Constraints
+-- 2. Repair Profiles Table & Remove Foreign Key Restrictions
 DO $$ 
 BEGIN 
-    -- Drop the restrictive tier check constraint if it exists
-    -- This allows industry names like 'Elite Node' or 'Gold Tier'
+    -- Drop the foreign key link to auth.users for demo personas
+    -- This allows us to have profiles without requiring real signups
+    IF EXISTS (SELECT 1 FROM information_schema.table_constraints WHERE constraint_name = 'profiles_id_fkey') THEN
+        ALTER TABLE profiles DROP CONSTRAINT profiles_id_fkey;
+    END IF;
+
+    -- Drop the restrictive tier check constraint
     IF EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'profiles_tier_check') THEN
         ALTER TABLE profiles DROP CONSTRAINT profiles_tier_check;
     END IF;
@@ -33,7 +38,7 @@ BEGIN
 END $$;
 
 -- 3. Synchronize Demo Personas
--- We use a zero-UUID approach for demo reliability
+-- These will now work regardless of auth state
 INSERT INTO profiles (id, full_name, role, points, attendance_count, project_count, rank, tier, featured_project)
 VALUES 
   ('00000000-0000-0000-0000-000000000001', 'Admin Node', 'admin', 999, 15, 8, '1', 'Elite Node', 'System Core'),
@@ -46,7 +51,7 @@ ON CONFLICT (id) DO UPDATE SET
   tier = EXCLUDED.tier,
   featured_project = EXCLUDED.featured_project;
 
--- 4. Finalize Security Visibility
+-- 4. Enable Public Visibility for the Gallery
 ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS "Enable read access for all users" ON "public"."profiles";
 CREATE POLICY "Enable read access for all users" ON "public"."profiles" FOR SELECT USING (true);
