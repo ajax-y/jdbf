@@ -51,7 +51,60 @@ ON CONFLICT (id) DO UPDATE SET
   tier = EXCLUDED.tier,
   featured_project = EXCLUDED.featured_project;
 
--- 4. Enable Public Visibility for the Gallery
-ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
-DROP POLICY IF EXISTS "Enable read access for all users" ON "public"."profiles";
-CREATE POLICY "Enable read access for all users" ON "public"."profiles" FOR SELECT USING (true);
+-- 5. Events Table
+CREATE TABLE IF NOT EXISTS events (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    title TEXT NOT NULL,
+    description TEXT,
+    location TEXT,
+    date DATE,
+    time TIME,
+    qr_secret TEXT,
+    is_active BOOLEAN DEFAULT true,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+ALTER TABLE events ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Enable all for anyone" ON events FOR ALL USING (true) WITH CHECK (true);
+
+-- 6. Attendance Table
+CREATE TABLE IF NOT EXISTS attendance (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    event_id UUID REFERENCES events(id) ON DELETE CASCADE,
+    user_id UUID REFERENCES profiles(id) ON DELETE CASCADE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+ALTER TABLE attendance ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Enable all for anyone" ON attendance FOR ALL USING (true) WITH CHECK (true);
+
+-- 7. Notifications Table
+CREATE TABLE IF NOT EXISTS notifications (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    text TEXT NOT NULL,
+    type TEXT DEFAULT 'info',
+    read BOOLEAN DEFAULT false,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+ALTER TABLE notifications ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Enable all for anyone" ON notifications FOR ALL USING (true) WITH CHECK (true);
+
+-- 8. Enable Realtime for relevant tables (safe: skip if already added)
+DO $$
+BEGIN
+    ALTER PUBLICATION supabase_realtime ADD TABLE attendance;
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
+
+DO $$
+BEGIN
+    ALTER PUBLICATION supabase_realtime ADD TABLE notifications;
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
+
+DO $$
+BEGIN
+    ALTER PUBLICATION supabase_realtime ADD TABLE events;
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;

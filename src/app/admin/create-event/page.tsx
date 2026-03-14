@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { QRCodeSVG } from "qrcode.react";
+import { supabase } from "@/lib/supabase";
 import {
   Card,
   CardContent,
@@ -38,17 +39,45 @@ export default function CreateEventPage() {
     setSecret(s);
   };
 
-  const handleCreate = (e: React.FormEvent) => {
+  const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsPublishing(true);
     
-    // Industrial Simulation: Network delay
-    setTimeout(() => {
+    try {
       if (!secret) generateSecret();
+      const eventSecret = secret || Math.random().toString(36).substring(2, 15);
+
+      // 1. Save to Supabase
+      const { data, error } = await supabase
+        .from('events')
+        .insert([
+          { 
+            title, 
+            description, 
+            date, 
+            time, 
+            location, 
+            qr_secret: eventSecret,
+            is_active: true 
+          }
+        ])
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      // 2. Add Notification in Cloud
+      await supabase.from('notifications').insert([
+        { text: `New Event Created: ${title}`, type: 'success' }
+      ]);
+
       setShowQR(true);
-      setIsPublishing(false);
       showNotification("Session Node Synchronized Successfully!");
-    }, 1500);
+    } catch (error: any) {
+      showNotification(error.message || "Failed to sync node", "error");
+    } finally {
+      setIsPublishing(false);
+    }
   };
 
   const downloadQR = () => {
@@ -218,11 +247,19 @@ export default function CreateEventPage() {
                     <div className="p-8 bg-white rounded-[4rem] shadow-[0_40px_80px_rgba(0,0,0,0.15)] ring-4 ring-white/20">
                       <QRCodeSVG 
                         id="event-qr"
-                        value={JSON.stringify({ title, date, time, secret })} 
-                        size={280}
+                        value={JSON.stringify({ title, date, time, secret, location })} 
+                        size={320}
                         fgColor="#2f8d46"
                         level="H"
                         includeMargin
+                        imageSettings={{
+                          src: "/logo.png",
+                          x: undefined,
+                          y: undefined,
+                          height: 60,
+                          width: 60,
+                          excavate: true,
+                        }}
                       />
                     </div>
                     

@@ -9,10 +9,11 @@ import {
 } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Users, QrCode, ArrowLeft } from "lucide-react";
+import { Users, QrCode, ArrowLeft, Clock } from "lucide-react";
 import type { RealtimePostgresInsertPayload } from "@supabase/supabase-js";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 type Attendee = {
   id: string;
@@ -32,18 +33,58 @@ export default function LiveWallPage() {
   const router = useRouter();
 
   useEffect(() => {
-    // 1. Fetch Event Info
+    // 1. Fetch Event Info from Cloud
     const fetchEventInfo = async () => {
-       // In a real app we'd fetch from Supabase
-       setEventTitle(id === "active" ? "Next.js Masterclass" : `Session Node: ${id}`);
+       const { data: event } = await supabase
+         .from('events')
+         .select('*')
+         .eq('id', id)
+         .single();
+       
+       if (event) {
+         setEventTitle(event.title);
+       } else {
+         setEventTitle(`Session Node: ${id}`);
+       }
     };
-    
-    // 2. Clear Initial Data (Empty first)
-    setAttendees([]);
-    setCount(0);
-    fetchEventInfo();
 
-    // 3. Subscribe to REALTIME attendance changes FOR THIS SPECIFIC EVENT
+    // 2. Fetch Attendees from Cloud
+    const fetchAttendees = async () => {
+      const { data, count: total } = await supabase
+        .from('attendance')
+        .select(`
+          id,
+          created_at,
+          profiles:user_id (
+            full_name,
+            avatar_url,
+            tier
+          )
+        `, { count: 'exact' })
+        .eq('event_id', id)
+        .order('created_at', { ascending: false });
+
+      if (data) {
+        setAttendees(data.map((a: any) => ({
+          id: a.id,
+          user: {
+            full_name: a.profiles?.full_name || 'Unknown',
+            avatar_url: a.profiles?.avatar_url || '',
+            tier: a.profiles?.tier || 'Member',
+          },
+          time: new Date(a.created_at).toLocaleString([], { 
+            month: 'short', day: 'numeric', 
+            hour: '2-digit', minute: '2-digit' 
+          }),
+        })));
+      }
+      setCount(total || 0);
+    };
+
+    fetchEventInfo();
+    fetchAttendees();
+
+    // 3. Subscribe to REALTIME attendance changes
     const channel = supabase
       .channel(`live-attendance-${id}`)
       .on('postgres_changes', 
@@ -53,8 +94,26 @@ export default function LiveWallPage() {
           schema: 'public',
           filter: `event_id=eq.${id}` 
         }, 
-        (payload: RealtimePostgresInsertPayload<any>) => {
+        async (payload: RealtimePostgresInsertPayload<any>) => {
            console.log('New attendee for event!', payload);
+           // Fetch the profile for this user
+           const { data: profile } = await supabase
+             .from('profiles')
+             .select('full_name, avatar_url, tier')
+             .eq('id', payload.new.user_id)
+             .single();
+           
+           const newAttendee: Attendee = {
+             id: payload.new.id,
+             user: {
+               full_name: profile?.full_name || 'New Member',
+               avatar_url: profile?.avatar_url || '',
+               tier: profile?.tier || 'Member',
+             },
+             time: 'Just now',
+           };
+           
+           setAttendees(prev => [newAttendee, ...prev]);
            setCount(prev => prev + 1);
       })
       .subscribe();
@@ -65,17 +124,17 @@ export default function LiveWallPage() {
   }, [id]);
 
   return (
-    <div className="max-w-7xl mx-auto space-y-12 pb-20 px-4 sm:px-0">
+    <div className="max-w-7xl mx-auto space-y-12 pb-20 px-4 sm:px-0 mt-8">
       <div className="flex items-center justify-between mb-4 mt-2">
          <Link href="/admin/live-wall">
-            <Button variant="ghost" className="rounded-xl font-black text-[10px] uppercase tracking-widest gap-2 bg-white border shadow-sm h-10 px-4">
+            <Button variant="outline" className="rounded-xl font-black text-[10px] uppercase tracking-widest gap-2 bg-white border shadow-sm h-10 px-4">
                <ArrowLeft size={14} />
                Back to Walls
             </Button>
          </Link>
          <div className="flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-xl border border-primary/20">
             <div className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-            <span className="text-[10px] font-black text-primary uppercase tracking-widest leading-none">Node: {id}</span>
+            <span className="text-[10px] font-black text-primary uppercase tracking-widest leading-none">Live</span>
          </div>
       </div>
 
@@ -132,22 +191,25 @@ export default function LiveWallPage() {
                    <CardContent className="p-10">
                       <div className="flex flex-col items-center text-center gap-8">
                          <div className="relative">
-                            <Avatar className="h-32 w-32 ring-[12px] ring-slate-50 shadow-inner">
+                            <Avatar className="h-24 w-24 ring-[8px] ring-slate-50 shadow-inner">
                                <AvatarImage src={attendee.user.avatar_url} />
-                               <AvatarFallback className="text-4xl font-black bg-primary/5 text-primary">
+                               <AvatarFallback className="text-2xl font-black bg-primary/5 text-primary">
                                   {attendee.user.full_name.charAt(0)}
                                </AvatarFallback>
                             </Avatar>
-                            <div className="absolute -bottom-3 left-1/2 -translate-x-1/2">
-                               <Badge className="bg-primary text-white border-none font-black text-[10px] uppercase tracking-widest px-4 py-1.5 rounded-full shadow-lg">
+                            <div className="absolute -bottom-2 left-1/2 -translate-x-1/2">
+                               <Badge className="bg-primary text-white border-none font-black text-[8px] uppercase tracking-widest px-3 py-1 rounded-full shadow-lg">
                                   {attendee.user.tier}
                                </Badge>
                             </div>
                          </div>
                          
                          <div>
-                            <h4 className="text-2xl font-black text-slate-900 tracking-tight">{attendee.user.full_name}</h4>
-                            <p className="text-[10px] text-primary font-black mt-3 uppercase tracking-[0.2em]">{attendee.time}</p>
+                            <h4 className="text-xl font-black text-slate-900 tracking-tight">{attendee.user.full_name}</h4>
+                            <div className="flex items-center justify-center gap-2 mt-2">
+                               <Clock size={12} className="text-slate-400" />
+                               <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">{attendee.time}</p>
+                            </div>
                          </div>
                       </div>
                    </CardContent>
@@ -158,17 +220,5 @@ export default function LiveWallPage() {
         </div>
       )}
     </div>
-  );
-}
-
-function Button({ children, variant, className, ...props }: any) {
-  const variants = {
-    ghost: "hover:bg-slate-100 text-slate-600",
-    default: "bg-primary text-white shadow-lg"
-  };
-  return (
-    <button className={`inline-flex items-center justify-center transition-colors font-bold ${variants[variant as keyof typeof variants] || variants.default} ${className}`} {...props}>
-      {children}
-    </button>
   );
 }

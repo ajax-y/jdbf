@@ -10,12 +10,11 @@ import {
   LogOut,
   PlusCircle,
   QrCode,
-  BarChart3,
+  Settings,
 } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
@@ -30,6 +29,14 @@ import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const userItems = [
   { title: "Dashboard", icon: LayoutDashboard, url: "/dashboard" },
@@ -40,10 +47,9 @@ const userItems = [
 ];
 
 const adminItems = [
-  { title: "Command Center", icon: ShieldCheck, url: "/admin" },
+  { title: "Dashboard", icon: ShieldCheck, url: "/admin" },
   { title: "Create Event", icon: PlusCircle, url: "/admin/create-event" },
   { title: "Live Wall", icon: QrCode, url: "/admin/live-wall" },
-  { title: "App Analytics", icon: BarChart3, url: "/admin/analytics" },
 ];
 
 export function AppSidebar() {
@@ -71,21 +77,57 @@ export function AppSidebar() {
 
   return (
     <Sidebar className="border-r border-border/50 bg-card">
-      <SidebarHeader className="p-6">
-        <Link href={isAdmin ? "/admin" : "/dashboard"} className="flex items-center gap-3 group">
-          <div className="h-10 w-10 rounded-xl bg-primary flex items-center justify-center text-primary-foreground font-bold text-xl group-hover:scale-105 transition-transform duration-300 shadow-lg shadow-primary/20">
+      <SidebarHeader className="p-4">
+        {/* Profile at Top Left Corner */}
+        <div className="mb-6">
+          <DropdownMenu>
+            <DropdownMenuTrigger render={
+              <Button variant="ghost" className="w-full flex items-center gap-3 p-2 h-auto hover:bg-slate-50 rounded-2xl transition-all">
+                <Avatar className="h-10 w-10 ring-2 ring-primary/10 p-0.5">
+                  <AvatarImage src="" />
+                  <AvatarFallback className="bg-primary/10 text-primary font-black text-xs">
+                    {isAdmin ? 'AD' : 'GM'}
+                  </AvatarFallback>
+                </Avatar>
+                <div className="flex-1 text-left overflow-hidden">
+                  <p className="text-xs font-black text-slate-900 truncate tracking-tight">{sessionUser.name}</p>
+                  <p className="text-[9px] text-primary uppercase font-black tracking-widest mt-0.5">
+                    {sessionUser.role}
+                  </p>
+                </div>
+              </Button>
+            } />
+            <DropdownMenuContent className="w-56" align="start" side="bottom">
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <Link href="/profile">
+                <DropdownMenuItem className="cursor-pointer">
+                  <User className="mr-2 h-4 w-4" />
+                  <span>Edit Profile</span>
+                </DropdownMenuItem>
+              </Link>
+              <DropdownMenuItem className="cursor-pointer">
+                <Settings className="mr-2 h-4 w-4" />
+                <span>Settings</span>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={handleLogout} className="text-destructive focus:text-destructive cursor-pointer font-bold">
+                <LogOut className="mr-2 h-4 w-4" />
+                <span>Logout Session</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+
+        <Link href={isAdmin ? "/admin" : "/dashboard"} className="flex items-center gap-3 group px-2">
+          <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground font-bold text-lg group-hover:scale-105 transition-transform duration-300 shadow-lg shadow-primary/20">
             G
           </div>
           <div>
-            <h1 className="font-bold text-sm tracking-tight text-slate-900">GfG Club</h1>
-            <div className="flex items-center gap-2">
-               <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-semibold">
-                 RIT Campus
-               </p>
-               {isAdmin && (
-                 <span className="text-[8px] bg-primary/10 text-primary px-1.5 py-0.5 rounded-full font-black uppercase tracking-tighter">Admin</span>
-               )}
-            </div>
+            <h1 className="font-bold text-xs tracking-tight text-slate-900 leading-none">GfG Club</h1>
+            <p className="text-[8px] text-muted-foreground uppercase tracking-widest font-semibold mt-1">
+              RIT Campus
+            </p>
           </div>
         </Link>
       </SidebarHeader>
@@ -115,34 +157,6 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-
-      <SidebarFooter className="p-4">
-        <div className="rounded-[2.5rem] bg-slate-50 p-5 border border-slate-100 shadow-sm">
-          <div className="flex items-center gap-3 mb-5">
-            <Avatar className="h-10 w-10 ring-2 ring-primary/10 p-0.5">
-              <AvatarImage src="" />
-              <AvatarFallback className="bg-primary/10 text-primary font-black text-xs">
-                {isAdmin ? 'AD' : 'GM'}
-              </AvatarFallback>
-            </Avatar>
-            <div className="flex-1 overflow-hidden">
-              <p className="text-xs font-black text-slate-900 truncate tracking-tight">{sessionUser.name}</p>
-              <p className="text-[9px] text-primary uppercase font-black tracking-widest mt-0.5">
-                {sessionUser.role}
-              </p>
-            </div>
-          </div>
-          
-          <Button 
-            onClick={handleLogout}
-            variant="ghost" 
-            className="h-12 rounded-2xl text-[9px] font-black uppercase tracking-[0.15em] gap-3 bg-white border border-slate-100 hover:bg-destructive hover:text-white hover:border-destructive transition-all w-full shadow-sm"
-          >
-            <LogOut className="h-4 w-4" />
-            End Session Hub
-          </Button>
-        </div>
-      </SidebarFooter>
     </Sidebar>
   );
 }
