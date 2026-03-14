@@ -13,12 +13,15 @@ import { Badge } from "@/components/ui/badge";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { supabase } from "@/lib/supabase";
 import type { RealtimePostgresInsertPayload } from "@supabase/supabase-js";
+import Link from "next/link";
+import { User, LogOut } from "lucide-react";
 
 export function RootWrapper({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -150,11 +153,11 @@ export function RootWrapper({ children }: { children: React.ReactNode }) {
                    </DropdownMenuContent>
                  </DropdownMenu>
 
-                 <div className="hidden sm:flex items-center gap-3 pl-4 border-l border-slate-100">
+                 <div className="flex items-center gap-3 pl-4 border-l border-slate-100">
                     <DropdownMenu>
                       <DropdownMenuTrigger render={
-                        <Button variant="ghost" className="flex items-center gap-3 h-auto p-1.5 pr-3 hover:bg-slate-50 rounded-2xl transition-all outline-none focus:ring-0">
-                          <div className="text-right">
+                        <Button variant="ghost" className="flex items-center gap-3 h-auto p-1.5 pr-2 sm:pr-3 hover:bg-slate-50 rounded-2xl transition-all outline-none focus:ring-0">
+                          <div className="text-right hidden sm:block">
                              <p className="text-xs font-black text-slate-900 leading-none">
                                {isAdmin ? 'Admin Node' : 'Geek Member'}
                              </p>
@@ -170,26 +173,24 @@ export function RootWrapper({ children }: { children: React.ReactNode }) {
                           </Avatar>
                         </Button>
                       } />
-                      <DropdownMenuContent className="w-56 rounded-2xl p-2 border-slate-100 shadow-xl" align="end" side="bottom">
-                        <DropdownMenuLabel className="font-bold text-xs px-3 py-2 text-slate-400 uppercase tracking-widest">User Account</DropdownMenuLabel>
-                        <DropdownMenuSeparator className="mx-2" />
-                        <DropdownMenuItem className="rounded-xl cursor-pointer py-2.5 px-3">
-                           <User className="mr-2 h-4 w-4 text-slate-400" />
-                           <span className="font-bold text-sm">Edit Profile</span>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className="rounded-xl cursor-pointer py-2.5 px-3">
-                           <Settings className="mr-2 h-4 w-4 text-slate-400" />
-                           <span className="font-bold text-sm">Account Settings</span>
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator className="mx-2" />
+                      <DropdownMenuContent className="w-56 rounded-2xl p-2 border-slate-100 shadow-xl" align="end" side="bottom" sideOffset={12}>
+                        <DropdownMenuLabel className="font-bold text-[10px] px-3 py-2 text-slate-400 uppercase tracking-[0.2em]">Session Control</DropdownMenuLabel>
+                        <DropdownMenuSeparator className="mx-2 opacity-50" />
+                        <Link href="/profile">
+                          <DropdownMenuItem className="rounded-xl cursor-pointer py-3 px-3 hover:bg-slate-50 transition-colors">
+                             <User className="mr-3 h-4 w-4 text-slate-400" />
+                             <span className="font-bold text-sm text-slate-700">Edit Profile</span>
+                          </DropdownMenuItem>
+                        </Link>
+                        <DropdownMenuSeparator className="mx-2 opacity-50" />
                         <DropdownMenuItem 
                           onClick={() => {
                             document.cookie = "gfg_session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
                             window.location.href = "/";
                           }} 
-                          className="rounded-xl cursor-pointer py-2.5 px-3 text-destructive focus:text-destructive font-bold"
+                          className="rounded-xl cursor-pointer py-3 px-3 text-destructive focus:text-destructive focus:bg-destructive/5 font-black"
                         >
-                           <LogOut className="mr-2 h-4 w-4" />
+                           <LogOut className="mr-3 h-4 w-4" />
                            <span className="text-sm">Logout Session</span>
                         </DropdownMenuItem>
                       </DropdownMenuContent>
