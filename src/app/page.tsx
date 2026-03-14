@@ -6,8 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Github, Loader2, Mail, Lock, ArrowRight } from "lucide-react";
-import Link from "next/link";
+import { Loader2, User, Lock, ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
@@ -52,44 +51,41 @@ export default function LoginPage() {
         transition={{ duration: 0.5 }}
         className="w-full max-w-[450px] z-10"
       >
-        <div className="flex flex-col items-center mb-8">
-           <div className="h-16 w-16 rounded-[1.5rem] bg-primary flex items-center justify-center text-primary-foreground font-black text-3xl shadow-xl shadow-primary/30 mb-4">
+        <div className="flex flex-col items-center mb-8 text-slate-900">
+           <div className="h-20 w-20 rounded-[1.75rem] bg-primary flex items-center justify-center text-primary-foreground font-black text-4xl shadow-2xl shadow-primary/30 mb-4">
              G
            </div>
-           <h1 className="text-3xl font-black tracking-tighter text-center">GFG CLUB PORTAL</h1>
-           <p className="text-muted-foreground font-medium uppercase tracking-[0.2em] text-[10px] mt-1">Innovate · Create · Elevate</p>
+           <h1 className="text-4xl font-black tracking-tighter text-center">GFG CLUB PORTAL</h1>
+           <p className="text-slate-500 font-black uppercase tracking-[0.25em] text-[11px] mt-1">Innovate · Create · Elevate</p>
         </div>
 
-        <Card className="border-none shadow-[0_20px_50px_rgba(0,0,0,0.05)] bg-white/80 backdrop-blur-xl rounded-[2.5rem] overflow-hidden">
-          <CardHeader className="p-8 pb-0 text-center">
-            <CardTitle className="text-2xl font-black">Welcome Back</CardTitle>
-            <CardDescription className="text-sm font-medium">Enter your credentials to access the hub</CardDescription>
+        <Card className="border-none shadow-[0_30px_60px_rgba(0,0,0,0.08)] bg-white rounded-[2.5rem] overflow-hidden">
+          <CardHeader className="p-10 pb-0 text-center">
+            <CardTitle className="text-3xl font-black text-slate-900">Welcome Back</CardTitle>
+            <CardDescription className="text-base font-bold text-slate-500">Authorized members login here</CardDescription>
           </CardHeader>
-          <CardContent className="p-8 pt-6">
-            <form onSubmit={handleLogin} className="space-y-6">
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <Label className="text-[10px] font-black uppercase tracking-widest ml-1 opacity-60">Campus Email</Label>
+          <CardContent className="p-10 pt-8">
+            <form onSubmit={handleLogin} className="space-y-8">
+              <div className="space-y-5">
+                <div className="space-y-3">
+                  <Label className="text-[11px] font-black uppercase tracking-widest ml-1 text-slate-900">User ID</Label>
                   <div className="relative">
-                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <User className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
                     <Input 
-                      placeholder="name@rit.edu" 
-                      className="h-14 rounded-2xl pl-12 bg-muted/30 border-none focus-visible:ring-primary/20 transition-all font-medium"
+                      placeholder="Enter your User ID" 
+                      className="h-16 rounded-2xl pl-12 bg-slate-50 border-2 border-transparent focus:border-primary/20 focus:bg-white transition-all font-bold text-slate-900 text-lg placeholder:text-slate-300 placeholder:font-medium"
                       required
                     />
                   </div>
                 </div>
-                <div className="space-y-2">
-                  <div className="flex justify-between items-center px-1">
-                    <Label className="text-[10px] font-black uppercase tracking-widest opacity-60">Password</Label>
-                    <Link href="#" className="text-[10px] font-black uppercase tracking-widest text-primary hover:underline">Forgot?</Link>
-                  </div>
+                <div className="space-y-3">
+                  <Label className="text-[11px] font-black uppercase tracking-widest ml-1 text-slate-900">Password</Label>
                   <div className="relative">
-                    <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
                     <Input 
                       type="password"
                       placeholder="••••••••" 
-                      className="h-14 rounded-2xl pl-12 bg-muted/30 border-none focus-visible:ring-primary/20 transition-all font-medium"
+                      className="h-16 rounded-2xl pl-12 bg-slate-50 border-2 border-transparent focus:border-primary/20 focus:bg-white transition-all font-bold text-slate-900 text-lg placeholder:text-slate-300 placeholder:font-medium"
                       required
                     />
                   </div>
@@ -99,41 +95,25 @@ export default function LoginPage() {
               <Button 
                 type="submit" 
                 disabled={isLoading}
-                className="w-full h-14 rounded-2xl font-black text-xs uppercase tracking-widest bg-primary hover:bg-primary/90 shadow-lg shadow-primary/20 transition-all group"
+                className="w-full h-16 rounded-2xl font-black text-sm uppercase tracking-widest bg-primary hover:bg-primary/90 text-white shadow-xl shadow-primary/30 transition-all group"
               >
                 {isLoading ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
+                  <Loader2 className="h-5 w-5 animate-spin mx-auto" />
                 ) : (
                   <>
-                    Sign In
-                    <ArrowRight className="h-4 w-4 ml-2 transition-transform group-hover:translate-x-1" />
+                    Launch Hub
+                    <ArrowRight className="h-5 w-5 ml-2 transition-transform group-hover:translate-x-1" />
                   </>
                 )}
               </Button>
-
-              <div className="relative py-4">
-                <div className="absolute inset-0 flex items-center">
-                  <span className="w-full border-t border-border/10" />
-                </div>
-                <div className="relative flex justify-center text-[10px] font-black uppercase tracking-widest">
-                  <span className="bg-[#fafafa] px-4 text-muted-foreground">OR CONTINUE WITH</span>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <Button variant="outline" className="h-14 rounded-2xl border-none bg-muted/30 hover:bg-muted/50 font-black text-[10px] uppercase tracking-widest">
-                  <Github className="h-4 w-4 mr-2" />
-                  GitHub
-                </Button>
-                <Button variant="outline" className="h-14 rounded-2xl border-none bg-muted/30 hover:bg-muted/50 font-black text-[10px] uppercase tracking-widest">
-                  Google
-                </Button>
-              </div>
             </form>
 
-            <p className="text-center text-[10px] font-black uppercase tracking-widest text-muted-foreground/40 mt-8">
-              Authorized Campus Access Only
-            </p>
+            <div className="flex flex-col items-center gap-2 mt-10">
+               <div className="h-1 w-12 bg-slate-100 rounded-full mb-2" />
+               <p className="text-center text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">
+                Official Campus Node
+              </p>
+            </div>
           </CardContent>
         </Card>
       </motion.div>
