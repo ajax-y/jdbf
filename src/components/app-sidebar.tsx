@@ -10,9 +10,7 @@ import {
   LogOut,
   PlusCircle,
   QrCode,
-  Layout,
   BarChart3,
-  Settings,
 } from "lucide-react";
 import {
   Sidebar,
@@ -134,16 +132,14 @@ export function AppSidebar() {
             </div>
           </div>
           
-          <div className="grid grid-cols-2 gap-2">
-             <Button variant="ghost" className="h-10 rounded-xl text-[10px] font-black uppercase tracking-widest gap-2 bg-background border border-border/50">
-               <Settings className="h-3.5 w-3.5" />
-             </Button>
+          <div className="grid grid-cols-1">
              <Button 
                onClick={handleLogout}
                variant="ghost" 
-               className="h-10 rounded-xl text-[10px] font-black uppercase tracking-widest gap-2 bg-background border border-border/50 hover:bg-destructive hover:text-destructive-foreground hover:border-destructive transition-all"
+               className="h-12 rounded-2xl text-[10px] font-black uppercase tracking-widest gap-3 bg-white border border-border/50 hover:bg-destructive hover:text-white hover:border-destructive transition-all w-full"
              >
-               <LogOut className="h-3.5 w-3.5" />
+               <LogOut className="h-4 w-4" />
+               Sign Out Hub
              </Button>
           </div>
         </div>

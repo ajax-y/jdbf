@@ -69,8 +69,8 @@ export default function CreateEventPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
         <motion.div
-           initial={{ opacity: 0, x: -30 }}
-           animate={{ opacity: 1, x: 0 }}
+           initial={{ opacity: 0, y: 20 }}
+           animate={{ opacity: 1, y: 0 }}
            transition={{ duration: 0.5 }}
         >
           <Card className="border-none shadow-xl bg-card overflow-hidden">
@@ -91,11 +91,11 @@ export default function CreateEventPage() {
                     />
                   </div>
                   
-                  <div className="grid grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div className="space-y-2">
                       <Label className="text-xs font-black uppercase tracking-widest opacity-60">Date & Time</Label>
                       <div className="relative">
-                        <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                        <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none z-10" />
                         <Input 
                           type="datetime-local" 
                           className="h-12 rounded-xl pl-10"
@@ -108,7 +108,7 @@ export default function CreateEventPage() {
                     <div className="space-y-2">
                       <Label className="text-xs font-black uppercase tracking-widest opacity-60">Venue</Label>
                       <div className="relative">
-                        <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                        <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none z-10" />
                         <Input 
                           placeholder="CS Lab 2" 
                           className="h-12 rounded-xl pl-10"
@@ -140,8 +140,8 @@ export default function CreateEventPage() {
         </motion.div>
 
         <motion.div
-           initial={{ opacity: 0, x: 30 }}
-           animate={{ opacity: 1, x: 0 }}
+           initial={{ opacity: 0, y: 20 }}
+           animate={{ opacity: 1, y: 0 }}
            transition={{ duration: 0.5, delay: 0.2 }}
         >
           <Card className={`h-full border-none shadow-xl transition-all duration-500 overflow-hidden ${showQR ? 'bg-primary text-primary-foreground' : 'bg-muted/30 border-2 border-dashed border-border'}`}>
