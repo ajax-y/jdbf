@@ -78,48 +78,7 @@ export function AppSidebar() {
   return (
     <Sidebar className="border-r border-border/50 bg-card">
       <SidebarHeader className="p-4">
-        {/* Profile at Top Left Corner */}
-        <div className="mb-6">
-          <DropdownMenu>
-            <DropdownMenuTrigger render={
-              <Button variant="ghost" className="w-full flex items-center gap-3 p-2 h-auto hover:bg-slate-50 rounded-2xl transition-all">
-                <Avatar className="h-10 w-10 ring-2 ring-primary/10 p-0.5">
-                  <AvatarImage src="" />
-                  <AvatarFallback className="bg-primary/10 text-primary font-black text-xs">
-                    {isAdmin ? 'AD' : 'GM'}
-                  </AvatarFallback>
-                </Avatar>
-                <div className="flex-1 text-left overflow-hidden">
-                  <p className="text-xs font-black text-slate-900 truncate tracking-tight">{sessionUser.name}</p>
-                  <p className="text-[9px] text-primary uppercase font-black tracking-widest mt-0.5">
-                    {sessionUser.role}
-                  </p>
-                </div>
-              </Button>
-            } />
-            <DropdownMenuContent className="w-56" align="start" side="bottom">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <Link href="/profile">
-                <DropdownMenuItem className="cursor-pointer">
-                  <User className="mr-2 h-4 w-4" />
-                  <span>Edit Profile</span>
-                </DropdownMenuItem>
-              </Link>
-              <DropdownMenuItem className="cursor-pointer">
-                <Settings className="mr-2 h-4 w-4" />
-                <span>Settings</span>
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={handleLogout} className="text-destructive focus:text-destructive cursor-pointer font-bold">
-                <LogOut className="mr-2 h-4 w-4" />
-                <span>Logout Session</span>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-
-        <Link href={isAdmin ? "/admin" : "/dashboard"} className="flex items-center gap-3 group px-2">
+        <Link href={isAdmin ? "/admin" : "/dashboard"} className="flex items-center gap-3 group px-2 mt-2">
           <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground font-bold text-lg group-hover:scale-105 transition-transform duration-300 shadow-lg shadow-primary/20">
             G
           </div>

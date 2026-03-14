@@ -135,7 +135,7 @@ export function RootWrapper({ children }: { children: React.ReactNode }) {
                         {notifications.length === 0 ? (
                            <div className="p-10 text-center text-slate-400 font-bold text-sm">No notifications yet</div>
                         ) : (
-                          notifications.map(n => (
+                          notifications.map((n: any) => (
                             <div key={n.id} className={`p-4 rounded-xl mb-1 transition-colors ${n.read ? 'hover:bg-slate-50/50' : 'bg-primary/5 border border-primary/10'}`}>
                                <p className="text-xs font-bold text-slate-900 leading-relaxed">{n.text}</p>
                                <p className="text-[9px] text-slate-400 uppercase font-black tracking-widest mt-2">{n.time}</p>
@@ -150,22 +150,50 @@ export function RootWrapper({ children }: { children: React.ReactNode }) {
                    </DropdownMenuContent>
                  </DropdownMenu>
 
-
                  <div className="hidden sm:flex items-center gap-3 pl-4 border-l border-slate-100">
-                    <div className="text-right">
-                       <p className="text-xs font-black text-slate-900 leading-none">
-                         {isAdmin ? 'Admin Node' : 'Geek Member'}
-                       </p>
-                       <p className="text-[8px] font-black uppercase tracking-widest text-primary mt-1">
-                         {isAdmin ? 'System Admin' : 'Gold Tier'}
-                       </p>
-                    </div>
-                    <Avatar className="h-10 w-10 ring-2 ring-primary/10">
-                      <AvatarImage src="" />
-                      <AvatarFallback className="bg-primary/10 text-primary font-black text-xs">
-                        {isAdmin ? 'AD' : 'GM'}
-                      </AvatarFallback>
-                    </Avatar>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger render={
+                        <Button variant="ghost" className="flex items-center gap-3 h-auto p-1.5 pr-3 hover:bg-slate-50 rounded-2xl transition-all outline-none focus:ring-0">
+                          <div className="text-right">
+                             <p className="text-xs font-black text-slate-900 leading-none">
+                               {isAdmin ? 'Admin Node' : 'Geek Member'}
+                             </p>
+                             <p className="text-[8px] font-black uppercase tracking-widest text-primary mt-1">
+                               {isAdmin ? 'System Admin' : 'Gold Tier'}
+                             </p>
+                          </div>
+                          <Avatar className="h-10 w-10 ring-2 ring-primary/10 shadow-sm">
+                            <AvatarImage src="" />
+                            <AvatarFallback className="bg-primary/10 text-primary font-black text-xs">
+                              {isAdmin ? 'AD' : 'GM'}
+                            </AvatarFallback>
+                          </Avatar>
+                        </Button>
+                      } />
+                      <DropdownMenuContent className="w-56 rounded-2xl p-2 border-slate-100 shadow-xl" align="end" side="bottom">
+                        <DropdownMenuLabel className="font-bold text-xs px-3 py-2 text-slate-400 uppercase tracking-widest">User Account</DropdownMenuLabel>
+                        <DropdownMenuSeparator className="mx-2" />
+                        <DropdownMenuItem className="rounded-xl cursor-pointer py-2.5 px-3">
+                           <User className="mr-2 h-4 w-4 text-slate-400" />
+                           <span className="font-bold text-sm">Edit Profile</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem className="rounded-xl cursor-pointer py-2.5 px-3">
+                           <Settings className="mr-2 h-4 w-4 text-slate-400" />
+                           <span className="font-bold text-sm">Account Settings</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator className="mx-2" />
+                        <DropdownMenuItem 
+                          onClick={() => {
+                            document.cookie = "gfg_session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+                            window.location.href = "/";
+                          }} 
+                          className="rounded-xl cursor-pointer py-2.5 px-3 text-destructive focus:text-destructive font-bold"
+                        >
+                           <LogOut className="mr-2 h-4 w-4" />
+                           <span className="text-sm">Logout Session</span>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                  </div>
                </div>
             </div>

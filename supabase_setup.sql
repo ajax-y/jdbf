@@ -64,7 +64,22 @@ CREATE TABLE IF NOT EXISTS events (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
+-- Patch: add missing columns if table already existed
+DO $$
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='events' AND column_name='time') THEN
+        ALTER TABLE events ADD COLUMN time TIME;
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='events' AND column_name='location') THEN
+        ALTER TABLE events ADD COLUMN location TEXT;
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='events' AND column_name='created_at') THEN
+        ALTER TABLE events ADD COLUMN created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL;
+    END IF;
+END $$;
+
 ALTER TABLE events ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "Enable all for anyone" ON events;
 CREATE POLICY "Enable all for anyone" ON events FOR ALL USING (true) WITH CHECK (true);
 
 -- 6. Attendance Table
@@ -76,6 +91,7 @@ CREATE TABLE IF NOT EXISTS attendance (
 );
 
 ALTER TABLE attendance ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "Enable all for anyone" ON attendance;
 CREATE POLICY "Enable all for anyone" ON attendance FOR ALL USING (true) WITH CHECK (true);
 
 -- 7. Notifications Table
@@ -88,6 +104,7 @@ CREATE TABLE IF NOT EXISTS notifications (
 );
 
 ALTER TABLE notifications ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "Enable all for anyone" ON notifications;
 CREATE POLICY "Enable all for anyone" ON notifications FOR ALL USING (true) WITH CHECK (true);
 
 -- 8. Enable Realtime for relevant tables (safe: skip if already added)
