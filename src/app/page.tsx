@@ -131,9 +131,8 @@ export default function LoginPage() {
               </div>
             </form>
 
-            <p className="text-center text-xs font-medium text-muted-foreground mt-8">
-              Don&apos;t have an account?{" "}
-              <Link href="/signup" className="text-primary font-black hover:underline uppercase tracking-tighter">Sign up</Link>
+            <p className="text-center text-[10px] font-black uppercase tracking-widest text-muted-foreground/40 mt-8">
+              Authorized Campus Access Only
             </p>
           </CardContent>
         </Card>
