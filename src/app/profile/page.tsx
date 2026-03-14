@@ -121,24 +121,24 @@ export default function ProfilePage() {
         
         <div className="flex-1 pt-4 sm:pt-6 z-10 w-full overflow-hidden">
            <div className="flex flex-col lg:flex-row items-center gap-4 sm:gap-5 mb-4 sm:mb-6">
-              <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tighter text-slate-900 leading-none truncate">
+              <h1 className="text-3xl sm:text-5xl lg:text-7xl font-black tracking-tighter text-slate-900 leading-none truncate">
                 {profile?.full_name?.split(' ')[0]} <span className="text-primary italic underline underline-offset-8 decoration-primary/10">{profile?.full_name?.split(' ')[1]}.</span>
               </h1>
               <Badge className="bg-primary/10 text-primary border-none font-black px-5 py-2 uppercase tracking-[0.2em] text-[10px] rounded-full shrink-0">
                 {profile?.tier || 'Member'}
               </Badge>
            </div>
-           <p className="text-lg sm:text-xl text-slate-500 font-bold mb-8 sm:mb-10 max-w-xl leading-relaxed mx-auto lg:mx-0">
+           <p className="text-base sm:text-lg lg:text-xl text-slate-500 font-bold mb-8 sm:mb-10 max-w-xl leading-relaxed mx-auto lg:mx-0">
              {profile?.bio || 'Building the future of RIT Campus innovation, one line of code at a time.'}
            </p>
-            <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-3 sm:gap-4">
+            <div className="flex flex-col sm:flex-row lg:flex-row justify-center lg:justify-start gap-3 sm:gap-4">
                <Link href={profile?.github_link || "#"} target="_blank" className="w-full sm:w-auto">
-                 <Button variant="outline" className="w-full sm:w-auto rounded-2xl h-14 px-8 font-black text-[10px] uppercase tracking-widest gap-3 border-2 border-slate-100 hover:bg-slate-50 hover:text-primary transition-all shadow-sm">
+                 <Button variant="outline" className="w-full sm:w-auto rounded-2xl h-12 sm:h-14 px-6 sm:px-8 font-black text-[10px] uppercase tracking-widest gap-3 border-2 border-slate-100 hover:bg-slate-50 hover:text-primary transition-all shadow-sm">
                     <Github size={18} />
                     Registry
                  </Button>
                </Link>
-               <Button onClick={handleSave} disabled={saving} className="w-full sm:w-auto rounded-2xl h-14 px-10 font-black text-[10px] uppercase tracking-widest gap-3 shadow-xl shadow-primary/20 bg-primary text-white hover:scale-105 transition-all">
+               <Button onClick={handleSave} disabled={saving} className="w-full sm:w-auto rounded-2xl h-12 sm:h-14 px-8 sm:px-10 font-black text-[10px] uppercase tracking-widest gap-3 shadow-xl shadow-primary/20 bg-primary text-white hover:scale-105 transition-all">
                   {saving ? <Loader2 size={18} className="animate-spin" /> : <Save size={18} />}
                   Sync Profile
                </Button>

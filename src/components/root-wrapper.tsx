@@ -202,7 +202,7 @@ export function RootWrapper({ children }: { children: React.ReactNode }) {
                </div>
             </div>
 
-            <div className="flex-1 p-4 sm:p-6 md:p-8 pb-10">
+            <div className="flex-1 p-4 sm:p-8 lg:p-12 pb-10">
               {children}
             </div>
           </SidebarInset>
