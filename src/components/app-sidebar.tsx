@@ -66,7 +66,7 @@ export function AppSidebar() {
   }, [pathname]);
 
   const handleLogout = () => {
-    router.push("/login");
+    router.push("/");
   };
 
   return (

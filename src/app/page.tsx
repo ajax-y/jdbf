@@ -1,131 +1,143 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { Button, buttonVariants } from "@/components/ui/button";
-import { ArrowRight, Code, Zap, Target, ShieldCheck } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Github, Loader2, Mail, Lock, ArrowRight } from "lucide-react";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
-export default function LandingPage() {
+export default function LoginPage() {
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    // Simulate login
+    setTimeout(() => {
+      setIsLoading(false);
+      router.push("/dashboard");
+    }, 1500);
+  };
+
   return (
-    <div className="flex flex-col min-h-screen -mt-4 -mx-4 md:-mx-8">
-      {/* Hero Section */}
-      <section className="relative h-[90vh] flex flex-col items-center justify-center text-center px-4 overflow-hidden">
-        {/* Animated Background Primitives */}
-        <div className="absolute inset-0 z-0">
-           <motion.div 
-             animate={{ 
-               scale: [1, 1.2, 1],
-               rotate: [0, 90, 0],
-               opacity: [0.3, 0.5, 0.3]
-             }}
-             transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-             className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary/20 blur-[120px] rounded-full"
-           />
-           <motion.div 
-             animate={{ 
-               scale: [1.2, 1, 1.2],
-               rotate: [0, -90, 0],
-               opacity: [0.2, 0.4, 0.2]
-             }}
-             transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-             className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-emerald-500/10 blur-[150px] rounded-full"
-           />
+    <div className="min-h-screen w-full flex items-center justify-center p-4 relative overflow-hidden bg-[#fafafa]">
+      {/* Abstract Background Shapes */}
+      <div className="absolute top-0 left-0 w-full h-full z-0 pointer-events-none">
+        <motion.div 
+          animate={{ 
+            x: [0, 50, 0],
+            y: [0, 30, 0],
+          }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-[-10%] right-[-5%] w-[40%] h-[40%] bg-primary/5 blur-[120px] rounded-full"
+        />
+        <motion.div 
+          animate={{ 
+            x: [0, -50, 0],
+            y: [0, -30, 0],
+          }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute bottom-[-10%] left-[-5%] w-[50%] h-[50%] bg-emerald-500/5 blur-[150px] rounded-full"
+        />
+      </div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="w-full max-w-[450px] z-10"
+      >
+        <div className="flex flex-col items-center mb-8">
+           <div className="h-16 w-16 rounded-[1.5rem] bg-primary flex items-center justify-center text-primary-foreground font-black text-3xl shadow-xl shadow-primary/30 mb-4">
+             G
+           </div>
+           <h1 className="text-3xl font-black tracking-tighter text-center">GFG CLUB PORTAL</h1>
+           <p className="text-muted-foreground font-medium uppercase tracking-[0.2em] text-[10px] mt-1">Innovate · Create · Elevate</p>
         </div>
 
-        <div className="relative z-10 max-w-5xl">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-primary/10 text-primary border border-primary/20 mb-8"
-          >
-            <span className="text-xs font-black uppercase tracking-[0.2em]">The Central Digital Hub</span>
-          </motion.div>
-          
-          <motion.h1 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-7xl md:text-9xl font-black tracking-tighter leading-[0.85] mb-8"
-          >
-            GEEKS FOR <br />
-            <span className="text-primary italic">GEEKS.</span> <br />
-            <span className="text-muted-foreground/30">RIT CAMPUS</span>
-          </motion.h1>
-
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-            className="text-xl md:text-2xl text-muted-foreground font-medium max-w-2xl mx-auto mb-12 text-balance"
-          >
-            Empowering the next generation of campus innovators through code, community, and collaboration.
-          </motion.p>
-
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6 }}
-            className="flex flex-col sm:flex-row gap-6 justify-center"
-          >
-            <Link 
-              href="/dashboard"
-              className={cn(
-                buttonVariants(),
-                "h-16 px-10 rounded-2xl text-sm font-black uppercase tracking-widest gap-3 shadow-2xl shadow-primary/30 group"
-              )}
-            >
-                Enter Portal
-                <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-2" />
-            </Link>
-            <Link 
-              href="/leaderboard"
-              className={cn(
-                buttonVariants({ variant: "outline" }),
-                "h-16 px-10 rounded-2xl text-sm font-black uppercase tracking-widest border-2 hover:bg-muted/50"
-              )}
-            >
-                View Leaderboard
-            </Link>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Features Grid */}
-      <section className="py-32 px-4 md:px-24 bg-muted/20">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-           {[
-             { title: "Live Events", desc: "Real-time attendance wall and QR verified check-ins.", icon: Zap },
-             { title: "Project Gallery", desc: "Showcase your innovations and collaborate with peers.", icon: Code },
-             { title: "Member Tiers", desc: "Earn points, rank up, and unlock exclusive club perks.", icon: Target },
-             { title: "Secure Admin", desc: "Powerful tools for event management and analytics.", icon: ShieldCheck }
-           ].map((feat, i) => (
-             <motion.div 
-               key={feat.title}
-               initial={{ opacity: 0, y: 30 }}
-               whileInView={{ opacity: 1, y: 0 }}
-               viewport={{ once: true }}
-               transition={{ delay: i * 0.1 }}
-               className="p-10 rounded-[2.5rem] bg-card shadow-xl hover:-translate-y-2 transition-transform duration-500 group"
-             >
-                <div className="h-16 w-16 rounded-[1.25rem] bg-primary/10 flex items-center justify-center text-primary mb-8 group-hover:scale-110 transition-transform">
-                   <feat.icon size={32} />
+        <Card className="border-none shadow-[0_20px_50px_rgba(0,0,0,0.05)] bg-white/80 backdrop-blur-xl rounded-[2.5rem] overflow-hidden">
+          <CardHeader className="p-8 pb-0 text-center">
+            <CardTitle className="text-2xl font-black">Welcome Back</CardTitle>
+            <CardDescription className="text-sm font-medium">Enter your credentials to access the hub</CardDescription>
+          </CardHeader>
+          <CardContent className="p-8 pt-6">
+            <form onSubmit={handleLogin} className="space-y-6">
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label className="text-[10px] font-black uppercase tracking-widest ml-1 opacity-60">Campus Email</Label>
+                  <div className="relative">
+                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Input 
+                      placeholder="name@rit.edu" 
+                      className="h-14 rounded-2xl pl-12 bg-muted/30 border-none focus-visible:ring-primary/20 transition-all font-medium"
+                      required
+                    />
+                  </div>
                 </div>
-                <h3 className="text-2xl font-black mb-4 tracking-tight">{feat.title}</h3>
-                <p className="text-muted-foreground font-medium leading-relaxed">{feat.desc}</p>
-             </motion.div>
-           ))}
-        </div>
-      </section>
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center px-1">
+                    <Label className="text-[10px] font-black uppercase tracking-widest opacity-60">Password</Label>
+                    <Link href="#" className="text-[10px] font-black uppercase tracking-widest text-primary hover:underline">Forgot?</Link>
+                  </div>
+                  <div className="relative">
+                    <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Input 
+                      type="password"
+                      placeholder="••••••••" 
+                      className="h-14 rounded-2xl pl-12 bg-muted/30 border-none focus-visible:ring-primary/20 transition-all font-medium"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
 
-      <footer className="py-20 border-t border-border/10 text-center">
-         <div className="h-12 w-12 rounded-2xl bg-primary flex items-center justify-center text-primary-foreground font-black text-2xl mx-auto mb-8">
-           G
-         </div>
-         <p className="text-sm font-black uppercase tracking-[0.5em] text-muted-foreground/50">
-           Innovate · Create · Elevate
-         </p>
-      </footer>
+              <Button 
+                type="submit" 
+                disabled={isLoading}
+                className="w-full h-14 rounded-2xl font-black text-xs uppercase tracking-widest bg-primary hover:bg-primary/90 shadow-lg shadow-primary/20 transition-all group"
+              >
+                {isLoading ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <>
+                    Sign In
+                    <ArrowRight className="h-4 w-4 ml-2 transition-transform group-hover:translate-x-1" />
+                  </>
+                )}
+              </Button>
+
+              <div className="relative py-4">
+                <div className="absolute inset-0 flex items-center">
+                  <span className="w-full border-t border-border/10" />
+                </div>
+                <div className="relative flex justify-center text-[10px] font-black uppercase tracking-widest">
+                  <span className="bg-[#fafafa] px-4 text-muted-foreground">OR CONTINUE WITH</span>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <Button variant="outline" className="h-14 rounded-2xl border-none bg-muted/30 hover:bg-muted/50 font-black text-[10px] uppercase tracking-widest">
+                  <Github className="h-4 w-4 mr-2" />
+                  GitHub
+                </Button>
+                <Button variant="outline" className="h-14 rounded-2xl border-none bg-muted/30 hover:bg-muted/50 font-black text-[10px] uppercase tracking-widest">
+                  Google
+                </Button>
+              </div>
+            </form>
+
+            <p className="text-center text-xs font-medium text-muted-foreground mt-8">
+              Don&apos;t have an account?{" "}
+              <Link href="/signup" className="text-primary font-black hover:underline uppercase tracking-tighter">Sign up</Link>
+            </p>
+          </CardContent>
+        </Card>
+      </motion.div>
     </div>
   );
 }

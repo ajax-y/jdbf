@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 
 export function RootWrapper({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const isAuthPage = pathname === "/login" || pathname === "/signup" || pathname === "/";
+  const isAuthPage = pathname === "/signup" || pathname === "/";
 
   if (isAuthPage) {
     return <>{children}</>;
