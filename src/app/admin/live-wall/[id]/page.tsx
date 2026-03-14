@@ -28,7 +28,7 @@ type Attendee = {
 export default function LiveWallPage() {
   const [attendees, setAttendees] = useState<Attendee[]>([]);
   const [count, setCount] = useState(0);
-  const [eventTitle, setEventTitle] = useState("Loading Session...");
+  const [eventInfo, setEventInfo] = useState<{title: string, date: string, time: string} | null>(null);
   const { id } = useParams();
   const router = useRouter();
 
@@ -42,9 +42,11 @@ export default function LiveWallPage() {
          .single();
        
        if (event) {
-         setEventTitle(event.title);
-       } else {
-         setEventTitle(`Session Node: ${id}`);
+         setEventInfo({
+           title: event.title,
+           date: new Date(event.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
+           time: event.time || 'TBD'
+         });
        }
     };
 
@@ -144,11 +146,17 @@ export default function LiveWallPage() {
         </div>
         
         <div className="relative z-10 flex-1">
-          <div className="flex items-center justify-center lg:justify-start gap-3 mb-8">
+          <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 mb-8">
              <span className="px-4 py-1.5 bg-white/10 rounded-xl text-[10px] font-black uppercase tracking-[0.3em] border border-white/10">Active Stream Wall</span>
+             {eventInfo && (
+               <>
+                 <span className="px-4 py-1.5 bg-primary/20 rounded-xl text-[10px] font-black uppercase tracking-[0.3em] border border-primary/30 text-primary">{eventInfo.date}</span>
+                 <span className="px-4 py-1.5 bg-emerald-500/20 rounded-xl text-[10px] font-black uppercase tracking-[0.3em] border border-emerald-500/30 text-emerald-400">{eventInfo.time}</span>
+               </>
+             )}
           </div>
           <h1 className="text-5xl sm:text-8xl font-black tracking-tighter mb-8 leading-none">
-            {eventTitle}
+            {eventInfo?.title || "Loading Session..."}
           </h1>
           <p className="text-xl font-bold text-slate-400 max-w-xl leading-relaxed">
             Real-time participants broadcast. Visual feed activates upon successful token verification.

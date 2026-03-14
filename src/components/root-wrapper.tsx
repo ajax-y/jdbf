@@ -108,9 +108,10 @@ export function RootWrapper({ children }: { children: React.ReactNode }) {
                      <Menu size={22} strokeWidth={2.5} />
                   </SidebarTrigger>
                   
-                  <div className="flex items-center gap-3">
-                    <div className="h-10 w-10 rounded-xl overflow-hidden shadow-lg shadow-primary/20 border-2 border-primary/10">
-                      <img src="/logo.png" alt="GfG Logo" className="w-full h-full object-cover" />
+                  <div className="flex items-center gap-4">
+                    <div className="h-12 w-12 rounded-2xl bg-white shadow-[0_0_20px_rgba(34,197,94,0.2)] flex items-center justify-center p-1.5 border-2 border-primary/20 relative group overflow-hidden">
+                       <div className="absolute inset-0 bg-primary/5 group-hover:bg-primary/10 transition-colors" />
+                       <img src="/logo.png" alt="GfG Logo" className="w-full h-full object-contain relative z-10" />
                     </div>
                     <div>
                       <h1 className="font-bold text-sm tracking-tight text-slate-900 leading-none">GfG Club</h1>

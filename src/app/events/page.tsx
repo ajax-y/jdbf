@@ -13,6 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Camera, CheckCircle2, History, Info, XCircle, QrCode, ArrowRight, Zap, Sparkles, Loader2, RefreshCcw } from "lucide-react";
+import { supabase } from "@/lib/supabase";
 
 export default function JoinEventPage() {
   const [scanning, setScanning] = useState(false);
@@ -52,15 +53,38 @@ export default function JoinEventPage() {
         { facingMode: "environment" },
         config,
         (decodedText) => {
-          try {
-            const data = JSON.parse(decodedText);
-            if (data.secret) {
-              stopScanner();
-              setResult({ status: 'success', message: `Identity verified for ${data.title}. Merit points added to profile.` });
-            }
-          } catch (e) {
-            // Keep scanning, maybe not our JSON
-          }
+          const processAttendance = async () => {
+             try {
+               const data = JSON.parse(decodedText);
+               const userId = document.cookie.split("; ").find(row => row.startsWith("gfg_session="))?.split("=")[1];
+               
+               if (data.id && userId) {
+                 await stopScanner();
+                 
+                 // 1. Insert Attendance
+                 const { error: attendError } = await supabase
+                   .from('attendance')
+                   .insert([{ event_id: data.id, user_id: userId }]);
+
+                 if (attendError) throw attendError;
+
+                 // 2. Fetch User Name for Message
+                 const { data: profile } = await supabase
+                   .from('profiles')
+                   .select('full_name')
+                   .eq('id', userId)
+                   .single();
+
+                 setResult({ 
+                   status: 'success', 
+                   message: `Successfully joined "${data.title || 'the event'}" as ${profile?.full_name || 'Member'}. 10 merit points added.` 
+                 });
+               }
+             } catch (e) {
+               // Silently fail if not our QR
+             }
+          };
+          processAttendance();
         },
         (errorMessage) => {
           // ignore scan errors
@@ -125,13 +149,13 @@ export default function JoinEventPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
         <div className="lg:col-span-2 space-y-10">
-          <Card className={`border-none shadow-2xl overflow-hidden rounded-[3.5rem] transition-all duration-700 bg-white ${scanning ? 'ring-8 ring-primary/10' : 'border border-slate-50'}`}>
-             <CardHeader className="bg-slate-50/50 p-10 border-b border-slate-100">
+          <Card className={`border-none shadow-2xl overflow-hidden rounded-[3.5rem] transition-all duration-700 bg-slate-950 text-white ${scanning ? 'ring-8 ring-primary/20' : 'border border-white/5'}`}>
+             <CardHeader className="bg-white/5 p-10 border-b border-white/10">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
                    <div className="flex items-center gap-4">
-                      <div className={`h-3 w-3 rounded-full ${scanning ? 'bg-primary animate-pulse' : 'bg-slate-300'}`} />
+                      <div className={`h-3 w-3 rounded-full ${scanning ? 'bg-primary animate-pulse' : 'bg-slate-700'}`} />
                       <div>
-                        <CardTitle className="text-2xl font-black text-slate-950 tracking-tight">{scanning ? 'Establishing Handshake...' : 'System Available'}</CardTitle>
+                        <CardTitle className="text-2xl font-black text-white tracking-tight">{scanning ? 'Establishing Handshake...' : 'System Available'}</CardTitle>
                         <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Optical Recognition Active</p>
                       </div>
                    </div>
@@ -150,14 +174,14 @@ export default function JoinEventPage() {
                             <motion.div 
                               animate={{ rotate: 360 }}
                               transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-                              className="absolute inset-[-30px] border-2 border-dashed border-slate-200 rounded-[4rem]"
+                              className="absolute inset-[-30px] border-2 border-dashed border-white/10 rounded-[4rem]"
                             />
-                            <div className="h-48 w-48 rounded-[4rem] bg-white shadow-2xl flex items-center justify-center mx-auto ring-1 ring-slate-100 relative z-10">
-                               <QrCode size={80} className="text-slate-100" />
+                            <div className="h-48 w-48 rounded-[4rem] bg-white/5 shadow-2xl flex items-center justify-center mx-auto ring-1 ring-white/10 relative z-10">
+                               <QrCode size={80} className="text-white/10" />
                             </div>
                          </div>
                          <div className="space-y-4">
-                           <h3 className="text-3xl font-black text-slate-950 tracking-tight leading-none">Signal Lost</h3>
+                           <h3 className="text-3xl font-black text-white tracking-tight leading-none">Signal Lost</h3>
                            <p className="text-slate-400 font-bold max-w-xs mx-auto text-base">Activate the optical scanner to detect the club session security token.</p>
                          </div>
                       </div>

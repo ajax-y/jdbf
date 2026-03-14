@@ -12,6 +12,7 @@ type CloudEvent = {
   id: string;
   title: string;
   date: string;
+  time: string;
   is_active: boolean;
   attendee_count?: number;
 };
@@ -41,6 +42,7 @@ export default function LiveWallSelector() {
               id: event.id,
               title: event.title,
               date: event.date ? new Date(event.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'No date',
+              time: event.time || 'TBD',
               is_active: event.is_active,
               attendee_count: count || 0
             };
@@ -106,7 +108,7 @@ export default function LiveWallSelector() {
                     <h3 className="text-3xl font-black text-slate-900 tracking-tight mb-2 leading-tight">
                       {event.title}
                     </h3>
-                    <p className="text-sm font-bold text-slate-400">{event.date}</p>
+                    <p className="text-sm font-bold text-slate-400">{event.date} • {event.time}</p>
                  </div>
                  <CardContent className="p-10 flex items-center justify-between bg-slate-50/50">
                     <div className="flex flex-col">

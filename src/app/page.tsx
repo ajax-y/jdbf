@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Loader2, User, Lock, ArrowRight, AlertCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { supabase } from "@/lib/supabase";
 
 export default function LoginPage() {
   const [userId, setUserId] = useState("");
@@ -21,25 +22,30 @@ export default function LoginPage() {
     setIsLoading(true);
     setError("");
 
-    // Authentic Security Layer
-    setTimeout(() => {
-      // 1. Verify Credentials
-      const isAdmin = userId === "admin" && password === "admin123";
-      const isMember = userId === "geeks" && password === "member123";
+    try {
+      // Query profiles for match (check both full_name and username)
+      const { data: profile, error: dbError } = await supabase
+        .from('profiles')
+        .select('*')
+        .or(`full_name.eq."${userId}",username.eq."${userId}"`)
+        .eq('password', password)
+        .maybeSingle();
 
-      if (isAdmin || isMember) {
-        // 2. Set Session Cookie (Simulated via document.cookie for middleware)
-        const role = isAdmin ? "admin" : "member";
-        document.cookie = `gfg_session=${role}; path=/; max-age=86400; SameSite=Lax`;
-        
-        // 3. Redirect
-        router.push(isAdmin ? "/admin" : "/dashboard");
-        router.refresh(); // Important to trigger middleware re-check
-      } else {
-        setIsLoading(false);
-        setError("Invalid User ID or Password. Access Denied.");
+      if (dbError || !profile) {
+        throw new Error("Invalid Credentials. Access Denied.");
       }
-    }, 1000);
+
+      // Set session cookie based on user ID and role
+      const role = profile.role;
+      document.cookie = `gfg_session=${profile.id}; path=/; max-age=86400; SameSite=Lax`;
+      document.cookie = `gfg_role=${role}; path=/; max-age=86400; SameSite=Lax`;
+      
+      router.push(role === 'admin' ? "/admin" : "/dashboard");
+      router.refresh();
+    } catch (err: any) {
+      setIsLoading(false);
+      setError(err.message || "Authentication failed.");
+    }
   };
 
   return (
@@ -58,8 +64,9 @@ export default function LoginPage() {
         className="w-full max-w-[450px] z-10"
       >
         <div className="flex flex-col items-center mb-10">
-           <div className="h-20 w-20 rounded-[2rem] bg-primary flex items-center justify-center text-white font-black text-4xl shadow-2xl shadow-primary/40 mb-4">
-             G
+           <div className="h-24 w-24 rounded-[2.5rem] bg-white flex items-center justify-center p-3 shadow-2xl border-2 border-primary/20 mb-6 group relative overflow-hidden">
+              <div className="absolute inset-0 bg-primary/5 group-hover:bg-primary/10 transition-colors" />
+              <img src="/logo.png" alt="GfG Logo" className="w-full h-full object-contain relative z-10" />
            </div>
            <h1 className="text-4xl font-black tracking-tighter text-slate-950">GFG PORTAL</h1>
         </div>

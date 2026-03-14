@@ -122,8 +122,8 @@ export default function AdminDashboard() {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-         <Card className="lg:col-span-2 border-none shadow-2xl bg-white rounded-[3.5rem] overflow-hidden border border-slate-50">
+      <div className="grid grid-cols-1 gap-8">
+         <Card className="border-none shadow-2xl bg-white rounded-[3.5rem] overflow-hidden border border-slate-50">
             <CardHeader className="p-10 border-b border-slate-50 bg-slate-50/30">
                <div className="flex justify-between items-center">
                   <div>
@@ -166,54 +166,6 @@ export default function AdminDashboard() {
                </div>
             </CardContent>
          </Card>
-
-         <div className="space-y-8">
-            <Card className="border-none shadow-2xl bg-slate-950 text-white rounded-[3.5rem] p-10 overflow-hidden relative group">
-               <div className="relative z-10">
-                  <div className="h-14 w-14 rounded-2xl bg-white/10 flex items-center justify-center mb-10 border border-white/10">
-                     <Users className="text-primary" size={28} />
-                  </div>
-                  <h4 className="text-3xl font-black tracking-tight mb-4">Membership <span className="text-primary italic">Overview.</span></h4>
-                  <p className="text-slate-400 font-bold mb-8 leading-relaxed">
-                     Detailed breakdown of chapter growth and member engagement metrics.
-                  </p>
-                  <div className="space-y-6">
-                     {[
-                       { label: 'Growth Rate', val: '12%', color: 'bg-emerald-500' },
-                       { label: 'Engagement', val: '78%', color: 'bg-blue-500' },
-                     ].map((s) => (
-                       <div key={s.label} className="space-y-3">
-                          <div className="flex justify-between text-[11px] font-black uppercase tracking-widest">
-                             <span className="text-slate-100">{s.label}</span>
-                             <span className="text-primary">{s.val}</span>
-                          </div>
-                          <div className="h-2 w-full bg-white/10 rounded-full overflow-hidden">
-                             <motion.div initial={{ width: 0 }} animate={{ width: s.val }} className={`h-full ${s.color}`} />
-                          </div>
-                       </div>
-                     ))}
-                  </div>
-               </div>
-               <div className="absolute -bottom-10 -right-10 opacity-5 pointer-events-none group-hover:scale-110 transition-transform duration-1000">
-                  <Globe size={300} />
-               </div>
-            </Card>
-
-            <Card className="border-none shadow-2xl bg-white rounded-[3.5rem] p-10 border border-slate-50 group hover:border-primary/20 transition-all duration-500">
-               <div className="flex items-center gap-6 mb-8">
-                  <div className="h-16 w-16 rounded-2xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500">
-                     <Settings size={28} strokeWidth={2.5} />
-                  </div>
-                  <div>
-                     <h4 className="text-2xl font-black text-slate-900">Admin Meta</h4>
-                     <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mt-1">Platform Controls</p>
-                  </div>
-               </div>
-               <Button variant="outline" className="w-full h-14 rounded-2xl font-black text-[10px] uppercase tracking-widest border-2 border-slate-100 hover:bg-slate-50 transition-all">
-                  Access Portal Settings
-               </Button>
-            </Card>
-         </div>
       </div>
     </div>
   );

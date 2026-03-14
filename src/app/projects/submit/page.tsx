@@ -15,20 +15,48 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Github, Upload, Rocket, Layout, Globe, Code2, Sparkles, CheckCircle2, ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { supabase } from "@/lib/supabase";
 
 export default function SubmitProjectPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    github_url: "",
+    live_url: "",
+    tech_stack: ""
+  });
   const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
+
+    try {
+      const userId = document.cookie.split("; ").find(row => row.startsWith("gfg_session="))?.split("=")[1];
+      if (!userId) throw new Error("No active session found.");
+
+      const { error } = await supabase
+        .from('projects')
+        .insert([{
+          title: formData.title,
+          description: formData.description,
+          github_url: formData.github_url,
+          live_url: formData.live_url,
+          tech_stack: formData.tech_stack.split(',').map(s => s.trim()),
+          owner_id: userId
+        }]);
+
+      if (error) throw error;
+
       setShowSuccess(true);
       setTimeout(() => router.push("/projects"), 2000);
-    }, 2000);
+    } catch (err: any) {
+      alert(err.message || "Failed to submit node.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -76,12 +104,24 @@ export default function SubmitProjectPage() {
                 <form onSubmit={handleSubmit} className="space-y-8">
                   <div className="space-y-2">
                     <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary ml-1">Project Identifier</Label>
-                    <Input placeholder="e.g. AI-Powered Campus Map" className="h-14 rounded-2xl bg-slate-50/50 border-none font-bold text-lg focus:ring-2 focus:ring-primary/20 transition-all" required />
+                    <Input 
+                      value={formData.title}
+                      onChange={e => setFormData({...formData, title: e.target.value})}
+                      placeholder="e.g. AI-Powered Campus Map" 
+                      className="h-14 rounded-2xl bg-slate-50/50 border-none font-bold text-lg focus:ring-2 focus:ring-primary/20 transition-all" 
+                      required 
+                    />
                   </div>
 
                   <div className="space-y-2">
-                    <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary ml-1">Value Proposition (Tagline)</Label>
-                    <Input placeholder="Describe the core impact in one sentence" className="h-14 rounded-2xl bg-slate-50/50 border-none font-bold text-lg focus:ring-2 focus:ring-primary/20 transition-all" required />
+                    <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary ml-1">Tech Stack (comma separated)</Label>
+                    <Input 
+                      value={formData.tech_stack}
+                      onChange={e => setFormData({...formData, tech_stack: e.target.value})}
+                      placeholder="e.g. Next.js, Supabase, Tailwind" 
+                      className="h-14 rounded-2xl bg-slate-50/50 border-none font-bold text-lg focus:ring-2 focus:ring-primary/20 transition-all" 
+                      required 
+                    />
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -89,14 +129,25 @@ export default function SubmitProjectPage() {
                       <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary ml-1">GitHub Endpoint</Label>
                       <div className="relative group">
                         <Github className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400 group-focus-within:text-primary transition-colors" />
-                        <Input placeholder="github.com/repo-link" className="h-14 rounded-2xl pl-12 bg-slate-50/50 border-none font-bold text-lg focus:ring-2 focus:ring-primary/20 transition-all" required />
+                        <Input 
+                          value={formData.github_url}
+                          onChange={e => setFormData({...formData, github_url: e.target.value})}
+                          placeholder="github.com/repo-link" 
+                          className="h-14 rounded-2xl pl-12 bg-slate-50/50 border-none font-bold text-lg focus:ring-2 focus:ring-primary/20 transition-all" 
+                          required 
+                        />
                       </div>
                     </div>
                     <div className="space-y-2">
                       <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary ml-1">Live Manifest (Optional)</Label>
                       <div className="relative group">
                         <Globe className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400 group-focus-within:text-primary transition-colors" />
-                        <Input placeholder="https://live-app.demo" className="h-14 rounded-2xl pl-12 bg-slate-50/50 border-none font-bold text-lg focus:ring-2 focus:ring-primary/20 transition-all" />
+                        <Input 
+                          value={formData.live_url}
+                          onChange={e => setFormData({...formData, live_url: e.target.value})}
+                          placeholder="https://live-app.demo" 
+                          className="h-14 rounded-2xl pl-12 bg-slate-50/50 border-none font-bold text-lg focus:ring-2 focus:ring-primary/20 transition-all" 
+                        />
                       </div>
                     </div>
                   </div>
@@ -104,6 +155,8 @@ export default function SubmitProjectPage() {
                   <div className="space-y-2">
                     <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary ml-1">Architecture Overview</Label>
                     <Textarea 
+                      value={formData.description}
+                      onChange={e => setFormData({...formData, description: e.target.value})}
                       placeholder="Explain features, tech stack, and engineering choices..." 
                       className="min-h-[180px] rounded-[2.5rem] bg-slate-50/50 border-none font-bold text-lg focus:ring-2 focus:ring-primary/20 transition-all p-8" 
                       required
