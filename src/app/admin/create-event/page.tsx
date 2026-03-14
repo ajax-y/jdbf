@@ -122,7 +122,7 @@ export default function CreateEventPage() {
       </AnimatePresence>
 
       <div className="mb-16">
-        <h1 className="text-5xl md:text-8xl font-black tracking-tighter text-white leading-none">
+        <h1 className="text-5xl md:text-8xl font-black tracking-tighter text-slate-900 leading-none">
           Create <span className="text-primary italic underline underline-offset-[12px] decoration-primary/20">Event.</span>
         </h1>
         <p className="text-slate-500 mt-10 text-xl font-bold max-w-2xl uppercase tracking-widest leading-relaxed">
@@ -136,10 +136,10 @@ export default function CreateEventPage() {
            animate={{ opacity: 1, y: 0 }}
            transition={{ duration: 0.5 }}
         >
-          <Card className="border-none shadow-2xl bg-[#1a1c2c]/60 backdrop-blur-xl overflow-hidden rounded-[3.5rem] border border-white/5">
-             <CardHeader className="bg-white/5 p-10 sm:p-12 border-b border-white/5">
-                <CardTitle className="text-2xl sm:text-3xl font-black text-white tracking-tight leading-none mb-3">Event Configuration</CardTitle>
-                <CardDescription className="font-bold text-xs text-slate-500 uppercase tracking-[0.2em]">System parameters required for deployment</CardDescription>
+          <Card className="border-none shadow-[0_30px_80px_rgba(0,0,0,0.04)] bg-white overflow-hidden rounded-[3.5rem] border border-slate-100">
+             <CardHeader className="bg-slate-50/50 p-10 sm:p-12 border-b border-slate-100">
+                <CardTitle className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight leading-none mb-3">Event Configuration</CardTitle>
+                <CardDescription className="font-bold text-xs text-slate-400 uppercase tracking-[0.2em]">System parameters required for deployment</CardDescription>
              </CardHeader>
              <CardContent className="p-10 sm:p-12">
                 <form onSubmit={handleCreate} className="space-y-8">
@@ -147,7 +147,7 @@ export default function CreateEventPage() {
                     <Label className="text-[10px] font-black uppercase tracking-[0.2em] ml-1 text-primary">Session Title</Label>
                     <Input 
                       placeholder="e.g. Next.js Masterclass" 
-                      className="h-16 rounded-2xl bg-white/5 border-white/5 font-bold text-lg focus:border-primary/30 transition-all text-white pl-8"
+                      className="h-16 rounded-2xl bg-slate-50 border-slate-100 font-bold text-lg focus:border-primary/20 transition-all text-slate-900 pl-8 placeholder:text-slate-300 outline-none ring-0"
                       value={title}
                       onChange={(e) => setTitle(e.target.value)}
                       required
@@ -158,10 +158,10 @@ export default function CreateEventPage() {
                     <div className="space-y-4">
                       <Label className="text-[10px] font-black uppercase tracking-[0.2em] ml-1 text-primary">Session Date</Label>
                       <div className="relative group">
-                        <Calendar className="absolute left-6 top-1/2 -translate-y-1/2 h-6 w-6 text-slate-600 pointer-events-none group-focus-within:text-primary transition-colors" />
+                        <Calendar className="absolute left-6 top-1/2 -translate-y-1/2 h-6 w-6 text-slate-300 pointer-events-none group-focus-within:text-primary transition-colors" />
                         <Input 
                           type="date" 
-                          className="h-16 rounded-2xl pl-16 bg-white/5 border-white/5 font-bold text-lg focus:border-primary/30 transition-all w-full text-white"
+                          className="h-16 rounded-2xl pl-16 bg-slate-50 border-slate-100 font-bold text-lg focus:border-primary/20 transition-all w-full text-slate-900 outline-none ring-0"
                           value={date}
                           onChange={(e) => setDate(e.target.value)}
                           required
@@ -171,10 +171,10 @@ export default function CreateEventPage() {
                     <div className="space-y-4">
                       <Label className="text-[10px] font-black uppercase tracking-[0.2em] ml-1 text-primary">Start Time</Label>
                       <div className="relative group">
-                        <Clock className="absolute left-6 top-1/2 -translate-y-1/2 h-6 w-6 text-slate-600 pointer-events-none group-focus-within:text-primary transition-colors" />
+                        <Clock className="absolute left-6 top-1/2 -translate-y-1/2 h-6 w-6 text-slate-300 pointer-events-none group-focus-within:text-primary transition-colors" />
                         <Input 
                           type="time" 
-                          className="h-16 rounded-2xl pl-16 bg-white/5 border-white/5 font-bold text-lg focus:border-primary/30 transition-all w-full text-white"
+                          className="h-16 rounded-2xl pl-16 bg-slate-50 border-slate-100 font-bold text-lg focus:border-primary/20 transition-all w-full text-slate-900 outline-none ring-0"
                           value={time}
                           onChange={(e) => setTime(e.target.value)}
                           required
@@ -186,10 +186,10 @@ export default function CreateEventPage() {
                    <div className="space-y-4">
                     <Label className="text-[10px] font-black uppercase tracking-[0.2em] ml-1 text-primary">Location / Venue</Label>
                     <div className="relative group">
-                      <MapPin className="absolute left-6 top-1/2 -translate-y-1/2 h-6 w-6 text-slate-600 pointer-events-none group-focus-within:text-primary transition-colors" />
+                      <MapPin className="absolute left-6 top-1/2 -translate-y-1/2 h-6 w-6 text-slate-300 pointer-events-none group-focus-within:text-primary transition-colors" />
                       <Input 
                         placeholder="CS Lab 2 / Zoom Hub" 
-                        className="h-16 rounded-2xl pl-16 bg-white/5 border-white/5 font-bold text-lg focus:border-primary/30 transition-all text-white"
+                        className="h-16 rounded-2xl pl-16 bg-slate-50 border-slate-100 font-bold text-lg focus:border-primary/20 transition-all text-slate-900 outline-none ring-0 placeholder:text-slate-300"
                         value={location}
                         onChange={(e) => setLocation(e.target.value)}
                         required
@@ -197,28 +197,28 @@ export default function CreateEventPage() {
                     </div>
                   </div>
  
-                   <div className="space-y-4">
-                    <Label className="text-[10px] font-black uppercase tracking-[0.2em] ml-1 text-primary">Briefing Description</Label>
-                    <Textarea 
-                      placeholder="Detailed overview for club members..." 
-                      className="min-h-[160px] rounded-[2.5rem] bg-white/5 border-white/5 font-bold text-lg focus:border-primary/30 transition-all p-8 text-white"
-                      value={description}
-                      onChange={(e) => setDescription(e.target.value)}
-                    />
-                  </div>
+                    <div className="space-y-4">
+                     <Label className="text-[10px] font-black uppercase tracking-[0.2em] ml-1 text-primary">Briefing Description</Label>
+                     <Textarea 
+                       placeholder="Detailed overview for club members..." 
+                       className="min-h-[160px] rounded-[2.5rem] bg-slate-50 border-slate-100 font-bold text-lg focus:border-primary/20 transition-all p-8 text-slate-900 placeholder:text-slate-300 outline-none ring-0"
+                       value={description}
+                       onChange={(e) => setDescription(e.target.value)}
+                     />
+                   </div>
  
-                   <Button 
-                    type="submit" 
-                    disabled={isPublishing}
-                    className="w-full h-20 rounded-[2.5rem] font-black text-xs uppercase tracking-[0.2em] gap-4 shadow-2xl shadow-primary/20 bg-primary text-white hover:bg-primary border-none transition-all hover:scale-[1.02] active:scale-95"
-                  >
-                    {isPublishing ? (
-                      <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: 'linear' }}>
-                        <Save size={24} />
-                      </motion.div>
-                    ) : <Save size={24} />}
-                    {isPublishing ? 'Synchronizing Node...' : 'Deploy & Generate QR'}
-                  </Button>
+                    <Button 
+                     type="submit" 
+                     disabled={isPublishing}
+                     className="w-full h-20 rounded-[2.5rem] font-black text-xs uppercase tracking-[0.2em] gap-4 shadow-[0_20px_40px_rgba(47,141,70,0.2)] bg-primary text-white hover:bg-primary border-none transition-all hover:scale-[1.02] active:scale-95"
+                   >
+                     {isPublishing ? (
+                       <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: 'linear' }}>
+                         <Save size={24} />
+                       </motion.div>
+                     ) : <Save size={24} />}
+                     {isPublishing ? 'Synchronizing Node...' : 'Deploy & Generate QR'}
+                   </Button>
                 </form>
              </CardContent>
           </Card>
@@ -230,10 +230,10 @@ export default function CreateEventPage() {
            transition={{ duration: 0.5, delay: 0.2 }}
            className="lg:h-full"
         >
-          <Card className={`h-full border border-white/5 shadow-2xl transition-all duration-700 overflow-hidden relative ${showQR ? 'bg-primary text-white' : 'bg-[#1a1c2c]/60 backdrop-blur-xl border-dashed'} rounded-[3.5rem]`}>
+          <Card className={`h-full border border-slate-100 shadow-[0_40px_100px_rgba(0,0,0,0.04)] transition-all duration-700 overflow-hidden relative ${showQR ? 'bg-primary text-white border-primary/20' : 'bg-white border-dashed'} rounded-[3.5rem]`}>
              <CardHeader className="p-10 text-center relative z-10">
-                <CardTitle className={`text-3xl font-black tracking-tight leading-none mb-3 ${showQR ? 'text-white' : 'text-white/50'}`}>Access Signal</CardTitle>
-                <CardDescription className={`font-bold text-xs uppercase tracking-[0.2em] mt-3 ${showQR ? 'text-white/70' : 'text-slate-600'}`}>
+                <CardTitle className={`text-3xl font-black tracking-tight leading-none mb-3 ${showQR ? 'text-white' : 'text-slate-900'}`}>Access Signal</CardTitle>
+                <CardDescription className={`font-bold text-xs uppercase tracking-[0.2em] mt-3 ${showQR ? 'text-white/70' : 'text-slate-400'}`}>
                   {showQR ? 'Verified secure token' : 'Awaiting system deployment'}
                 </CardDescription>
              </CardHeader>
@@ -254,8 +254,6 @@ export default function CreateEventPage() {
                         includeMargin
                         imageSettings={{
                           src: "/logo.png",
-                          x: undefined,
-                          y: undefined,
                           height: 60,
                           width: 60,
                           excavate: true,
@@ -289,10 +287,10 @@ export default function CreateEventPage() {
                   </motion.div>
                  ) : (
                    <div className="text-center space-y-10">
-                     <div className="h-48 w-48 rounded-[3.5rem] bg-white/5 shadow-2xl flex items-center justify-center mx-auto border border-white/5 ring-1 ring-white/5">
-                        <QrCode size={90} className="text-slate-800 animate-pulse" />
+                     <div className="h-48 w-48 rounded-[3.5rem] bg-slate-50 flex items-center justify-center mx-auto border border-slate-100 shadow-inner">
+                        <QrCode size={90} className="text-slate-200 animate-pulse" />
                      </div>
-                     <p className="font-black text-slate-600 text-xs uppercase tracking-[0.3em] max-w-[200px] mx-auto leading-relaxed">Initialize node configuration to start</p>
+                     <p className="font-black text-slate-400 text-xs uppercase tracking-[0.3em] max-w-[200px] mx-auto leading-relaxed">Initialize node configuration to start</p>
                    </div>
                  )}
              </CardContent>

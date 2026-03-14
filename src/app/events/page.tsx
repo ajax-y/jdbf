@@ -110,10 +110,10 @@ export default function JoinEventPage() {
 
   return (
     <div className="max-w-7xl mx-auto space-y-12 pb-24 px-4 sm:px-0">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 bg-[#1a1c2c]/60 backdrop-blur-2xl p-12 sm:p-20 rounded-[4rem] text-white shadow-[0_50px_100px_rgba(0,0,0,0.4)] relative overflow-hidden border border-white/5">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 bg-white p-12 sm:p-20 rounded-[4rem] text-slate-900 shadow-[0_40px_100px_rgba(0,0,0,0.04)] relative overflow-hidden border border-slate-100">
         <div className="relative z-10 flex-1 overflow-hidden">
-          <Badge className="bg-primary/20 text-primary border border-primary/20 font-black text-[10px] uppercase tracking-[0.3em] px-5 py-2 rounded-full mb-8 sm:mb-10">Attendance Link</Badge>
-          <h1 className="text-4xl sm:text-5xl md:text-8xl font-black tracking-tighter mb-6 sm:mb-8 leading-none">
+          <Badge className="bg-primary/10 text-primary border border-primary/20 font-black text-[10px] uppercase tracking-[0.3em] px-5 py-2 rounded-full mb-8 sm:mb-10 block w-fit">Attendance Link</Badge>
+          <h1 className="text-4xl sm:text-5xl md:text-8xl font-black tracking-tighter mb-6 sm:mb-8 leading-none text-slate-900">
             Live <span className="text-primary italic">Events.</span>
           </h1>
           <p className="text-lg sm:text-xl font-bold text-slate-400 max-w-xl leading-relaxed uppercase tracking-widest">
@@ -133,7 +133,7 @@ export default function JoinEventPage() {
              <Button 
                variant="ghost"
                onClick={stopScanner}
-               className="w-full sm:w-auto h-20 rounded-[2.5rem] px-12 font-black text-xs uppercase tracking-[0.2em] gap-3 bg-white/5 text-white border border-white/10 hover:bg-white/10 transition-all shadow-xl"
+                className="w-full sm:w-auto h-20 rounded-[2.5rem] px-12 font-black text-xs uppercase tracking-[0.2em] gap-3 bg-slate-50 text-slate-400 border border-slate-200 hover:bg-slate-100 transition-all shadow-sm"
              >
                 <XCircle size={24} />
                 Close Relay
@@ -149,13 +149,13 @@ export default function JoinEventPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
         <div className="lg:col-span-2 space-y-10">
-          <Card className={`border-none shadow-2xl overflow-hidden rounded-[2.5rem] sm:rounded-[3.5rem] transition-all duration-700 bg-[#1a1c2c]/60 backdrop-blur-xl text-white ${scanning ? 'ring-8 ring-primary/10 border-primary/20' : 'border border-white/5'}`}>
-             <CardHeader className="bg-white/5 p-8 sm:p-10 border-b border-white/5">
+          <Card className={`border-none shadow-[0_40px_100px_rgba(0,0,0,0.04)] overflow-hidden rounded-[2.5rem] sm:rounded-[3.5rem] transition-all duration-700 bg-white text-slate-900 ${scanning ? 'ring-8 ring-primary/5 border-primary/20' : 'border border-slate-100'}`}>
+             <CardHeader className="bg-slate-50/50 p-8 sm:p-10 border-b border-slate-100">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
                    <div className="flex items-center gap-6">
                       <div className={`h-4 w-4 rounded-full ${scanning ? 'bg-primary shadow-[0_0_15px_rgba(34,197,94,0.5)] animate-pulse' : 'bg-slate-700'}`} />
                       <div className="overflow-hidden">
-                        <CardTitle className="text-xl sm:text-2xl font-black text-white tracking-tight leading-none truncate">{scanning ? 'Establishing Handshake...' : 'System Available'}</CardTitle>
+                        <CardTitle className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight leading-none truncate">{scanning ? 'Establishing Handshake...' : 'System Available'}</CardTitle>
                         <p className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mt-3">Optical Recognition Active</p>
                       </div>
                    </div>
@@ -181,8 +181,8 @@ export default function JoinEventPage() {
                             </div>
                          </div>
                          <div className="space-y-4">
-                           <h3 className="text-3xl font-black text-white tracking-tight leading-none">Signal Lost</h3>
-                           <p className="text-slate-200 font-bold max-w-xs mx-auto text-base">Activate the optical scanner to detect the club session security token.</p>
+                           <h3 className="text-3xl font-black text-slate-900 tracking-tight leading-none">Signal Lost</h3>
+                           <p className="text-slate-400 font-bold max-w-xs mx-auto text-base">Activate the optical scanner to detect the club session security token.</p>
                          </div>
                       </div>
                    )}
@@ -248,14 +248,14 @@ export default function JoinEventPage() {
         </div>
 
         <div className="space-y-10">
-           <Card className="border-none shadow-2xl bg-[#1a1c2c]/60 backdrop-blur-xl overflow-hidden border border-white/5 rounded-[3.5rem] relative">
+            <Card className="border-none shadow-[0_40px_100px_rgba(0,0,0,0.04)] overflow-hidden rounded-[3.5rem] relative bg-white border border-slate-100">
               <CardHeader className="p-10 pb-6">
                  <div className="flex items-center gap-6">
                     <div className="h-16 w-16 rounded-2xl bg-white/5 flex items-center justify-center border border-white/5 shadow-inner">
                        <History className="text-slate-500" size={28} />
                     </div>
                     <div className="overflow-hidden">
-                      <CardTitle className="text-2xl font-black text-white tracking-tight leading-none truncate">Archives</CardTitle>
+                      <CardTitle className="text-2xl font-black text-slate-900 tracking-tight leading-none truncate">Archives</CardTitle>
                       <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mt-3">Previous Check-ins</p>
                     </div>
                  </div>
@@ -264,8 +264,8 @@ export default function JoinEventPage() {
                  {history.length === 0 ? (
                    <div className="py-24 text-center space-y-8 overflow-hidden">
                       <div className="relative inline-block">
-                        <div className="h-32 w-32 rounded-[3.5rem] bg-white/5 flex items-center justify-center mx-auto border border-white/5 shadow-2xl ring-1 ring-white/5">
-                           <History className="text-slate-800" size={48} />
+                        <div className="h-32 w-32 rounded-[3.5rem] bg-slate-50 shadow-inner flex items-center justify-center mx-auto border border-slate-100">
+                           <History className="text-slate-200" size={48} />
                         </div>
                       </div>
                       <div className="space-y-4">

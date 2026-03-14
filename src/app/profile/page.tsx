@@ -99,7 +99,7 @@ export default function ProfilePage() {
 
   return (
     <div className="max-w-5xl mx-auto py-4 sm:py-8 space-y-12 pb-24 px-4 sm:px-0">
-      <div className="flex flex-col items-center lg:items-start lg:flex-row gap-8 sm:gap-16 mb-12 sm:mb-20 bg-[#1a1c2c]/60 backdrop-blur-xl p-8 sm:p-16 rounded-[3rem] sm:rounded-[5rem] shadow-[0_50px_100px_rgba(0,0,0,0.4)] border border-white/5 relative overflow-hidden text-center lg:text-left">
+      <div className="flex flex-col items-center lg:items-start lg:flex-row gap-8 sm:gap-16 mb-12 sm:mb-20 bg-white p-8 sm:p-16 rounded-[3rem] sm:rounded-[5rem] shadow-[0_40px_100px_rgba(0,0,0,0.04)] border border-slate-100 relative overflow-hidden text-center lg:text-left">
         {/* Background Accent */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         
@@ -121,24 +121,24 @@ export default function ProfilePage() {
         
         <div className="flex-1 pt-4 sm:pt-10 z-10 w-full overflow-hidden">
            <div className="flex flex-col lg:flex-row items-center gap-6 mb-8">
-              <h1 className="text-4xl sm:text-5xl lg:text-8xl font-black tracking-tighter text-white leading-none truncate">
+              <h1 className="text-4xl sm:text-5xl lg:text-8xl font-black tracking-tighter text-slate-900 leading-none truncate">
                 {profile?.full_name?.split(' ')[0]} <span className="text-primary italic underline underline-offset-[12px] decoration-primary/20">{profile?.full_name?.split(' ')[1]}.</span>
               </h1>
-              <Badge className="bg-primary/20 text-primary border border-primary/20 font-black px-6 py-2.5 uppercase tracking-[0.3em] text-[10px] rounded-full shrink-0">
+              <Badge className="bg-primary/10 text-primary border border-primary/20 font-black px-6 py-2.5 uppercase tracking-[0.3em] text-[10px] rounded-full shrink-0">
                 {profile?.tier || 'Member'}
               </Badge>
            </div>
-           <p className="text-base sm:text-xl text-slate-400 font-bold mb-12 max-w-xl leading-relaxed mx-auto lg:mx-0 uppercase tracking-widest">
+           <p className="text-base sm:text-lg text-slate-400 font-bold mb-12 max-w-xl leading-relaxed mx-auto lg:mx-0 uppercase tracking-widest">
              {profile?.bio || 'Building the future of RIT Campus innovation, one line of code at a time.'}
            </p>
             <div className="flex flex-col sm:flex-row lg:flex-row justify-center lg:justify-start gap-3 sm:gap-4">
                 <Link href={profile?.github_link || "#"} target="_blank" className="w-full sm:w-auto">
-                  <Button variant="ghost" className="w-full sm:w-auto rounded-2xl h-16 sm:h-20 px-12 font-black text-[11px] uppercase tracking-[0.2em] gap-4 bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-all shadow-xl">
+                  <Button variant="ghost" className="w-full sm:w-auto rounded-2xl h-16 sm:h-20 px-12 font-black text-[11px] uppercase tracking-[0.2em] gap-4 bg-slate-50 border border-slate-200/60 text-slate-600 hover:bg-slate-100 transition-all shadow-sm">
                      <Github size={24} />
                      Registry
                   </Button>
                 </Link>
-                <Button onClick={handleSave} disabled={saving} className="w-full sm:w-auto rounded-2xl h-16 sm:h-20 px-12 sm:px-16 font-black text-[11px] uppercase tracking-[0.2em] gap-4 shadow-[0_20px_40px_rgba(34,197,94,0.2)] bg-primary text-white hover:scale-[1.05] transition-all border-none">
+                <Button onClick={handleSave} disabled={saving} className="w-full sm:w-auto rounded-2xl h-16 sm:h-20 px-12 sm:px-16 font-black text-[11px] uppercase tracking-[0.2em] gap-4 shadow-[0_20px_40px_rgba(47,141,70,0.2)] bg-primary text-white hover:scale-[1.05] transition-all border-none">
                    {saving ? <Loader2 size={24} className="animate-spin" /> : <Save size={24} />}
                    Sync Profile
                 </Button>
@@ -148,15 +148,15 @@ export default function ProfilePage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
         <div className="lg:col-span-2 space-y-12">
-          <Card className="border-none shadow-2xl bg-[#1a1c2c]/60 backdrop-blur-xl rounded-[3.5rem] overflow-hidden border border-white/5">
-            <CardHeader className="p-10 sm:p-12 border-b border-white/5 bg-white/5">
+          <Card className="border-none shadow-[0_30px_80px_rgba(0,0,0,0.04)] bg-white rounded-[3.5rem] overflow-hidden border border-slate-100">
+            <CardHeader className="p-10 sm:p-12 border-b border-slate-50 bg-slate-50/30">
                <div className="flex items-center gap-6">
-                  <div className="h-16 w-16 rounded-[1.3rem] bg-white/5 border border-white/10 flex items-center justify-center text-primary shadow-inner ring-1 ring-primary/20">
+                  <div className="h-16 w-16 rounded-[1.3rem] bg-white border border-slate-200/60 flex items-center justify-center text-primary shadow-sm ring-1 ring-primary/5">
                     <User size={32} strokeWidth={2.5} />
                   </div>
                   <div className="overflow-hidden">
-                    <CardTitle className="text-2xl sm:text-3xl font-black text-white tracking-tight text-left leading-none mb-3 truncate">Identity Node</CardTitle>
-                    <CardDescription className="font-bold text-slate-500 text-left uppercase tracking-[0.2em] text-[10px]">Core parameters of your club presence</CardDescription>
+                    <CardTitle className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight text-left leading-none mb-3 truncate">Identity Node</CardTitle>
+                    <CardDescription className="font-bold text-slate-400 text-left uppercase tracking-[0.2em] text-[10px]">Core parameters of your club presence</CardDescription>
                   </div>
                </div>
             </CardHeader>
@@ -165,23 +165,23 @@ export default function ProfilePage() {
                   <div className="space-y-4">
                      <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary ml-1">Full Signature (Name)</Label>
                       <div className="relative group">
-                        <User className="absolute left-6 top-1/2 -translate-y-1/2 h-6 w-6 text-slate-600 group-focus-within:text-primary transition-colors" />
+                        <User className="absolute left-6 top-1/2 -translate-y-1/2 h-6 w-6 text-slate-300 group-focus-within:text-primary transition-colors" />
                         <Input 
                           value={formData.full_name}
                           onChange={e => setFormData({...formData, full_name: e.target.value})}
-                          className="h-16 rounded-2xl pl-16 bg-white/5 border-white/5 font-bold text-white focus:border-primary/30 transition-all" 
+                          className="h-16 rounded-2xl pl-16 bg-slate-50 border-slate-100 font-bold text-slate-900 focus:border-primary/20 transition-all outline-none ring-0 placeholder:text-slate-300" 
                         />
                       </div>
                    </div>
                    <div className="space-y-4">
                       <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary ml-1">Universal Handle (Username)</Label>
                       <div className="relative group">
-                         <AtSign className="absolute left-6 top-1/2 -translate-y-1/2 h-6 w-6 text-slate-600 group-focus-within:text-primary transition-colors" />
+                         <AtSign className="absolute left-6 top-1/2 -translate-y-1/2 h-6 w-6 text-slate-300 group-focus-within:text-primary transition-colors" />
                          <Input 
                            value={formData.username}
                            onChange={e => setFormData({...formData, username: e.target.value})}
                            placeholder="geeks_rit"
-                           className="h-16 rounded-2xl pl-16 bg-white/5 border-white/5 font-bold text-white focus:border-primary/30 transition-all" 
+                           className="h-16 rounded-2xl pl-16 bg-slate-50 border-slate-100 font-bold text-slate-900 focus:border-primary/20 transition-all outline-none ring-0 placeholder:text-slate-300" 
                          />
                       </div>
                    </div>
@@ -190,15 +190,15 @@ export default function ProfilePage() {
                 <div className="space-y-4">
                    <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary ml-1">Encryption Token (Password)</Label>
                    <div className="relative group">
-                      <Lock className="absolute left-6 top-1/2 -translate-y-1/2 h-6 w-6 text-slate-600 group-focus-within:text-primary transition-colors" />
+                      <Lock className="absolute left-6 top-1/2 -translate-y-1/2 h-6 w-6 text-slate-300 group-focus-within:text-primary transition-colors" />
                       <Input 
                         type="password"
                         value={formData.password}
                         onChange={e => setFormData({...formData, password: e.target.value})}
-                        className="h-16 rounded-2xl pl-16 bg-white/5 border-white/5 font-bold text-white focus:border-primary/30 transition-all" 
+                        className="h-16 rounded-2xl pl-16 bg-slate-50 border-slate-100 font-bold text-slate-900 focus:border-primary/20 transition-all outline-none ring-0 placeholder:text-slate-300" 
                       />
                    </div>
-                   <p className="text-[10px] font-black text-slate-600 ml-1 uppercase tracking-widest">Your password is encrypted in the club databank.</p>
+                   <p className="text-[10px] font-black text-slate-400 ml-1 uppercase tracking-widest">Your password is encrypted in the club databank.</p>
                 </div>
  
                 <div className="space-y-4">
@@ -207,21 +207,21 @@ export default function ProfilePage() {
                      value={formData.bio}
                      onChange={e => setFormData({...formData, bio: e.target.value})}
                      placeholder="Describe your tech journey..."
-                     className="min-h-[160px] rounded-[2.5rem] bg-white/5 border-white/5 font-bold text-white focus:border-primary/30 transition-all p-8" 
+                     className="min-h-[160px] rounded-[2.5rem] bg-slate-50 border-slate-100 font-bold text-slate-900 focus:border-primary/20 transition-all p-8 outline-none ring-0 placeholder:text-slate-300" 
                    />
                 </div>
              </CardContent>
           </Card>
 
-          <Card className="border-none shadow-2xl bg-[#1a1c2c]/60 backdrop-blur-xl rounded-[3.5rem] overflow-hidden border border-white/5">
-            <CardHeader className="p-10 sm:p-12 border-b border-white/5 bg-white/5">
+          <Card className="border-none shadow-[0_30px_80px_rgba(0,0,0,0.04)] bg-white rounded-[3.5rem] overflow-hidden border border-slate-100">
+            <CardHeader className="p-10 sm:p-12 border-b border-slate-50 bg-slate-50/30">
                <div className="flex items-center gap-6">
-                  <div className="h-16 w-16 rounded-[1.3rem] bg-white/5 border border-white/10 flex items-center justify-center text-primary shadow-inner ring-1 ring-primary/20">
+                  <div className="h-16 w-16 rounded-[1.3rem] bg-white border border-slate-200/60 flex items-center justify-center text-primary shadow-sm ring-1 ring-primary/5">
                     <Briefcase size={32} strokeWidth={2.5} />
                   </div>
                   <div className="overflow-hidden">
-                    <CardTitle className="text-2xl sm:text-3xl font-black text-white tracking-tight text-left leading-none mb-3 truncate">Technical Protocol</CardTitle>
-                    <CardDescription className="font-bold text-slate-500 text-left uppercase tracking-[0.2em] text-[10px]">Professional links and expertise nodes</CardDescription>
+                    <CardTitle className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight text-left leading-none mb-3 truncate">Technical Protocol</CardTitle>
+                    <CardDescription className="font-bold text-slate-400 text-left uppercase tracking-[0.2em] text-[10px]">Professional links and expertise nodes</CardDescription>
                   </div>
                </div>
             </CardHeader>
@@ -232,32 +232,32 @@ export default function ProfilePage() {
                     value={formData.core_expertise}
                     onChange={e => setFormData({...formData, core_expertise: e.target.value})}
                     placeholder="Next.js, Python, Deep Learning..."
-                    className="h-16 rounded-2xl bg-white/5 border-white/5 font-bold text-white focus:border-primary/30 transition-all pl-8" 
+                    className="h-16 rounded-2xl bg-slate-50 border-slate-100 font-bold text-slate-900 focus:border-primary/20 transition-all outline-none ring-0 placeholder:text-slate-300" 
                   />
                </div>
- 
+  
                <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                   <div className="space-y-4">
                      <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary ml-1">GitHub Endpoint</Label>
                      <div className="relative group">
-                        <Github className="absolute left-6 top-1/2 -translate-y-1/2 h-6 w-6 text-slate-600 group-focus-within:text-primary transition-colors" />
+                        <Github className="absolute left-6 top-1/2 -translate-y-1/2 h-6 w-6 text-slate-300 group-focus-within:text-primary transition-colors" />
                         <Input 
                           value={formData.github_link}
                           onChange={e => setFormData({...formData, github_link: e.target.value})}
                           placeholder="github.com/username"
-                          className="h-16 rounded-2xl pl-16 bg-white/5 border-white/5 font-bold text-white focus:border-primary/30 transition-all" 
+                          className="h-16 rounded-2xl pl-16 bg-slate-50 border-slate-100 font-bold text-slate-900 focus:border-primary/20 transition-all outline-none ring-0 placeholder:text-slate-300" 
                         />
                      </div>
                   </div>
                   <div className="space-y-4">
                      <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary ml-1">Contact Signal (Email/Link)</Label>
                      <div className="relative group">
-                        <Mail className="absolute left-6 top-1/2 -translate-y-1/2 h-6 w-6 text-slate-600 group-focus-within:text-primary transition-colors" />
+                        <Mail className="absolute left-6 top-1/2 -translate-y-1/2 h-6 w-6 text-slate-300 group-focus-within:text-primary transition-colors" />
                         <Input 
                           value={formData.contact_info}
                           onChange={e => setFormData({...formData, contact_info: e.target.value})}
                           placeholder="geeks@campus.rit"
-                          className="h-16 rounded-2xl pl-16 bg-white/5 border-white/5 font-bold text-white focus:border-primary/30 transition-all" 
+                          className="h-16 rounded-2xl pl-16 bg-slate-50 border-slate-100 font-bold text-slate-900 focus:border-primary/20 transition-all outline-none ring-0 placeholder:text-slate-300" 
                         />
                      </div>
                   </div>
@@ -267,37 +267,37 @@ export default function ProfilePage() {
         </div>
 
         <div className="space-y-12">
-          <Card className="border-none shadow-2xl bg-slate-900 text-white rounded-[3.5rem] p-10 overflow-hidden relative group">
+          <Card className="border-none shadow-[0_30px_80px_rgba(0,0,0,0.05)] bg-primary text-white rounded-[3.5rem] p-10 overflow-hidden relative group">
              <div className="relative z-10">
                 <h3 className="text-2xl font-black mb-6 flex items-center gap-3 text-white">
-                   <Edit3 className="text-primary" />
+                   <Edit3 className="text-white" />
                    Profile Sync
                 </h3>
-                <p className="font-bold text-slate-300 text-sm leading-relaxed mb-8">
+                <p className="font-bold text-white/80 text-sm leading-relaxed mb-8">
                    All changes are synchronized instantly with the cloud repository. Ensure your handles are unique across the campus network.
                 </p>
                 <div className="space-y-4">
-                   <div className="flex items-center gap-3 p-4 bg-white/5 rounded-2xl border border-white/5">
-                      <div className="h-2 w-2 rounded-full bg-primary" />
-                      <span className="text-[10px] font-black uppercase tracking-widest text-slate-300">Encryption Active</span>
+                   <div className="flex items-center gap-3 p-4 bg-white/10 rounded-2xl border border-white/10">
+                      <div className="h-2 w-2 rounded-full bg-white animate-pulse" />
+                      <span className="text-[10px] font-black uppercase tracking-widest text-white">Encryption Active</span>
                    </div>
-                   <div className="flex items-center gap-3 p-4 bg-white/5 rounded-2xl border border-white/5">
-                      <div className="h-2 w-2 rounded-full bg-emerald-500" />
-                      <span className="text-[10px] font-black uppercase tracking-widest text-slate-300">Public Manifest Verified</span>
+                   <div className="flex items-center gap-3 p-4 bg-white/10 rounded-2xl border border-white/10">
+                      <div className="h-2 w-2 rounded-full bg-emerald-300" />
+                      <span className="text-[10px] font-black uppercase tracking-widest text-white">Public Manifest Verified</span>
                    </div>
                 </div>
              </div>
           </Card>
-
-          <div className="p-10 rounded-[3.5rem] border border-white/5 bg-white/5 flex flex-col items-center text-center space-y-8 shadow-inner overflow-hidden">
-             <div className="h-24 w-24 rounded-[2rem] bg-[#0a0b14] flex items-center justify-center text-slate-700 border border-white/5 shadow-2xl ring-1 ring-white/5">
+ 
+          <div className="p-10 rounded-[3.5rem] border border-slate-200 bg-white flex flex-col items-center text-center space-y-8 shadow-[0_20px_50px_rgba(0,0,0,0.03)] overflow-hidden">
+             <div className="h-24 w-24 rounded-[2rem] bg-slate-50 flex items-center justify-center text-slate-300 border border-slate-100 shadow-inner">
                 <ExternalLink size={40} />
              </div>
              <div>
-                <p className="text-sm font-black text-white uppercase tracking-[0.2em] leading-none mb-3">Public View</p>
-                <p className="text-[10px] font-bold text-slate-600 uppercase tracking-[0.3em]">See how nodes see you</p>
+                <p className="text-sm font-black text-slate-900 uppercase tracking-[0.2em] leading-none mb-3">Public View</p>
+                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em]">See how nodes see you</p>
              </div>
-             <Button variant="ghost" className="w-full rounded-2xl h-16 font-black text-[10px] border border-white/5 transition-all hover:bg-white/5 text-slate-500 hover:text-white uppercase tracking-[0.3em]">
+             <Button variant="ghost" className="w-full rounded-2xl h-16 font-black text-[10px] border border-slate-100 transition-all hover:bg-slate-50 text-slate-400 hover:text-slate-900 uppercase tracking-[0.3em]">
                 Generate Public Page
              </Button>
           </div>

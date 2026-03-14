@@ -98,17 +98,17 @@ export default function ProjectGalleryPage() {
     <div className="max-w-7xl mx-auto space-y-12 pb-24 px-4 sm:px-0">
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-10 bg-white p-10 sm:p-16 lg:p-24 rounded-[3.5rem] text-slate-900 shadow-[0_40px_80px_rgba(0,0,0,0.05)] relative overflow-hidden border border-slate-200/50">
         <div className="relative z-10 flex-1 overflow-hidden">
-          <Badge className="bg-primary/10 text-primary border border-primary/20 font-black text-[10px] uppercase tracking-[0.4em] px-6 py-2.5 rounded-full mb-10 translate-y-[-10px] block w-fit">Showcase Archive</Badge>
-          <h1 className="text-5xl sm:text-7xl lg:text-9xl font-black tracking-tighter mb-10 leading-none text-slate-900">
+          <Badge className="bg-primary/10 text-primary border border-primary/20 font-black text-[10px] uppercase tracking-[0.4em] px-6 py-2.5 rounded-full mb-8 sm:mb-10 block w-fit">Showcase Archive</Badge>
+          <h1 className="text-4xl sm:text-6xl lg:text-9xl font-black tracking-tighter mb-8 sm:mb-10 leading-none text-slate-900">
             Project <span className="text-primary italic underline underline-offset-[16px] decoration-primary/20">Gallery.</span>
           </h1>
-          <p className="text-xl font-bold text-slate-500 max-w-xl leading-relaxed uppercase tracking-widest text-sm sm:text-base">
+          <p className="text-lg font-bold text-slate-500 max-w-xl leading-relaxed uppercase tracking-widest text-xs sm:text-base">
             The decentralized archive of RIT Campus innovation. Explore the next generation of software engineering.
           </p>
         </div>
-        <div className="relative z-10 w-full lg:w-auto">
+        <div className="relative z-10 w-full lg:w-auto mt-6 lg:mt-0">
            <Link href="/projects/submit" className="w-full sm:w-auto p-1 inline-block">
-              <Button className="w-full h-24 rounded-[3rem] px-16 font-black text-xs uppercase tracking-[0.3em] gap-5 shadow-[0_30px_60px_rgba(59,130,246,0.3)] transition-all hover:scale-[1.05] active:scale-95 bg-primary text-white border-none">
+              <Button className="w-full h-20 sm:h-24 rounded-[2.5rem] sm:rounded-[3rem] px-10 sm:px-16 font-black text-xs uppercase tracking-[0.3em] gap-5 shadow-[0_20px_50px_rgba(47,141,70,0.2)] transition-all hover:scale-[1.05] active:scale-95 bg-primary text-white border-none">
                  <Plus size={28} />
                  Initialize Prototype
               </Button>
@@ -160,13 +160,13 @@ export default function ProjectGalleryPage() {
               </CardContent>
            </Card>
 
-           <div className="p-8 sm:p-10 rounded-[2.5rem] sm:rounded-[3.5rem] bg-slate-950 border border-white/5 flex items-center gap-6 group hover:bg-primary transition-all duration-500 cursor-pointer text-white">
-              <div className="h-12 w-12 sm:h-14 sm:w-14 rounded-2xl bg-white/10 flex items-center justify-center text-white shrink-0 group-hover:bg-white group-hover:text-primary transition-all duration-500 shadow-xl">
+           <div className="p-8 sm:p-10 rounded-[2.5rem] sm:rounded-[3.5rem] bg-white border border-slate-200/60 flex items-center gap-6 group hover:border-primary transition-all duration-500 cursor-pointer text-slate-900 shadow-[0_20px_50px_rgba(0,0,0,0.03)] hover:shadow-primary/5">
+              <div className="h-12 w-12 sm:h-14 sm:w-14 rounded-2xl bg-primary/5 border border-primary/20 flex items-center justify-center text-primary shrink-0 group-hover:bg-primary group-hover:text-white transition-all duration-500 shadow-sm">
                   <Github className="h-6 w-6 sm:h-7 sm:w-7" />
               </div>
                <div className="overflow-hidden">
-                  <p className="text-sm font-black transition-colors text-white">Join Organization</p>
-                  <p className="text-[10px] font-bold text-slate-300 mt-0.5 group-hover:text-white/70 transition-colors truncate">rit-geeks@github</p>
+                  <p className="text-sm font-black transition-colors text-slate-900 group-hover:text-primary">Join Organization</p>
+                  <p className="text-[10px] font-bold text-slate-400 mt-0.5 group-hover:text-slate-500 transition-colors truncate">rit-geeks@github</p>
                </div>
            </div>
         </div>
@@ -225,7 +225,7 @@ export default function ProjectGalleryPage() {
                     </div>
 
                     <div className="relative h-[28rem] overflow-hidden bg-primary flex items-center justify-center px-10 text-center m-1 rounded-[2.5rem] group-hover:m-0 group-hover:rounded-none transition-all duration-700">
-                       <div className="absolute inset-0 bg-gradient-to-br from-primary via-blue-600 to-indigo-700 opacity-90 transition-all duration-700 group-hover:scale-110" />
+                       <div className="absolute inset-0 bg-gradient-to-br from-[#2f8d46] via-[#1a7a30] to-[#0a5d20] opacity-90 transition-all duration-700 group-hover:scale-110" />
                        {/* SVG Vector Background Deco */}
                        <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`, backgroundSize: '40px 40px' }} />
                        

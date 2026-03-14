@@ -57,7 +57,7 @@
   --card-foreground: oklch(0.2 0.05 250);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.2 0.05 250);
-  --primary: #3b82f6; /* Vibrant Blue */
+  --primary: #2f8d46; /* Official GfG Green */
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.96 0.01 250);
   --secondary-foreground: oklch(0.2 0.05 250);

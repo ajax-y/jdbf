@@ -118,15 +118,15 @@ export default function UserDashboard() {
     <div className="max-w-7xl mx-auto space-y-12 pb-20">
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 px-4 sm:px-0">
         <div className="overflow-hidden">
-          <h1 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tighter text-white leading-none">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tighter text-slate-900 leading-none">
             {isLoading ? "Synchronizing..." : `Welcome, ${profile?.full_name?.split(' ')[0] || 'Member'}.`}
           </h1>
           <div className="flex items-center gap-4 mt-6">
-             <Badge className="bg-primary/20 text-primary border border-primary/20 font-black text-[10px] uppercase tracking-widest px-4 py-1.5 rounded-full">
+             <Badge className="bg-primary/10 text-primary border border-primary/20 font-black text-[10px] uppercase tracking-widest px-4 py-1.5 rounded-full">
                 {profile?.tier || 'Standard Tier'}
              </Badge>
-             <div className="h-1 w-1 rounded-full bg-slate-600" />
-             <p className="text-slate-500 font-bold text-xs sm:text-sm uppercase tracking-widest">
+             <div className="h-1 w-1 rounded-full bg-slate-300" />
+             <p className="text-slate-400 font-bold text-xs sm:text-sm uppercase tracking-widest">
                {isLoading ? 'Fetching Cloud Data...' : 'Universal Profile Online'}
              </p>
           </div>
@@ -147,16 +147,16 @@ export default function UserDashboard() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.1 }}
           >
-            <Card className="border-none shadow-2xl transition-all duration-500 rounded-[2.5rem] bg-[#1a1c2c]/60 backdrop-blur-xl group cursor-default border border-white/5 overflow-hidden">
+            <Card className="border-none shadow-[0_20px_50px_rgba(0,0,0,0.03)] transition-all duration-500 rounded-[2.5rem] bg-white group cursor-default border border-slate-100 overflow-hidden">
               <CardContent className="p-8 sm:p-10">
                 <div className="flex items-center justify-between mb-10">
-                  <div className={`h-16 w-16 rounded-2xl bg-white/5 flex items-center justify-center ${stat.color} ring-1 ring-white/10 transition-transform group-hover:scale-110 duration-500 shadow-sm`}>
+                  <div className={`h-16 w-16 rounded-2xl bg-slate-50 flex items-center justify-center ${stat.color} border border-slate-100 transition-transform group-hover:scale-110 duration-500 shadow-sm`}>
                     <stat.icon size={28} strokeWidth={2.5} />
                   </div>
                 </div>
                 <div className="space-y-4">
-                  <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">{stat.title}</p>
-                  <h3 className="text-4xl sm:text-5xl font-black text-white tracking-tighter tabular-nums leading-none">
+                  <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">{stat.title}</p>
+                  <h3 className="text-4xl sm:text-5xl font-black text-slate-900 tracking-tighter tabular-nums leading-none">
                     {isLoading ? "..." : stat.value}
                   </h3>
                   <p className="text-xs sm:text-sm font-bold text-slate-400 leading-relaxed uppercase tracking-widest">
@@ -170,8 +170,8 @@ export default function UserDashboard() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <Card className="border-none shadow-2xl bg-slate-950 text-white rounded-[2.5rem] sm:rounded-[3.5rem] overflow-hidden group">
-          <CardHeader className="p-8 sm:p-10 pb-0">
+        <Card className="border-none shadow-[0_40px_100px_rgba(0,0,0,0.04)] bg-slate-900 text-white rounded-[2.5rem] sm:rounded-[3.5rem] overflow-hidden group">
+          <CardHeader className="p-8 sm:p-10 pb-0 shadow-sm relative z-10">
              <div className="flex justify-between items-start">
                <div>
                   <Badge className="bg-primary text-white border-none font-black text-[10px] uppercase tracking-widest px-4 py-1.5 rounded-full mb-6">Spotlight</Badge>
@@ -184,12 +184,12 @@ export default function UserDashboard() {
                </div>
              </div>
           </CardHeader>
-          <CardContent className="p-8 sm:p-10 pt-8">
+          <CardContent className="p-8 sm:p-10 pt-8 relative z-10">
             <div className="space-y-6">
                <h3 className="text-xl font-black text-white flex items-center gap-3">
                  {profile?.featured_project || 'Aurora Engine'}
                </h3>
-               <p className="text-slate-300 font-bold text-base leading-relaxed">
+               <p className="text-slate-400 font-bold text-base leading-relaxed">
                  Advanced cloud-native architecture optimized for real-time data streaming and secure member authorization.
                </p>
                <div className="flex flex-wrap gap-2">
@@ -197,50 +197,53 @@ export default function UserDashboard() {
                     <span key={t} className="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-[10px] font-black uppercase tracking-widest text-slate-300">{t}</span>
                   ))}
                </div>
-               <Button className="w-full h-14 rounded-2xl font-black text-xs uppercase tracking-widest bg-white text-slate-950 hover:bg-slate-200">
+               <Button className="w-full h-14 rounded-2xl font-black text-xs uppercase tracking-widest bg-white text-slate-950 hover:bg-slate-200 border-none transition-all">
                  Live Demo
                </Button>
             </div>
           </CardContent>
+          <div className="absolute top-0 right-0 p-8 opacity-[0.05] pointer-events-none translate-x-1/4 translate-y-[-10%]">
+             <Code2 size={400} />
+          </div>
         </Card>
 
-        <Card className="border-none shadow-2xl bg-[#1a1c2c]/60 backdrop-blur-xl rounded-[3.5rem] overflow-hidden border border-white/5 flex flex-col">
-          <CardHeader className="p-10 border-b border-white/5 bg-white/5">
-             <div className="flex justify-between items-center text-white">
+        <Card className="border-none shadow-[0_30px_80px_rgba(0,0,0,0.03)] bg-white rounded-[3.5rem] overflow-hidden border border-slate-100 flex flex-col">
+          <CardHeader className="p-10 border-b border-slate-50 bg-slate-50/50">
+             <div className="flex justify-between items-center text-slate-900">
                 <div>
                    <CardTitle className="text-2xl font-black tracking-tight">Cloud Leaderboard</CardTitle>
-                   <CardDescription className="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">Real-time point sync</CardDescription>
+                   <CardDescription className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Real-time point sync</CardDescription>
                 </div>
                 <Trophy size={28} className="text-amber-500" />
              </div>
           </CardHeader>
           <CardContent className="p-0 flex-1">
-             <div className="divide-y divide-white/5">
+             <div className="divide-y divide-slate-50">
                 {leaderboard.length > 0 ? leaderboard.map((user, i) => (
-                  <div key={user.id} className="p-6 sm:p-8 flex items-center justify-between hover:bg-white/5 transition-colors">
+                  <div key={user.id} className="p-6 sm:p-8 flex items-center justify-between hover:bg-slate-50 transition-colors">
                      <div className="flex items-center gap-4">
-                        <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-xl bg-white/5 flex items-center justify-center font-black text-slate-500 border border-white/5 text-xs">
+                        <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-xl bg-slate-50 flex items-center justify-center font-black text-slate-400 border border-slate-100 text-xs shadow-sm">
                            #{i + 1}
                         </div>
                         <div>
-                           <p className="text-sm sm:text-base font-black text-white leading-none">{user.full_name}</p>
-                           <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mt-1">@{user.username || 'member'}</p>
+                           <p className="text-sm sm:text-base font-black text-slate-900 leading-none">{user.full_name}</p>
+                           <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-1">@{user.username || 'member'}</p>
                         </div>
                      </div>
                      <div className="text-right">
                         <p className="text-xl sm:text-2xl font-black text-primary tracking-tighter leading-none">{user.points}</p>
-                        <p className="text-[9px] font-black text-slate-600 uppercase tracking-widest mt-1">Points</p>
+                        <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mt-1">Points</p>
                      </div>
                   </div>
                 )) : (
-                  <div className="p-16 text-center text-slate-500 font-bold uppercase tracking-widest text-xs">
+                  <div className="p-16 text-center text-slate-300 font-bold uppercase tracking-widest text-xs">
                     Initializing cloud ranking...
                   </div>
                 )}
              </div>
           </CardContent>
-          <div className="p-8 bg-white/5 mt-auto">
-             <Button variant="ghost" className="w-full h-12 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-primary transition-all gap-2">
+          <div className="p-8 bg-slate-50 mt-auto border-t border-slate-100">
+             <Button variant="ghost" className="w-full h-12 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-primary transition-all gap-2 hover:bg-white">
                 Access Global Hall of Fame
                 <ChevronRight size={14} />
              </Button>

@@ -103,8 +103,8 @@ export function RootWrapper({ children }: { children: React.ReactNode }) {
           <SidebarInset className="bg-transparent flex flex-col min-h-screen overflow-x-hidden relative">
             {/* Vector Background Decoration */}
             <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-               <div className="absolute top-[-10%] right-[-10%] w-[60%] h-[60%] bg-blue-500/5 blur-[150px] rounded-full animate-pulse" />
-               <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-indigo-500/5 blur-[120px] rounded-full" />
+               <div className="absolute top-[-10%] right-[-10%] w-[60%] h-[60%] bg-primary/5 blur-[150px] rounded-full animate-pulse" />
+               <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary/5 blur-[120px] rounded-full" />
                <div className="absolute inset-0 opacity-[0.4]" style={{ backgroundImage: `radial-gradient(circle at 1px 1px, #e2e8f0 1px, transparent 0)`, backgroundSize: '32px 32px' }} />
             </div>
             {/* Global Header with Hamburger - Sticky within Inset */}
@@ -164,7 +164,7 @@ export function RootWrapper({ children }: { children: React.ReactNode }) {
                       <DropdownMenuTrigger render={
                          <Button variant="ghost" className="flex items-center gap-3 h-auto p-1.5 pr-2 sm:pr-3 hover:bg-white/5 rounded-2xl transition-all outline-none focus:ring-0">
                            <div className="text-right hidden sm:block">
-                              <p className="text-xs font-black text-white leading-none">
+                              <p className="text-xs font-black text-slate-900 leading-none">
                                 {isAdmin ? 'Admin Node' : 'Geek Member'}
                               </p>
                               <p className="text-[8px] font-black uppercase tracking-widest text-primary mt-1">
@@ -179,7 +179,7 @@ export function RootWrapper({ children }: { children: React.ReactNode }) {
                           </Avatar>
                         </Button>
                       } />
-                       <DropdownMenuContent className="w-56 rounded-[1.5rem] p-2 border-white/10 bg-[#161826] shadow-2xl text-white" align="end" side="bottom" sideOffset={12}>
+                       <DropdownMenuContent className="w-56 rounded-[1.5rem] p-2 border-slate-200 bg-white shadow-2xl text-slate-900" align="end" side="bottom" sideOffset={12}>
                         <Link href="/profile">
                           <DropdownMenuItem className="rounded-xl cursor-pointer py-3.5 px-4 hover:bg-white/5 transition-colors gap-3">
                              <div className="h-8 w-8 rounded-lg bg-white/5 flex items-center justify-center text-slate-400">

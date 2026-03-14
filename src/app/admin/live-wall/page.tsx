@@ -71,7 +71,7 @@ export default function LiveWallSelector() {
     <div className="max-w-7xl mx-auto space-y-12 pb-20 px-4 sm:px-0">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-10 mb-16">
         <div>
-          <h1 className="text-5xl md:text-8xl font-black tracking-tighter text-white leading-none">
+          <h1 className="text-5xl md:text-8xl font-black tracking-tighter text-slate-900 leading-none">
             Attendance <span className="text-primary italic underline underline-offset-[12px] decoration-primary/20">Walls.</span>
           </h1>
           <p className="text-slate-500 mt-10 text-xl font-bold max-w-2xl uppercase tracking-widest leading-relaxed">
@@ -99,22 +99,22 @@ export default function LiveWallSelector() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
             >
-              <Card className="border-none shadow-2xl bg-[#1a1c2c]/60 backdrop-blur-xl overflow-hidden group border border-white/5 rounded-[3.5rem] hover:border-primary/30 transition-all duration-500 relative">
-                 <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                 <div className="p-10 border-b border-white/5">
+              <Card className="border-none shadow-[0_30px_80px_rgba(0,0,0,0.04)] bg-white overflow-hidden group border border-slate-100 rounded-[3.5rem] hover:border-primary/30 transition-all duration-500 relative">
+                 <div className="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-transparent via-primary to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                 <div className="p-10 border-b border-slate-50">
                     <div className="flex items-center gap-3 mb-6">
                       <div className="h-2 w-2 rounded-full bg-primary animate-ping" />
                       <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary">Live Node Available</span>
                     </div>
-                    <h3 className="text-3xl font-black text-white tracking-tighter mb-4 leading-none group-hover:text-primary transition-colors">
-                      {event.title}
+                    <h3 className="text-3xl font-black text-slate-900 tracking-tighter mb-4 leading-none group-hover:text-primary transition-colors">
+                       {event.title}
                     </h3>
-                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">{event.date} • {event.time}</p>
+                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">{event.date} • {event.time}</p>
                  </div>
-                 <CardContent className="p-10 flex items-center justify-between bg-white/5">
+                 <CardContent className="p-10 flex items-center justify-between bg-slate-50/30">
                     <div className="flex flex-col">
-                       <span className="text-3xl font-black text-white leading-none tabular-nums">{event.attendee_count}</span>
-                       <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 mt-2">Attendees Synchronized</span>
+                       <span className="text-3xl font-black text-slate-900 leading-none tabular-nums">{event.attendee_count}</span>
+                       <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 mt-2">Attendees Synchronized</span>
                     </div>
                     <Link href={`/admin/live-wall/${event.id}`}>
                        <Button className="rounded-[1.5rem] h-16 w-16 p-0 flex items-center justify-center bg-primary text-white border-none shadow-[0_10px_30px_rgba(34,197,94,0.3)] hover:scale-110 active:scale-90 transition-all">
@@ -127,26 +127,26 @@ export default function LiveWallSelector() {
           ))}
 
           {activeEvents.length === 0 && !loading && (
-            <div className="border-2 border-dashed border-white/5 bg-[#1a1c2c]/30 rounded-[3.5rem] p-16 flex flex-col items-center justify-center text-center space-y-8 min-h-[400px] col-span-full">
-               <div className="h-24 w-24 rounded-[2rem] bg-white/5 flex items-center justify-center border border-white/5">
-                  <LayoutGrid size={40} className="text-slate-800" />
+            <div className="border-2 border-dashed border-slate-100 bg-slate-50/50 rounded-[3.5rem] p-16 flex flex-col items-center justify-center text-center space-y-8 min-h-[400px] col-span-full">
+               <div className="h-24 w-24 rounded-[2rem] bg-white flex items-center justify-center border border-slate-100 shadow-sm">
+                  <LayoutGrid size={40} className="text-slate-200" />
                </div>
                <div className="space-y-3">
-                  <p className="text-2xl font-black text-white leading-none tracking-tighter">No Events in Cloud</p>
-                  <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-600">Create an event to see it appear here in real-time</p>
+                  <p className="text-2xl font-black text-slate-900 leading-none tracking-tighter">No Events in Cloud</p>
+                  <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Create an event to see it appear here in real-time</p>
                </div>
             </div>
           )}
  
            {/* Placeholder for awaiting nodes */}
            {activeEvents.length > 0 && (
-            <div className="border-2 border-dashed border-white/5 bg-[#1a1c2c]/30 rounded-[3.5rem] p-16 flex flex-col items-center justify-center text-center space-y-8 min-h-[400px] opacity-40">
-               <div className="h-24 w-24 rounded-[2rem] bg-white/5 flex items-center justify-center border border-white/5">
-                  <LayoutGrid size={40} className="text-slate-800" />
+            <div className="border-2 border-dashed border-slate-100 bg-slate-50/30 rounded-[3.5rem] p-16 flex flex-col items-center justify-center text-center space-y-8 min-h-[400px] opacity-40">
+               <div className="h-24 w-24 rounded-[2rem] bg-white flex items-center justify-center border border-slate-100 shadow-sm">
+                  <LayoutGrid size={40} className="text-slate-200" />
                </div>
                <div className="space-y-3">
-                  <p className="text-2xl font-black text-white leading-none tracking-tighter">Awaiting Signal</p>
-                  <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-600">Stream will activate upon creation</p>
+                  <p className="text-2xl font-black text-slate-900 leading-none tracking-tighter">Awaiting Signal</p>
+                  <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Stream will activate upon creation</p>
                </div>
             </div>
           )}

@@ -54,12 +54,12 @@ export default function LoginPage() {
         <motion.div 
           animate={{ x: [0, 80, 0], y: [0, 40, 0], scale: [1, 1.2, 1] }}
           transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[-20%] right-[-10%] w-[60%] h-[60%] bg-blue-500/10 blur-[150px] rounded-full"
+          className="absolute top-[-20%] right-[-10%] w-[60%] h-[60%] bg-primary/10 blur-[150px] rounded-full"
         />
         <motion.div 
           animate={{ x: [0, -60, 0], y: [0, 80, 0], scale: [1, 1.1, 1] }}
           transition={{ duration: 20, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          className="absolute bottom-[-15%] left-[-10%] w-[50%] h-[50%] bg-indigo-500/5 blur-[120px] rounded-full"
+          className="absolute bottom-[-15%] left-[-10%] w-[50%] h-[50%] bg-primary/5 blur-[120px] rounded-full"
         />
         <div className="absolute inset-0 opacity-[0.5]" style={{ backgroundImage: `radial-gradient(circle at 2px 2px, #e2e8f0 1.5px, transparent 0)`, backgroundSize: '48px 48px' }} />
       </div>
@@ -78,7 +78,7 @@ export default function LoginPage() {
                  transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
                  className="w-full h-full flex items-center justify-center relative z-10"
                >
-                   <img src="https://media.geeksforgeeks.org/gfg-gg-logo.svg" alt="GfG Logo" className="w-40 h-40 object-contain drop-shadow-[0_25px_50px_rgba(59,130,246,0.2)]" />
+                   <img src="https://media.geeksforgeeks.org/gfg-gg-logo.svg" alt="GfG Logo" className="w-40 h-40 object-contain drop-shadow-[0_25px_50px_rgba(47,141,70,0.2)]" />
                 </motion.div>
                 {/* Vector Sparkles */}
                 {[...Array(6)].map((_, i) => (
@@ -170,7 +170,7 @@ export default function LoginPage() {
               <Button 
                 type="submit" 
                 disabled={isLoading}
-                className="w-full h-24 rounded-[3rem] font-black text-xs uppercase tracking-[0.4em] bg-primary hover:bg-blue-600 text-white shadow-[0_30px_60px_rgba(59,130,246,0.3)] transition-all hover:scale-[1.02] active:scale-95 border-none relative overflow-hidden group/btn"
+                className="w-full h-24 rounded-[3rem] font-black text-xs uppercase tracking-[0.4em] bg-primary hover:bg-[#256e36] text-white shadow-[0_30px_60px_rgba(47,141,70,0.3)] transition-all hover:scale-[1.02] active:scale-95 border-none relative overflow-hidden group/btn"
               >
                 <div className="absolute inset-0 bg-white/10 opacity-0 group-hover/btn:opacity-100 transition-opacity" />
                 {isLoading ? ( <Loader2 className="h-7 w-7 animate-spin" /> ) : (

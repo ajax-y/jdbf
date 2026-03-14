@@ -86,33 +86,33 @@ export default function SubmitProjectPage() {
       </AnimatePresence>
 
       <div className="mb-16">
-        <h1 className="text-5xl md:text-8xl font-black tracking-tighter text-white leading-none">
+        <h1 className="text-4xl sm:text-7xl md:text-8xl font-black tracking-tighter text-slate-900 leading-none">
           Share your <span className="text-primary italic underline underline-offset-[12px] decoration-primary/20">Vision.</span>
         </h1>
-        <p className="text-slate-500 mt-10 text-xl font-bold max-w-2xl uppercase tracking-widest leading-relaxed">
+        <p className="text-slate-500 mt-10 text-lg sm:text-xl font-bold max-w-2xl uppercase tracking-widest leading-relaxed">
           Upload your latest breakthrough to the campus project gallery. Earn merit points and industry visibility.
         </p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
         <div className="lg:col-span-2">
-          <Card className="border-none shadow-2xl bg-[#1a1c2c]/60 backdrop-blur-xl overflow-hidden rounded-[3.5rem] border border-white/5">
-             <CardHeader className="bg-white/5 p-10 sm:p-12 border-b border-white/5">
-                <CardTitle className="text-3xl font-black text-white tracking-tight leading-none mb-3">Project Node Configuration</CardTitle>
-                <CardDescription className="font-bold text-xs text-slate-500 uppercase tracking-[0.2em]">Define the engineering parameters of your creation</CardDescription>
+          <Card className="border-none shadow-2xl bg-white overflow-hidden rounded-[3.5rem] border border-slate-100">
+             <CardHeader className="bg-slate-50/50 p-10 sm:p-12 border-b border-slate-100">
+                <CardTitle className="text-3xl font-black text-slate-900 tracking-tight leading-none mb-3">Project Node Configuration</CardTitle>
+                <CardDescription className="font-bold text-xs text-slate-400 uppercase tracking-[0.2em]">Define the engineering parameters of your creation</CardDescription>
              </CardHeader>
              <CardContent className="p-10 sm:p-12">
                 <form onSubmit={handleSubmit} className="space-y-8">
-                   <div className="space-y-4">
-                     <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary ml-1">Project Identifier</Label>
-                     <Input 
-                       value={formData.title}
-                       onChange={e => setFormData({...formData, title: e.target.value})}
-                       placeholder="e.g. AI-Powered Campus Map" 
-                       className="h-16 rounded-[1.3rem] bg-white/5 border-white/5 font-bold text-lg focus:border-primary/30 transition-all text-white pl-8" 
-                       required 
-                     />
-                   </div>
+                  <div className="space-y-4">
+                    <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary ml-1">Project Identifier</Label>
+                    <Input 
+                      value={formData.title}
+                      onChange={e => setFormData({...formData, title: e.target.value})}
+                      placeholder="e.g. AI-Powered Campus Map" 
+                      className="h-16 rounded-[1.3rem] bg-slate-50 border-slate-100 font-bold text-lg focus:border-primary/30 transition-all text-slate-900 pl-8 shadow-sm" 
+                      required 
+                    />
+                  </div>
  
                    <div className="space-y-4">
                      <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary ml-1">Tech Stack (comma separated)</Label>
@@ -120,34 +120,34 @@ export default function SubmitProjectPage() {
                        value={formData.tech_stack}
                        onChange={e => setFormData({...formData, tech_stack: e.target.value})}
                        placeholder="e.g. Next.js, Supabase, Tailwind" 
-                       className="h-16 rounded-[1.3rem] bg-white/5 border-white/5 font-bold text-lg focus:border-primary/30 transition-all text-white pl-8" 
+                       className="h-16 rounded-[1.3rem] bg-slate-50 border-slate-100 font-bold text-lg focus:border-primary/30 transition-all text-slate-900 pl-8 shadow-sm" 
                        required 
                      />
                    </div>
  
                    <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                     <div className="space-y-4">
-                       <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary ml-1">GitHub Endpoint</Label>
-                       <div className="relative group">
-                         <Github className="absolute left-6 top-1/2 -translate-y-1/2 h-6 w-6 text-slate-600 group-focus-within:text-primary transition-colors" />
-                         <Input 
-                           value={formData.github_url}
-                           onChange={e => setFormData({...formData, github_url: e.target.value})}
-                           placeholder="github.com/repo-link" 
-                           className="h-16 rounded-[1.3rem] pl-16 bg-white/5 border-white/5 font-bold text-lg focus:border-primary/30 transition-all text-white" 
-                           required 
-                         />
-                       </div>
-                     </div>
+                      <div className="space-y-4">
+                        <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary ml-1">GitHub Endpoint</Label>
+                        <div className="relative group">
+                          <Github className="absolute left-6 top-1/2 -translate-y-1/2 h-6 w-6 text-slate-400 group-focus-within:text-primary transition-colors" />
+                          <Input 
+                            value={formData.github_url}
+                            onChange={e => setFormData({...formData, github_url: e.target.value})}
+                            placeholder="github.com/repo-link" 
+                            className="h-16 rounded-[1.3rem] pl-16 bg-slate-50 border-slate-100 font-bold text-lg focus:border-primary/30 transition-all text-slate-900 shadow-sm" 
+                            required 
+                          />
+                        </div>
+                      </div>
                      <div className="space-y-4">
                        <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary ml-1">Live Manifest (Optional)</Label>
                        <div className="relative group">
-                         <Globe className="absolute left-6 top-1/2 -translate-y-1/2 h-6 w-6 text-slate-600 group-focus-within:text-primary transition-colors" />
+                         <Globe className="absolute left-6 top-1/2 -translate-y-1/2 h-6 w-6 text-slate-400 group-focus-within:text-primary transition-colors" />
                          <Input 
                            value={formData.live_url}
                            onChange={e => setFormData({...formData, live_url: e.target.value})}
                            placeholder="https://live-app.demo" 
-                           className="h-16 rounded-[1.3rem] pl-16 bg-white/5 border-white/5 font-bold text-lg focus:border-primary/30 transition-all text-white" 
+                           className="h-16 rounded-[1.3rem] pl-16 bg-slate-50 border-slate-100 font-bold text-lg focus:border-primary/30 transition-all text-slate-900 shadow-sm" 
                          />
                        </div>
                      </div>
@@ -159,7 +159,7 @@ export default function SubmitProjectPage() {
                        value={formData.description}
                        onChange={e => setFormData({...formData, description: e.target.value})}
                        placeholder="Explain features, tech stack, and engineering choices..." 
-                       className="min-h-[220px] rounded-[2.5rem] bg-white/5 border-white/5 font-bold text-lg focus:border-primary/30 transition-all p-10 text-white" 
+                       className="min-h-[220px] rounded-[2.5rem] bg-slate-50 border-slate-100 font-bold text-lg focus:border-primary/30 transition-all p-10 text-slate-900 shadow-sm" 
                        required
                      />
                    </div>
@@ -209,18 +209,18 @@ export default function SubmitProjectPage() {
               </div>
            </Card>
 
-            <Card className="border-none shadow-2xl bg-[#1a1c2c]/60 backdrop-blur-xl rounded-[3.5rem] overflow-hidden border border-white/5 group hover:border-primary/20 transition-all duration-500">
-               <div className="h-48 w-full bg-white/5 flex items-center justify-center p-10">
-                  <div className="h-full w-full border-2 border-dashed border-white/10 rounded-3xl flex items-center justify-center">
-                     <Layout size={40} className="text-slate-800 group-hover:text-primary/10 transition-colors" />
+            <Card className="border-none shadow-[0_30px_80px_rgba(0,0,0,0.03)] bg-white rounded-[3.5rem] overflow-hidden border border-slate-100 group hover:border-primary/20 transition-all duration-500">
+               <div className="h-48 w-full bg-slate-50 flex items-center justify-center p-10">
+                  <div className="h-full w-full border-2 border-dashed border-slate-100 rounded-3xl flex items-center justify-center">
+                     <Layout size={40} className="text-slate-100 group-hover:text-primary/10 transition-colors" />
                   </div>
                </div>
-               <CardHeader className="p-10">
-                  <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-600">Node Preview</p>
-                  <CardTitle className="text-2xl font-black mt-3 text-white group-hover:text-primary transition-colors leading-none tracking-tighter">Elite Card Manifestation</CardTitle>
+               <CardHeader className="p-10 bg-white">
+                  <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Node Preview</p>
+                  <CardTitle className="text-2xl font-black mt-3 text-slate-900 group-hover:text-primary transition-colors leading-none tracking-tighter">Elite Card Manifestation</CardTitle>
                   <div className="flex items-center gap-3 mt-6">
                      <span className="h-2 w-2 rounded-full bg-primary shadow-[0_0_10px_rgba(34,197,94,0.5)]" />
-                     <span className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">Awaiting Signal</span>
+                     <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Awaiting Signal</span>
                   </div>
                </CardHeader>
             </Card>

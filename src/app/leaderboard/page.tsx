@@ -58,7 +58,7 @@ export default function LeaderboardPage() {
     <div className="max-w-6xl mx-auto space-y-12 pb-24">
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-10 mb-16 px-4 sm:px-0">
         <div className="flex-1 overflow-hidden">
-          <h1 className="text-5xl sm:text-7xl lg:text-9xl font-black tracking-tighter text-slate-900 leading-none truncate">
+          <h1 className="text-4xl sm:text-7xl lg:text-9xl font-black tracking-tighter text-slate-900 leading-none truncate">
             Leader<span className="text-primary italic underline underline-offset-[16px] decoration-primary/10">board.</span>
           </h1>
           <p className="text-slate-500 mt-10 text-xl font-bold max-w-xl leading-relaxed uppercase tracking-widest text-sm sm:text-base">
@@ -142,9 +142,9 @@ export default function LeaderboardPage() {
                         <p className="text-[10px] uppercase font-black tracking-[0.4em] text-slate-400 mt-2">Verified Merit Index</p>
                      </div>
                   </div>
-                  <div className="flex gap-3">
+                  <div className="flex flex-wrap gap-2 sm:gap-3">
                      {['All Time', 'This Month', 'Regional'].map((tab, i) => (
-                        <button key={tab} className={`px-6 py-3 rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all ${i === 0 ? 'bg-primary text-white shadow-lg shadow-primary/20' : 'bg-slate-50 text-slate-400 hover:text-slate-900'}`}>{tab}</button>
+                        <button key={tab} className={`px-4 sm:px-6 py-2.5 sm:py-3 rounded-full text-[9px] sm:text-[10px] font-black uppercase tracking-[0.2em] transition-all ${i === 0 ? 'bg-primary text-white shadow-lg shadow-primary/20' : 'bg-slate-50 text-slate-400 hover:text-slate-900'}`}>{tab}</button>
                      ))}
                   </div>
                </div>
