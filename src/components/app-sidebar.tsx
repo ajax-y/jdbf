@@ -57,16 +57,16 @@ export function AppSidebar() {
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    // Check path to simulate user switching for demo
-    if (pathname.includes("/admin")) {
-      setIsAdmin(true);
-    } else {
-      setIsAdmin(false);
-    }
+    // Get role from cookie
+    const session = document.cookie.split("; ").find(row => row.startsWith("gfg_session="))?.split("=")[1];
+    setIsAdmin(session === "admin");
   }, [pathname]);
 
   const handleLogout = () => {
+    // Clear session cookie
+    document.cookie = "gfg_session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
     router.push("/");
+    router.refresh();
   };
 
   return (
