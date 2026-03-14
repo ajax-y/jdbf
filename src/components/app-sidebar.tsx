@@ -72,14 +72,12 @@ export function AppSidebar() {
               {navItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton
-                    asChild
+                    render={<Link href={item.url} />}
                     isActive={pathname === item.url}
                     className="h-11 px-3 data-[active=true]:bg-primary/10 data-[active=true]:text-primary transition-all duration-200"
                   >
-                    <Link href={item.url} className="flex items-center gap-3">
-                      <item.icon className="h-5 w-5" />
-                      <span className="font-medium">{item.title}</span>
-                    </Link>
+                    <item.icon className="h-5 w-5" />
+                    <span className="font-medium">{item.title}</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
@@ -97,14 +95,12 @@ export function AppSidebar() {
                 {adminItems.map((item) => (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton
-                      asChild
+                      render={<Link href={item.url} />}
                       isActive={pathname === item.url}
                       className="h-11 px-3 data-[active=true]:bg-primary/10 data-[active=true]:text-primary transition-all duration-200"
                     >
-                      <Link href={item.url} className="flex items-center gap-3">
-                        <item.icon className="h-5 w-5" />
-                        <span className="font-medium">{item.title}</span>
-                      </Link>
+                      <item.icon className="h-5 w-5" />
+                      <span className="font-medium">{item.title}</span>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 ))}
