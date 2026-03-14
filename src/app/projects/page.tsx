@@ -76,10 +76,12 @@ export default function ProjectGalleryPage() {
             Showcase your work and get inspired by the community.
           </p>
         </div>
-        <Button className="rounded-2xl h-14 px-8 font-black text-xs uppercase tracking-widest gap-3 shadow-xl shadow-primary/20">
-          <Plus size={18} />
-          Submit Project
-        </Button>
+        <Link href="/projects/submit">
+          <Button className="rounded-2xl h-14 px-8 font-black text-xs uppercase tracking-widest gap-3 shadow-xl shadow-primary/20">
+            <Plus size={18} />
+            Submit Project
+          </Button>
+        </Link>
       </div>
 
       <div className="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8">
