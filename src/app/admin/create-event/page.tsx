@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { QRCodeSVG } from "qrcode.react";
 import {
@@ -14,7 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Calendar, MapPin, Download, Save, QrCode } from "lucide-react";
+import { Calendar, MapPin, Download, Save, QrCode, Play } from "lucide-react";
 
 export default function CreateEventPage() {
   const [title, setTitle] = useState("");
@@ -172,14 +173,24 @@ export default function CreateEventPage() {
                        <p className="text-sm font-bold opacity-80 max-w-[280px]">
                          Students scan this to mark attendance. Keep it displayed on the session screen.
                        </p>
-                       <Button 
-                         variant="secondary"
-                         onClick={downloadQR}
-                         className="rounded-2xl h-14 px-8 font-black text-xs uppercase tracking-widest gap-3 shadow-xl"
-                       >
-                         <Download size={18} />
-                         Download PNG
-                       </Button>
+                       <div className="flex flex-col sm:flex-row gap-3">
+                         <Button 
+                           variant="secondary"
+                           onClick={downloadQR}
+                           className="flex-1 rounded-2xl h-14 px-8 font-black text-xs uppercase tracking-widest gap-3 shadow-xl"
+                         >
+                           <Download size={18} />
+                           Download
+                         </Button>
+                         <Link href={`/admin/live-wall/${title.replace(/\s+/g, '-').toLowerCase()}`} className="flex-1">
+                           <Button 
+                             className="w-full rounded-2xl h-14 px-8 font-black text-xs uppercase tracking-widest gap-3 shadow-xl bg-white text-primary border-none hover:bg-slate-50"
+                           >
+                             <Play size={18} fill="currentColor" />
+                             Live Wall
+                           </Button>
+                         </Link>
+                       </div>
                     </div>
                   </motion.div>
                 ) : (
