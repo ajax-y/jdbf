@@ -49,19 +49,19 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center p-4 relative overflow-hidden bg-[#0a0b14]">
+    <div className="min-h-screen w-full flex items-center justify-center p-4 relative overflow-hidden bg-slate-50">
       <div className="absolute top-0 left-0 w-full h-full z-0 pointer-events-none">
         <motion.div 
-          animate={{ x: [0, 100, 0], y: [0, 50, 0], scale: [1, 1.2, 1] }}
+          animate={{ x: [0, 80, 0], y: [0, 40, 0], scale: [1, 1.2, 1] }}
           transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[-20%] right-[-10%] w-[60%] h-[60%] bg-primary/20 blur-[150px] rounded-full"
+          className="absolute top-[-20%] right-[-10%] w-[60%] h-[60%] bg-blue-500/10 blur-[150px] rounded-full"
         />
         <motion.div 
-          animate={{ x: [0, -80, 0], y: [0, 100, 0], scale: [1, 1.1, 1] }}
+          animate={{ x: [0, -60, 0], y: [0, 80, 0], scale: [1, 1.1, 1] }}
           transition={{ duration: 20, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          className="absolute bottom-[-15%] left-[-10%] w-[50%] h-[50%] bg-primary/10 blur-[120px] rounded-full"
+          className="absolute bottom-[-15%] left-[-10%] w-[50%] h-[50%] bg-indigo-500/5 blur-[120px] rounded-full"
         />
-        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: `radial-gradient(circle at 2px 2px, #22c55e 1px, transparent 0)`, backgroundSize: '40px 40px' }} />
+        <div className="absolute inset-0 opacity-[0.5]" style={{ backgroundImage: `radial-gradient(circle at 2px 2px, #e2e8f0 1.5px, transparent 0)`, backgroundSize: '48px 48px' }} />
       </div>
 
       <motion.div
@@ -78,41 +78,40 @@ export default function LoginPage() {
                  transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
                  className="w-full h-full flex items-center justify-center relative z-10"
                >
-                  <img src="https://media.geeksforgeeks.org/gfg-gg-logo.svg" alt="GfG Logo" className="w-32 h-32 object-contain drop-shadow-[0_0_30px_rgba(34,197,94,0.4)]" />
-               </motion.div>
-               {/* Vector Sparkles */}
-               {[...Array(6)].map((_, i) => (
-                 <motion.div
-                   key={i}
-                   animate={{ 
-                     scale: [1, 1.5, 1],
-                     opacity: [0.3, 0.8, 0.3],
-                     rotate: [0, 45, 0]
-                   }}
-                   transition={{ duration: 3 + i, repeat: Infinity, delay: i * 0.5 }}
-                   className="absolute text-primary"
-                   style={{
-                     top: `${Math.random() * 100}%`,
-                     left: `${Math.random() * 100}%`,
-                     zIndex: 0
-                   }}
-                 >
-                   <Sparkles size={16 + Math.random() * 20} />
-                 </motion.div>
-               ))}
-            </div>
-            <h1 className="text-3xl font-black tracking-widest text-white mb-2">GFG PORTAL</h1>
-            <p className="text-primary font-black text-[10px] uppercase tracking-[0.4em]">Vector Authorized Access</p>
+                   <img src="https://media.geeksforgeeks.org/gfg-gg-logo.svg" alt="GfG Logo" className="w-40 h-40 object-contain drop-shadow-[0_25px_50px_rgba(59,130,246,0.2)]" />
+                </motion.div>
+                {/* Vector Sparkles */}
+                {[...Array(6)].map((_, i) => (
+                  <motion.div
+                    key={i}
+                    animate={{ 
+                      scale: [1, 1.3, 1],
+                      opacity: [0.2, 0.5, 0.2],
+                    }}
+                    transition={{ duration: 4 + i, repeat: Infinity, delay: i * 0.5 }}
+                    className="absolute text-primary/30"
+                    style={{
+                      top: `${Math.random() * 100}%`,
+                      left: `${Math.random() * 100}%`,
+                      zIndex: 0
+                    }}
+                  >
+                    <Sparkles size={20 + Math.random() * 24} />
+                  </motion.div>
+                ))}
+             </div>
+             <h1 className="text-5xl font-black tracking-tight text-slate-900 mb-3 uppercase">Club Hub</h1>
+             <p className="text-primary font-black text-[11px] uppercase tracking-[0.4em] mb-12">Authorized Node Access</p>
         
 
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2 }}
-          className="bg-[#1a1c2c]/60 backdrop-blur-2xl p-8 sm:p-12 rounded-[3.5rem] border border-white/5 shadow-[0_50px_100px_rgba(0,0,0,0.5)] relative overflow-hidden group mt-10 w-full"
+          className="bg-white p-10 sm:p-14 rounded-[4rem] border border-slate-200/60 shadow-[0_40px_100px_rgba(0,0,0,0.06)] relative overflow-hidden group w-full"
         >
           {/* Top Edge Highlight */}
-          <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-primary to-transparent opacity-50" />
+          <div className="absolute top-0 left-0 right-0 h-[4px] bg-primary group-hover:h-[6px] transition-all" />
           
           <div className="relative z-10">
             <AnimatePresence mode="wait">
@@ -131,27 +130,27 @@ export default function LoginPage() {
 
             <form onSubmit={handleLogin} className="space-y-8">
               <div className="space-y-6">
-                <div className="space-y-3">
+                <div className="space-y-4">
                   <div className="relative">
-                    <User className="absolute left-5 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-500 group-focus-within:text-primary transition-colors" />
+                    <User className="absolute left-6 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400 group-focus-within:text-primary transition-colors" />
                     <Input 
                       value={userId}
                       onChange={(e) => setUserId(e.target.value)}
                       placeholder="Ident-ID / Username" 
-                      className="h-16 rounded-[1.8rem] pl-14 bg-white/5 border-white/5 focus:border-primary/30 focus:bg-white/[0.08] font-bold text-white transition-all outline-none"
+                      className="h-16 rounded-[1.8rem] pl-16 bg-slate-50 border-slate-100 focus:border-primary/20 focus:bg-white font-bold text-slate-900 transition-all outline-none ring-0 placeholder:text-slate-300"
                       required
                     />
                   </div>
                 </div>
-                <div className="space-y-3">
+                <div className="space-y-4">
                   <div className="relative">
-                    <Lock className="absolute left-5 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-500 group-focus-within:text-primary transition-colors" />
+                    <Lock className="absolute left-6 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400 group-focus-within:text-primary transition-colors" />
                     <Input 
                       type="password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      placeholder="Access Token" 
-                      className="h-16 rounded-[1.8rem] pl-14 bg-white/5 border-white/5 focus:border-primary/30 focus:bg-white/[0.08] font-bold text-white transition-all outline-none"
+                      placeholder="Security Token" 
+                      className="h-16 rounded-[1.8rem] pl-16 bg-slate-50 border-slate-100 focus:border-primary/20 focus:bg-white font-bold text-slate-900 transition-all outline-none ring-0 placeholder:text-slate-300"
                       required
                     />
                   </div>
@@ -171,10 +170,10 @@ export default function LoginPage() {
               <Button 
                 type="submit" 
                 disabled={isLoading}
-                className="w-full h-20 rounded-[2.5rem] font-black text-xs uppercase tracking-[0.3em] bg-primary hover:bg-primary/90 text-white shadow-[0_30px_60px_rgba(34,197,94,0.4)] transition-all hover:scale-[1.02] active:scale-95 border-none relative overflow-hidden group/btn"
+                className="w-full h-24 rounded-[3rem] font-black text-xs uppercase tracking-[0.4em] bg-primary hover:bg-blue-600 text-white shadow-[0_30px_60px_rgba(59,130,246,0.3)] transition-all hover:scale-[1.02] active:scale-95 border-none relative overflow-hidden group/btn"
               >
                 <div className="absolute inset-0 bg-white/10 opacity-0 group-hover/btn:opacity-100 transition-opacity" />
-                {isLoading ? ( <Loader2 className="h-6 w-6 animate-spin" /> ) : (
+                {isLoading ? ( <Loader2 className="h-7 w-7 animate-spin" /> ) : (
                   "Initiate Handshake"
                 )}
               </Button>

@@ -76,16 +76,16 @@ export function AppSidebar() {
   };
 
   return (
-    <Sidebar className="border-r border-white/5 bg-[#0a0b14] text-white">
+    <Sidebar className="border-r border-slate-200 bg-white text-slate-900">
       <SidebarHeader className="p-4">
-        <Link href={isAdmin ? "/admin" : "/dashboard"} className="flex items-center gap-3 group px-2 mt-2">
-          <div className="h-8 w-8 rounded-lg overflow-hidden shadow-lg shadow-primary/20 group-hover:scale-105 transition-transform duration-300 border border-primary/20 bg-white/5 p-1">
+        <Link href={isAdmin ? "/admin" : "/dashboard"} className="flex items-center gap-4 group px-2 mt-4">
+          <div className="h-10 w-10 rounded-2xl overflow-hidden shadow-md group-hover:scale-105 transition-all duration-500 border border-slate-100 bg-white p-2">
             <img src="https://media.geeksforgeeks.org/gfg-gg-logo.svg" alt="GfG Logo" className="w-full h-full object-contain" />
           </div>
           <div>
-            <h1 className="font-bold text-xs tracking-tight text-white leading-none">GfG Club</h1>
-            <p className="text-[8px] text-slate-500 uppercase tracking-widest font-semibold mt-1">
-              RIT Campus
+            <h1 className="font-extrabold text-sm tracking-tight text-slate-900 leading-none">Club Hub</h1>
+            <p className="text-[10px] text-slate-400 uppercase tracking-widest font-black mt-1.5">
+              RIT Campus Node
             </p>
           </div>
         </Link>
@@ -99,16 +99,16 @@ export function AppSidebar() {
              {isAdmin ? 'System Management' : 'Member Navigation'}
           </SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu>
+            <SidebarMenu className="gap-2">
               {(isAdmin ? adminItems : userItems).map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton
                     render={<Link href={item.url} />}
                     isActive={pathname === item.url}
-                    className="h-12 px-4 rounded-xl data-[active=true]:bg-primary/10 data-[active=true]:text-primary data-[active=true]:shadow-[0_0_20px_rgba(34,197,94,0.1)] hover:bg-white/5 transition-all duration-300 group/item text-slate-400"
+                    className="h-14 px-5 rounded-[1.2rem] data-[active=true]:bg-primary data-[active=true]:text-white data-[active=true]:shadow-lg data-[active=true]:shadow-primary/20 hover:bg-slate-50 transition-all duration-300 group/item text-slate-500"
                   >
                     <item.icon className={`h-5 w-5 transition-transform duration-300 ${pathname === item.url ? "scale-110" : "group-hover/item:scale-110"}`} />
-                    <span className="font-bold tracking-tight">{item.title}</span>
+                    <span className="font-extrabold tracking-tight text-xs uppercase tracking-widest">{item.title}</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}

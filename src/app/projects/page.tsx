@@ -96,38 +96,38 @@ export default function ProjectGalleryPage() {
 
   return (
     <div className="max-w-7xl mx-auto space-y-12 pb-24 px-4 sm:px-0">
-      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 bg-[#1a1c2c]/60 backdrop-blur-2xl p-8 sm:p-12 lg:p-20 rounded-[3rem] sm:rounded-[4rem] text-white shadow-[0_50px_100px_rgba(0,0,0,0.4)] relative overflow-hidden border border-white/5">
+      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-10 bg-white p-10 sm:p-16 lg:p-24 rounded-[3.5rem] text-slate-900 shadow-[0_40px_80px_rgba(0,0,0,0.05)] relative overflow-hidden border border-slate-200/50">
         <div className="relative z-10 flex-1 overflow-hidden">
-          <Badge className="bg-primary/20 text-primary border border-primary/20 font-black text-[10px] uppercase tracking-[0.3em] px-5 py-2 rounded-full mb-8 sm:mb-10">Showcase Archive</Badge>
-          <h1 className="text-4xl sm:text-5xl lg:text-8xl font-black tracking-tighter mb-6 sm:mb-8 leading-none text-white overflow-visible">
-            Project <span className="text-primary italic">Gallery.</span>
+          <Badge className="bg-primary/10 text-primary border border-primary/20 font-black text-[10px] uppercase tracking-[0.4em] px-6 py-2.5 rounded-full mb-10 translate-y-[-10px] block w-fit">Showcase Archive</Badge>
+          <h1 className="text-5xl sm:text-7xl lg:text-9xl font-black tracking-tighter mb-10 leading-none text-slate-900">
+            Project <span className="text-primary italic underline underline-offset-[16px] decoration-primary/20">Gallery.</span>
           </h1>
-          <p className="text-lg sm:text-xl font-bold text-slate-400 max-w-xl leading-relaxed uppercase tracking-widest">
+          <p className="text-xl font-bold text-slate-500 max-w-xl leading-relaxed uppercase tracking-widest text-sm sm:text-base">
             The decentralized archive of RIT Campus innovation. Explore the next generation of software engineering.
           </p>
         </div>
         <div className="relative z-10 w-full lg:w-auto">
            <Link href="/projects/submit" className="w-full sm:w-auto p-1 inline-block">
-              <Button className="w-full h-20 rounded-[2.5rem] px-12 font-black text-xs uppercase tracking-[0.2em] gap-4 shadow-2xl transition-all hover:scale-[1.05] active:scale-95 bg-primary text-white border-none shadow-primary/20">
-                 <Plus size={24} />
-                 Submit Prototype
+              <Button className="w-full h-24 rounded-[3rem] px-16 font-black text-xs uppercase tracking-[0.3em] gap-5 shadow-[0_30px_60px_rgba(59,130,246,0.3)] transition-all hover:scale-[1.05] active:scale-95 bg-primary text-white border-none">
+                 <Plus size={28} />
+                 Initialize Prototype
               </Button>
            </Link>
         </div>
-        <div className="absolute top-0 right-0 p-8 opacity-[0.02] pointer-events-none translate-x-1/4 translate-y-[-10%]">
+        <div className="absolute top-0 right-0 p-8 opacity-[0.03] pointer-events-none translate-x-1/4 translate-y-[-10%]">
            <Code2 size={600} />
         </div>
       </div>
 
       <div className="flex flex-col lg:flex-row gap-12">
         <div className="lg:w-1/3 space-y-8">
-           <Card className="border-none shadow-2xl bg-[#1a1c2c]/60 backdrop-blur-xl rounded-[3.5rem] p-10 overflow-hidden border border-white/5">
+           <Card className="border-none shadow-[0_20px_60px_rgba(0,0,0,0.05)] bg-white rounded-[3.5rem] p-10 overflow-hidden border border-slate-100">
               <CardHeader className="p-0 mb-10">
-                 <div className="h-16 w-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-8 shadow-inner">
-                    <Search size={28} className="text-primary shadow-[0_0_15px_rgba(34,197,94,0.3)]" />
+                 <div className="h-16 w-16 rounded-2xl bg-slate-50 border border-slate-200/60 flex items-center justify-center mb-8 shadow-sm">
+                    <Search size={28} className="text-primary" />
                  </div>
-                 <CardTitle className="text-3xl font-black text-white tracking-tight">Curation Filter</CardTitle>
-                 <CardDescription className="font-bold text-slate-500 mt-2 uppercase tracking-widest text-[10px]">Refine your search across the repo</CardDescription>
+                 <CardTitle className="text-3xl font-black text-slate-900 tracking-tight">Curation Filter</CardTitle>
+                 <CardDescription className="font-bold text-slate-400 mt-2 uppercase tracking-widest text-[10px]">Refine your search across the repo</CardDescription>
               </CardHeader>
                <CardContent className="p-0 space-y-8">
                   <div className="space-y-4">
@@ -136,7 +136,7 @@ export default function ProjectGalleryPage() {
                        value={search}
                        onChange={(e) => setSearch(e.target.value)}
                        placeholder="Search titles, stacks..." 
-                       className="h-16 rounded-[1.3rem] bg-white/5 border-white/5 focus:border-primary/30 transition-all font-bold text-white pl-6" 
+                       className="h-16 rounded-[1.5rem] bg-slate-50 border-slate-100 focus:border-primary/20 transition-all font-bold text-slate-900 pl-6 placeholder:text-slate-300 ring-0 focus-visible:ring-0" 
                      />
                   </div>
                  <div className="space-y-4">
@@ -146,7 +146,7 @@ export default function ProjectGalleryPage() {
                          <button 
                            key={tag} 
                            onClick={() => setSearch(tag)}
-                           className="flex items-center justify-between px-5 py-4 bg-white/5 border border-white/5 rounded-xl hover:bg-white/10 hover:border-white/10 transition-all text-[11px] font-black text-slate-400 group text-left"
+                           className="flex items-center justify-between px-5 py-5 bg-slate-50/50 border border-slate-100 rounded-2xl hover:bg-primary/5 hover:border-primary/20 transition-all text-[11px] font-black text-slate-500 group text-left"
                          >
                             {tag}
                             <ChevronRight size={14} className="opacity-0 group-hover:opacity-100 transition-all group-hover:translate-x-1 text-primary" />
@@ -154,7 +154,7 @@ export default function ProjectGalleryPage() {
                        ))}
                     </div>
                  </div>
-                 <Button onClick={() => setSearch("")} variant="ghost" className="w-full h-14 rounded-2xl font-black text-[10px] uppercase tracking-[0.3em] border border-white/5 hover:bg-white/5 text-slate-500 hover:text-white transition-all mt-4">
+                 <Button onClick={() => setSearch("")} variant="ghost" className="w-full h-14 rounded-2xl font-black text-[10px] uppercase tracking-[0.3em] border border-slate-100 hover:bg-slate-50 text-slate-400 hover:text-slate-900 transition-all mt-4">
                     Reset Sync
                  </Button>
               </CardContent>
@@ -178,18 +178,18 @@ export default function ProjectGalleryPage() {
             </div>
           ) : filteredProjects.length === 0 ? (
             <motion.div 
-               initial={{ opacity: 0, scale: 0.95 }}
-               animate={{ opacity: 1, scale: 1 }}
-               className="h-full min-h-[600px] border border-white/5 bg-[#1a1c2c]/30 backdrop-blur-xl rounded-[4rem] flex flex-col items-center justify-center p-12 text-center space-y-10"
+               initial={{ opacity: 0, y: 30 }}
+               animate={{ opacity: 1, y: 0 }}
+               className="h-full min-h-[600px] border border-slate-100 bg-white rounded-[4rem] flex flex-col items-center justify-center p-16 text-center space-y-12 shadow-[0_40px_80px_rgba(0,0,0,0.03)]"
             >
                <div className="relative">
-                  <div className="h-32 w-32 rounded-[3.5rem] bg-white/5 border border-white/5 shadow-2xl flex items-center justify-center relative z-10">
-                     <Layers size={50} className="text-slate-700" />
+                  <div className="h-40 w-40 rounded-[4rem] bg-slate-50 border border-slate-100 shadow-inner flex items-center justify-center relative z-10 transition-transform hover:scale-110 duration-500">
+                     <Layers size={50} className="text-slate-200" />
                   </div>
                </div>
-               <div className="space-y-4 max-w-sm mx-auto overflow-hidden">
-                  <h2 className="text-4xl font-black text-white tracking-tight leading-tight">Gallery Empty.</h2>
-                  <p className="text-slate-500 font-bold text-lg leading-relaxed uppercase tracking-widest text-xs">
+               <div className="space-y-6 max-w-sm mx-auto overflow-hidden">
+                  <h2 className="text-5xl font-black text-slate-900 tracking-tighter leading-tight">Gallery Empty.</h2>
+                  <p className="text-slate-400 font-bold text-lg leading-relaxed uppercase tracking-[0.3em] text-xs">
                     No matching repositories found on this node.
                   </p>
                </div>
@@ -203,74 +203,88 @@ export default function ProjectGalleryPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.1 }}
                 >
-                  <Card className="border-none shadow-2xl transition-all duration-500 rounded-[3rem] bg-[#1a1c2c]/60 backdrop-blur-xl overflow-hidden border border-white/5 flex flex-col h-full group relative">
-                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[1px] bg-gradient-to-r from-transparent via-primary/50 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
-                    <div className="relative h-64 overflow-hidden bg-white/5">
-                       <img 
-                         src={project.image_url || `https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80`} 
-                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100" 
-                         alt={project.title}
-                       />
-                       <div className="absolute inset-0 bg-gradient-to-t from-[#0a0b14] via-[#0a0b14]/40 to-transparent opacity-60 group-hover:opacity-90 transition-opacity p-8 flex items-end justify-end gap-3 translate-y-4 group-hover:translate-y-0 duration-500 transition-all">
+                  <Card className="border-none shadow-[0_30px_70px_rgba(0,0,0,0.08)] transition-all duration-700 rounded-[3.5rem] bg-white overflow-hidden border border-slate-100 flex flex-col h-full group relative hover:translate-y-[-12px]">
+                    <div className="p-8 sm:p-10 flex items-center justify-between">
+                       <div className="flex items-center gap-5">
+                          <Avatar className="h-14 w-14 border-4 border-slate-50 shadow-md p-1 bg-white">
+                             <AvatarImage src={project.owner?.avatar_url} />
+                             <AvatarFallback className="bg-primary/10 text-primary text-sm font-black">
+                                {project.owner?.full_name?.charAt(0)}
+                             </AvatarFallback>
+                          </Avatar>
+                          <div className="overflow-hidden">
+                             <p className="text-base font-black text-slate-900 truncate tracking-tight leading-none mb-1.5">{project.owner?.full_name}</p>
+                             <p className="text-[10px] font-black uppercase text-slate-400 tracking-[0.3em]">{project.owner?.tier} Node</p>
+                          </div>
+                       </div>
+                       <div className="flex gap-1">
+                          <div className="w-1.5 h-1.5 rounded-full bg-slate-200" />
+                          <div className="w-1.5 h-1.5 rounded-full bg-slate-200" />
+                          <div className="w-1.5 h-1.5 rounded-full bg-slate-200" />
+                       </div>
+                    </div>
+
+                    <div className="relative h-[28rem] overflow-hidden bg-primary flex items-center justify-center px-10 text-center m-1 rounded-[2.5rem] group-hover:m-0 group-hover:rounded-none transition-all duration-700">
+                       <div className="absolute inset-0 bg-gradient-to-br from-primary via-blue-600 to-indigo-700 opacity-90 transition-all duration-700 group-hover:scale-110" />
+                       {/* SVG Vector Background Deco */}
+                       <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`, backgroundSize: '40px 40px' }} />
+                       
+                       <div className="relative z-10 space-y-8">
+                          <h3 className="text-4xl sm:text-6xl font-black text-white tracking-tighter leading-[0.9] uppercase hyphens-auto break-words">
+                            {project.title}
+                          </h3>
+                          <div className="inline-flex items-center gap-3 px-6 py-2.5 bg-white/10 backdrop-blur-md rounded-full border border-white/20">
+                             <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white">Innovation Handshake</span>
+                          </div>
+                       </div>
+
+                       <div className="absolute bottom-8 right-8 flex gap-3 translate-y-20 group-hover:translate-y-0 transition-transform duration-500 delay-100">
                           <Link href={project.github_url || "#"} target="_blank">
-                             <Button size="icon" className="h-12 w-12 rounded-xl bg-white/5 backdrop-blur-md border border-white/20 text-white hover:bg-white hover:text-slate-900 transition-all">
-                                <Github size={20} />
+                             <Button size="icon" className="h-14 w-14 rounded-2xl bg-white text-primary border-none shadow-2xl hover:scale-110 transition-all">
+                                <Github size={24} />
                              </Button>
                           </Link>
                           <Link href={project.live_url || "#"} target="_blank">
-                             <Button size="icon" className="h-12 w-12 rounded-xl bg-primary text-white hover:scale-110 shadow-[0_0_20px_rgba(34,197,94,0.4)] transition-all">
-                                <ExternalLink size={20} />
+                             <Button size="icon" className="h-14 w-14 rounded-2xl bg-white text-primary border-none shadow-2xl hover:scale-110 transition-all">
+                                <ExternalLink size={24} />
                              </Button>
                           </Link>
                        </div>
                     </div>
+
                     <CardContent className="p-8 sm:p-10 flex-1 flex flex-col">
-                       <div className="flex items-center gap-4 mb-8">
-                          <Avatar className="h-12 w-12 border border-white/10 shadow-xl ring-1 ring-white/10 p-0.5 bg-[#0a0b14]">
-                             <AvatarImage src={project.owner?.avatar_url} />
-                             <AvatarFallback className="bg-primary/5 text-primary text-xs font-black">
-                                {project.owner?.full_name?.charAt(0)}
-                             </AvatarFallback>
-                          </Avatar>
-                          <div className="flex-1 overflow-hidden">
-                             <p className="text-sm font-black text-white truncate tracking-tight leading-none mb-1">{project.owner?.full_name}</p>
-                             <p className="text-[10px] font-black uppercase text-primary tracking-[0.2em]">{project.owner?.tier}</p>
+                       <div className="flex items-center justify-between mb-8 overflow-hidden">
+                          <div className="flex items-center gap-6">
+                             <button className="text-slate-900 hover:text-primary transition-colors active:scale-90" onClick={() => handleLike(project.id)}>
+                                <Heart size={28} className={project.likes?.length > 0 ? "fill-primary text-primary" : ""} />
+                             </button>
+                             <button className="text-slate-900 hover:text-primary transition-colors active:scale-90">
+                                <MessageSquare size={28} />
+                             </button>
+                             <button className="text-slate-900 hover:text-primary transition-colors active:scale-90" onClick={() => handleShare(project.id)}>
+                                <Share2 size={28} />
+                             </button>
                           </div>
+                          <button className="text-slate-900 transition-transform active:scale-90">
+                             <div className="h-10 w-8 border-2 border-slate-900 rounded-sm relative flex items-center justify-center">
+                                <div className="absolute top-0 right-0 w-2 h-2 border-b-2 border-l-2 border-slate-900" />
+                             </div>
+                          </button>
                        </div>
- 
-                       <div className="space-y-4 mb-8">
-                          <h3 className="text-3xl font-black text-white tracking-tighter leading-none group-hover:text-primary transition-colors">{project.title}</h3>
-                          <p className="text-sm font-bold text-slate-500 line-clamp-2 leading-relaxed uppercase tracking-widest text-[11px]">
+
+                       <div className="space-y-4">
+                          <p className="text-base font-black text-slate-900 leading-tight">
+                            {project.likes?.[0]?.count || 0} likes
+                          </p>
+                          <p className="text-sm font-bold text-slate-700 line-clamp-2 leading-relaxed tracking-tight">
+                             <span className="font-black mr-2">{project.owner?.full_name}</span>
                              {project.description}
                           </p>
-                       </div>
- 
-                       <div className="flex flex-wrap gap-2 mb-10 overflow-hidden">
-                          {project.tech_stack?.slice(0, 3).map((lang: string) => (
-                            <span key={lang} className="px-3 py-1.5 bg-white/5 border border-white/5 rounded-lg text-[10px] font-black uppercase tracking-widest text-slate-400 group-hover:border-primary/20 transition-all">{lang}</span>
-                          ))}
-                       </div>
- 
-                       <div className="mt-auto pt-8 border-t border-white/5 flex items-center justify-between">
-                          <div className="flex items-center gap-8">
-                             <button 
-                               onClick={(e) => { e.preventDefault(); handleLike(project.id); }}
-                               className="flex items-center gap-3 group/btn"
-                             >
-                                <Heart size={20} className="text-slate-700 group-hover/btn:text-rose-500 transition-colors" />
-                                <span className="text-sm font-black text-slate-500 tabular-nums">{project.likes?.[0]?.count || 0}</span>
-                             </button>
-                             <div className="flex items-center gap-3">
-                                <MessageSquare size={20} className="text-slate-700" />
-                                <span className="text-sm font-black text-slate-500 tabular-nums">{project.project_comments?.[0]?.count || 0}</span>
-                             </div>
+                          <div className="flex flex-wrap gap-2 pt-2">
+                             {project.tech_stack?.slice(0, 3).map((lang: string) => (
+                               <span key={lang} className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">#{lang.replace(/\s+/g, '')}</span>
+                             ))}
                           </div>
-                          <button 
-                            onClick={(e) => { e.preventDefault(); handleShare(project.id); }}
-                            className="h-12 w-12 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-slate-500 hover:bg-primary/10 hover:text-primary transition-all shadow-inner"
-                          >
-                             <Share2 size={18} />
-                          </button>
                        </div>
                     </CardContent>
                   </Card>
