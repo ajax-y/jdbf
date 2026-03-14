@@ -129,16 +129,16 @@ export default function ProjectGalleryPage() {
                  <CardTitle className="text-3xl font-black text-slate-900 tracking-tight">Curation Filter</CardTitle>
                  <CardDescription className="font-bold text-slate-500 mt-1">Refine your search across the repo</CardDescription>
               </CardHeader>
-              <CardContent className="p-0 space-y-8">
-                 <div className="space-y-3">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-primary ml-1 block">Search Keywords</label>
-                    <Input 
-                      value={search}
-                      onChange={(e) => setSearch(e.target.value)}
-                      placeholder="Search titles, stacks..." 
-                      className="h-14 rounded-2xl bg-slate-50 border-none font-bold text-sm" 
-                    />
-                 </div>
+               <CardContent className="p-0 space-y-6 sm:y-8">
+                  <div className="space-y-3">
+                     <label className="text-[10px] font-black uppercase tracking-widest text-primary ml-1 block">Search Keywords</label>
+                     <Input 
+                       value={search}
+                       onChange={(e) => setSearch(e.target.value)}
+                       placeholder="Search titles, stacks..." 
+                       className="h-12 sm:h-14 rounded-2xl bg-slate-50 border-none font-bold text-sm" 
+                     />
+                  </div>
                  <div className="space-y-4">
                     <label className="text-[10px] font-black uppercase tracking-widest text-primary ml-1 block">Tech Stack</label>
                     <div className="grid grid-cols-2 gap-3">
@@ -160,13 +160,13 @@ export default function ProjectGalleryPage() {
               </CardContent>
            </Card>
 
-           <div className="p-10 rounded-[3.5rem] bg-slate-950 border border-white/5 flex items-center gap-6 group hover:bg-primary transition-all duration-500 cursor-pointer text-white">
-              <div className="h-14 w-14 rounded-2xl bg-white/10 flex items-center justify-center text-white shrink-0 group-hover:bg-white group-hover:text-primary transition-all duration-500 shadow-xl">
-                 <Github size={28} />
+           <div className="p-8 sm:p-10 rounded-[2.5rem] sm:rounded-[3.5rem] bg-slate-950 border border-white/5 flex items-center gap-6 group hover:bg-primary transition-all duration-500 cursor-pointer text-white">
+              <div className="h-12 w-12 sm:h-14 sm:w-14 rounded-2xl bg-white/10 flex items-center justify-center text-white shrink-0 group-hover:bg-white group-hover:text-primary transition-all duration-500 shadow-xl">
+                  <Github className="h-6 w-6 sm:h-7 sm:w-7" />
               </div>
-              <div>
+              <div className="overflow-hidden">
                  <p className="text-sm font-black transition-colors">Join Organization</p>
-                 <p className="text-[10px] font-bold text-slate-400 mt-0.5 group-hover:text-white/70 transition-colors">rit-geeks@github</p>
+                 <p className="text-[10px] font-bold text-slate-400 mt-0.5 group-hover:text-white/70 transition-colors truncate">rit-geeks@github</p>
               </div>
            </div>
         </div>

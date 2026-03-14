@@ -156,10 +156,10 @@ export default function UserDashboard() {
                 </div>
                 <div className="space-y-4">
                   <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">{stat.title}</p>
-                  <h3 className="text-5xl font-black text-slate-950 tracking-tighter tabular-nums leading-none">
+                  <h3 className="text-4xl sm:text-5xl font-black text-slate-950 tracking-tighter tabular-nums leading-none">
                     {isLoading ? "..." : stat.value}
                   </h3>
-                  <p className="text-sm font-bold text-slate-500 leading-relaxed">
+                  <p className="text-xs sm:text-sm font-bold text-slate-500 leading-relaxed">
                     {stat.description}
                   </p>
                 </div>

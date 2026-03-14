@@ -112,11 +112,11 @@ export default function JoinEventPage() {
     <div className="max-w-7xl mx-auto space-y-12 pb-24 px-4 sm:px-0">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 bg-slate-900 p-12 sm:p-20 rounded-[4rem] text-white shadow-[0_50px_100px_rgba(0,0,0,0.2)] relative overflow-hidden">
         <div className="relative z-10 flex-1">
-          <Badge className="bg-primary text-white border-none font-black text-[10px] uppercase tracking-widest px-4 py-1.5 rounded-full mb-8">Attendance Link</Badge>
-          <h1 className="text-5xl sm:text-7xl font-black tracking-tighter mb-6 leading-none">
+          <Badge className="bg-primary text-white border-none font-black text-[10px] uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 sm:mb-8">Attendance Link</Badge>
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tighter mb-4 sm:mb-6 leading-none">
             Live <span className="text-primary italic">Events.</span>
           </h1>
-          <p className="text-xl font-bold text-slate-400 max-w-xl leading-relaxed">
+          <p className="text-lg sm:text-xl font-bold text-slate-400 max-w-xl leading-relaxed">
             Scan the verified session token to establish your participation node and synchronize merit points.
           </p>
         </div>
@@ -149,14 +149,14 @@ export default function JoinEventPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
         <div className="lg:col-span-2 space-y-10">
-          <Card className={`border-none shadow-2xl overflow-hidden rounded-[3.5rem] transition-all duration-700 bg-slate-950 text-white ${scanning ? 'ring-8 ring-primary/20' : 'border border-white/5'}`}>
-             <CardHeader className="bg-white/5 p-10 border-b border-white/10">
+          <Card className={`border-none shadow-2xl overflow-hidden rounded-[2.5rem] sm:rounded-[3.5rem] transition-all duration-700 bg-slate-950 text-white ${scanning ? 'ring-8 ring-primary/20' : 'border border-white/5'}`}>
+             <CardHeader className="bg-white/5 p-8 sm:p-10 border-b border-white/10">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
                    <div className="flex items-center gap-4">
                       <div className={`h-3 w-3 rounded-full ${scanning ? 'bg-primary animate-pulse' : 'bg-slate-700'}`} />
                       <div>
-                        <CardTitle className="text-2xl font-black text-white tracking-tight">{scanning ? 'Establishing Handshake...' : 'System Available'}</CardTitle>
-                        <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Optical Recognition Active</p>
+                        <CardTitle className="text-xl sm:text-2xl font-black text-white tracking-tight">{scanning ? 'Establishing Handshake...' : 'System Available'}</CardTitle>
+                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Optical Recognition Active</p>
                       </div>
                    </div>
                 </div>

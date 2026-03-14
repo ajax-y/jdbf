@@ -111,7 +111,7 @@ export default function AdminDashboard() {
                   </div>
                   <div className="space-y-2">
                     <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">{stat.title}</p>
-                    <h3 className="text-5xl font-black text-slate-950 tracking-tighter tabular-nums leading-none">
+                    <h3 className="text-4xl sm:text-5xl font-black text-slate-950 tracking-tighter tabular-nums leading-none">
                        {stat.value}
                     </h3>
                   </div>
@@ -123,29 +123,29 @@ export default function AdminDashboard() {
       </div>
 
       <div className="grid grid-cols-1 gap-8">
-         <Card className="border-none shadow-2xl bg-white rounded-[3.5rem] overflow-hidden border border-slate-50">
-            <CardHeader className="p-10 border-b border-slate-50 bg-slate-50/30">
-               <div className="flex justify-between items-center">
+          <Card className="border-none shadow-2xl bg-white rounded-[2.5rem] sm:rounded-[3.5rem] overflow-hidden border border-slate-50">
+            <CardHeader className="p-6 sm:p-10 border-b border-slate-50 bg-slate-50/30">
+               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                   <div>
-                     <CardTitle className="text-3xl font-black text-slate-950 tracking-tight">Live Leaderboard</CardTitle>
+                     <CardTitle className="text-2xl sm:text-3xl font-black text-slate-950 tracking-tight">Live Leaderboard</CardTitle>
                      <CardDescription className="font-bold text-slate-500 mt-1">Real-time member rankings based on club points</CardDescription>
                   </div>
-                  <Badge className="bg-primary/10 text-primary hover:bg-primary/10 font-black text-[10px] uppercase tracking-widest px-4 py-1.5 rounded-full border-none">Active Season</Badge>
+                  <Badge className="bg-primary/10 text-primary hover:bg-primary/10 font-black text-[10px] uppercase tracking-widest px-4 py-1.5 rounded-full border-none whitespace-nowrap">Active Season</Badge>
                </div>
             </CardHeader>
             <CardContent className="p-0">
                <div className="divide-y divide-slate-50">
-                  {leaderboard.length > 0 ? leaderboard.map((user) => (
-                    <div key={user.id} className="p-8 flex items-center justify-between hover:bg-slate-50 transition-all duration-300">
-                       <div className="flex items-center gap-6">
-                          <div className="h-12 w-12 rounded-xl bg-slate-100 flex items-center justify-center font-black text-slate-400 border border-slate-200 shrink-0">
+                   {leaderboard.length > 0 ? leaderboard.map((user) => (
+                    <div key={user.id} className="p-6 sm:p-8 flex items-center justify-between hover:bg-slate-50 transition-all duration-300">
+                       <div className="flex items-center gap-4 sm:gap-6">
+                          <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-xl bg-slate-100 flex items-center justify-center font-black text-slate-400 border border-slate-200 shrink-0 text-xs sm:text-sm">
                              #{user.rank}
                           </div>
-                          <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center text-primary font-black shrink-0">
+                          <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-primary/10 flex items-center justify-center text-primary font-black shrink-0 text-sm sm:text-base">
                              {user.avatar}
                           </div>
-                          <div>
-                             <p className="text-lg font-black text-slate-900 leading-none">{user.name}</p>
+                          <div className="overflow-hidden">
+                             <p className="text-base sm:text-lg font-black text-slate-900 leading-none truncate">{user.name}</p>
                              <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-1">Geek Member</p>
                           </div>
                        </div>

@@ -98,8 +98,8 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="max-w-5xl mx-auto py-8 px-4 sm:px-0 space-y-12 pb-24">
-      <div className="flex flex-col items-center md:items-start md:flex-row gap-12 mb-16 bg-white p-12 rounded-[4rem] shadow-xl border border-slate-50 relative overflow-hidden">
+    <div className="max-w-5xl mx-auto py-4 sm:py-8 px-4 sm:px-0 space-y-12 pb-24">
+      <div className="flex flex-col items-center md:items-start md:flex-row gap-8 sm:gap-12 mb-10 sm:mb-16 bg-white p-6 sm:p-12 rounded-[2.5rem] sm:rounded-[4rem] shadow-xl border border-slate-50 relative overflow-hidden text-center md:text-left">
         {/* Background Accent */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         
@@ -108,9 +108,9 @@ export default function ProfilePage() {
           animate={{ opacity: 1, scale: 1 }}
           className="relative group z-10"
         >
-          <Avatar className="h-56 w-56 border-[8px] border-white shadow-2xl transition-all duration-500 group-hover:scale-105">
+          <Avatar className="h-40 w-40 sm:h-56 sm:w-56 border-[6px] sm:border-[8px] border-white shadow-2xl transition-all duration-500 group-hover:scale-105">
             <AvatarImage src={profile?.avatar_url} />
-            <AvatarFallback className="text-6xl font-black bg-slate-50 text-primary">
+            <AvatarFallback className="text-4xl sm:text-6xl font-black bg-slate-50 text-primary">
               {profile?.full_name?.charAt(0)}
             </AvatarFallback>
           </Avatar>
@@ -119,48 +119,48 @@ export default function ProfilePage() {
           </button>
         </motion.div>
         
-        <div className="flex-1 text-center md:text-left pt-6 z-10">
-           <div className="flex flex-col md:flex-row items-center gap-5 mb-6">
-              <h1 className="text-5xl sm:text-7xl font-black tracking-tighter text-slate-900 leading-none">
+        <div className="flex-1 pt-4 sm:pt-6 z-10 w-full">
+           <div className="flex flex-col md:flex-row items-center gap-4 sm:gap-5 mb-4 sm:mb-6">
+              <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tighter text-slate-900 leading-none">
                 {profile?.full_name?.split(' ')[0]} <span className="text-primary italic underline underline-offset-8 decoration-primary/10">{profile?.full_name?.split(' ')[1]}.</span>
               </h1>
-              <Badge className="bg-primary/10 text-primary border-none font-black px-5 py-2 uppercase tracking-[0.2em] text-[10px] rounded-full">
+              <Badge className="bg-primary/10 text-primary border-none font-black px-5 py-2 uppercase tracking-[0.2em] text-[10px] rounded-full shrink-0">
                 {profile?.tier || 'Member'}
               </Badge>
            </div>
-           <p className="text-xl text-slate-500 font-bold mb-10 max-w-xl leading-relaxed">
+           <p className="text-lg sm:text-xl text-slate-500 font-bold mb-8 sm:mb-10 max-w-xl leading-relaxed mx-auto md:mx-0">
              {profile?.bio || 'Building the future of RIT Campus innovation, one line of code at a time.'}
            </p>
-           <div className="flex flex-wrap justify-center md:justify-start gap-4">
-              <Link href={profile?.github_link || "#"} target="_blank">
-                <Button variant="outline" className="rounded-2xl h-14 px-8 font-black text-[10px] uppercase tracking-widest gap-3 border-2 border-slate-100 hover:bg-slate-50 hover:text-primary transition-all shadow-sm">
-                   <Github size={18} />
-                   Registry
-                </Button>
-              </Link>
-              <Button onClick={handleSave} disabled={saving} className="rounded-2xl h-14 px-10 font-black text-[10px] uppercase tracking-widest gap-3 shadow-xl shadow-primary/20 bg-primary text-white hover:scale-105 transition-all">
-                 {saving ? <Loader2 size={18} className="animate-spin" /> : <Save size={18} />}
-                 Sync Profile
-              </Button>
-           </div>
+            <div className="flex flex-col sm:flex-row justify-center md:justify-start gap-3 sm:gap-4">
+               <Link href={profile?.github_link || "#"} target="_blank" className="w-full sm:w-auto">
+                 <Button variant="outline" className="w-full sm:w-auto rounded-2xl h-14 px-8 font-black text-[10px] uppercase tracking-widest gap-3 border-2 border-slate-100 hover:bg-slate-50 hover:text-primary transition-all shadow-sm">
+                    <Github size={18} />
+                    Registry
+                 </Button>
+               </Link>
+               <Button onClick={handleSave} disabled={saving} className="w-full sm:w-auto rounded-2xl h-14 px-10 font-black text-[10px] uppercase tracking-widest gap-3 shadow-xl shadow-primary/20 bg-primary text-white hover:scale-105 transition-all">
+                  {saving ? <Loader2 size={18} className="animate-spin" /> : <Save size={18} />}
+                  Sync Profile
+               </Button>
+            </div>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
         <div className="lg:col-span-2 space-y-12">
-          <Card className="border-none shadow-2xl bg-white rounded-[3.5rem] overflow-hidden border border-slate-50">
-            <CardHeader className="p-10 border-b border-slate-50">
+          <Card className="border-none shadow-2xl bg-white rounded-[2.5rem] sm:rounded-[3.5rem] overflow-hidden border border-slate-50">
+            <CardHeader className="p-6 sm:p-10 border-b border-slate-50">
                <div className="flex items-center gap-4">
                   <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
                     <User size={24} strokeWidth={2.5} />
                   </div>
                   <div>
-                    <CardTitle className="text-2xl font-black text-slate-900 tracking-tight">Identity Node</CardTitle>
-                    <CardDescription className="font-bold text-slate-400">Core parameters of your club presence</CardDescription>
+                    <CardTitle className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight text-left">Identity Node</CardTitle>
+                    <CardDescription className="font-bold text-slate-400 text-left">Core parameters of your club presence</CardDescription>
                   </div>
                </div>
             </CardHeader>
-            <CardContent className="p-10 space-y-10">
+            <CardContent className="p-6 sm:p-10 space-y-10">
                <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                   <div className="space-y-4">
                      <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary ml-1">Full Signature (Name)</Label>
@@ -213,19 +213,19 @@ export default function ProfilePage() {
             </CardContent>
           </Card>
 
-          <Card className="border-none shadow-2xl bg-white rounded-[3.5rem] overflow-hidden border border-slate-50">
-            <CardHeader className="p-10 border-b border-slate-50">
+          <Card className="border-none shadow-2xl bg-white rounded-[2.5rem] sm:rounded-[3.5rem] overflow-hidden border border-slate-50">
+            <CardHeader className="p-6 sm:p-10 border-b border-slate-50">
                <div className="flex items-center gap-4">
                   <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
                     <Briefcase size={24} strokeWidth={2.5} />
                   </div>
                   <div>
-                    <CardTitle className="text-2xl font-black text-slate-900 tracking-tight">Technical Protocol</CardTitle>
-                    <CardDescription className="font-bold text-slate-400">Professional links and expertise nodes</CardDescription>
+                    <CardTitle className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight text-left">Technical Protocol</CardTitle>
+                    <CardDescription className="font-bold text-slate-400 text-left">Professional links and expertise nodes</CardDescription>
                   </div>
                </div>
             </CardHeader>
-            <CardContent className="p-10 space-y-10">
+            <CardContent className="p-6 sm:p-10 space-y-10">
                <div className="space-y-4">
                   <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary ml-1">Core Expertise (comma separated)</Label>
                   <Input 

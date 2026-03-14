@@ -78,27 +78,27 @@ export default function LeaderboardPage() {
 
       {leaders.length > 0 ? (
         <>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-16 px-4 sm:px-0 pt-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-10 mb-10 sm:mb-16 px-4 sm:px-0 pt-6 sm:pt-10">
             {leaders.slice(0, 3).map((leader, index) => (
               <motion.div
                 key={leader.id}
                 initial={{ opacity: 0, scale: 0.9, y: 30 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className={`relative rounded-[4rem] p-12 flex flex-col items-center text-center gap-8 overflow-hidden shadow-2xl transition-all hover:translate-y-[-10px] ${
-                  index === 0 ? 'bg-slate-950 text-white order-1 md:order-2 scale-110 z-10 border-4 border-primary/30' : 'bg-white text-slate-900 md:order-1 border border-slate-100'
+                className={`relative rounded-[3rem] sm:rounded-[4rem] p-8 sm:p-12 flex flex-col items-center text-center gap-6 sm:gap-8 overflow-hidden shadow-2xl transition-all hover:translate-y-[-10px] ${
+                  index === 0 ? 'bg-slate-950 text-white order-1 md:order-2 scale-100 md:scale-110 z-10 border-4 border-primary/30' : 'bg-white text-slate-900 md:order-1 border border-slate-100'
                 }`}
               >
-                {index === 0 && <Crown className="absolute top-8 right-8 h-16 w-16 text-primary opacity-50 rotate-12" />}
+                {index === 0 && <Crown className="absolute top-6 right-6 sm:top-8 sm:right-8 h-12 w-12 sm:h-16 sm:w-16 text-primary opacity-50 rotate-12" />}
                 
                 <div className="relative">
-                  <Avatar className={`h-32 w-32 border-[6px] ${index === 0 ? 'border-primary' : 'border-slate-50'}`}>
+                  <Avatar className={`h-24 w-24 sm:h-32 sm:w-32 border-[4px] sm:border-[6px] ${index === 0 ? 'border-primary' : 'border-slate-50'}`}>
                     <AvatarImage src={leader.avatar_url} />
-                    <AvatarFallback className={`text-4xl font-black ${index === 0 ? 'bg-white/10 text-white' : 'bg-slate-50 text-primary'}`}>
+                    <AvatarFallback className={`text-3xl sm:text-4xl font-black ${index === 0 ? 'bg-white/10 text-white' : 'bg-slate-50 text-primary'}`}>
                       {leader.full_name?.charAt(0)}
                     </AvatarFallback>
                   </Avatar>
-                  <div className="absolute -bottom-3 -right-3 h-12 w-12 rounded-2xl bg-primary text-white flex items-center justify-center text-xl font-black shadow-2xl ring-4 ring-white">
+                  <div className="absolute -bottom-2 -right-2 sm:-bottom-3 sm:-right-3 h-10 w-10 sm:h-12 sm:w-12 rounded-xl sm:rounded-2xl bg-primary text-white flex items-center justify-center text-lg font-black shadow-2xl ring-4 ring-white">
                      {index + 1}
                   </div>
                 </div>
