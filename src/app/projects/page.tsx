@@ -96,65 +96,65 @@ export default function ProjectGalleryPage() {
 
   return (
     <div className="max-w-7xl mx-auto space-y-12 pb-24 px-4 sm:px-0">
-      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 bg-slate-900 p-8 sm:p-12 lg:p-20 rounded-[3rem] sm:rounded-[4rem] text-white shadow-[0_50px_100px_rgba(0,0,0,0.2)] relative overflow-hidden">
+      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 bg-[#1a1c2c]/60 backdrop-blur-2xl p-8 sm:p-12 lg:p-20 rounded-[3rem] sm:rounded-[4rem] text-white shadow-[0_50px_100px_rgba(0,0,0,0.4)] relative overflow-hidden border border-white/5">
         <div className="relative z-10 flex-1 overflow-hidden">
-          <Badge className="bg-primary text-white border-none font-black text-[10px] uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 sm:mb-8">Showcase</Badge>
-          <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black tracking-tighter mb-4 sm:mb-6 leading-none text-white">
+          <Badge className="bg-primary/20 text-primary border border-primary/20 font-black text-[10px] uppercase tracking-[0.3em] px-5 py-2 rounded-full mb-8 sm:mb-10">Showcase Archive</Badge>
+          <h1 className="text-4xl sm:text-5xl lg:text-8xl font-black tracking-tighter mb-6 sm:mb-8 leading-none text-white overflow-visible">
             Project <span className="text-primary italic">Gallery.</span>
           </h1>
-          <p className="text-lg sm:text-xl font-bold text-slate-300 max-w-xl leading-relaxed">
+          <p className="text-lg sm:text-xl font-bold text-slate-400 max-w-xl leading-relaxed uppercase tracking-widest">
             The decentralized archive of RIT Campus innovation. Explore the next generation of software engineering.
           </p>
         </div>
         <div className="relative z-10 w-full lg:w-auto">
-           <Link href="/projects/submit" className="w-full sm:w-auto border border-white/10 rounded-[2.5rem] p-1 inline-block">
-              <Button className="w-full h-16 rounded-[2.2rem] px-10 font-black text-xs uppercase tracking-widest gap-3 shadow-2xl transition-all hover:scale-[1.02] active:scale-95 bg-white text-slate-900 border-none transition-colors">
-                 <Plus size={18} />
+           <Link href="/projects/submit" className="w-full sm:w-auto p-1 inline-block">
+              <Button className="w-full h-20 rounded-[2.5rem] px-12 font-black text-xs uppercase tracking-[0.2em] gap-4 shadow-2xl transition-all hover:scale-[1.05] active:scale-95 bg-primary text-white border-none shadow-primary/20">
+                 <Plus size={24} />
                  Submit Prototype
               </Button>
            </Link>
         </div>
-        <div className="absolute top-0 right-0 p-8 opacity-5 pointer-events-none translate-x-1/4 translate-y-[-1/4]">
-           <Code2 size={400} />
+        <div className="absolute top-0 right-0 p-8 opacity-[0.02] pointer-events-none translate-x-1/4 translate-y-[-10%]">
+           <Code2 size={600} />
         </div>
       </div>
 
       <div className="flex flex-col lg:flex-row gap-12">
         <div className="lg:w-1/3 space-y-8">
-           <Card className="border-none shadow-2xl bg-white rounded-[3.5rem] p-10 overflow-hidden border border-slate-50">
+           <Card className="border-none shadow-2xl bg-[#1a1c2c]/60 backdrop-blur-xl rounded-[3.5rem] p-10 overflow-hidden border border-white/5">
               <CardHeader className="p-0 mb-10">
-                 <div className="h-14 w-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-6">
-                    <Search size={28} className="text-primary" />
+                 <div className="h-16 w-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-8 shadow-inner">
+                    <Search size={28} className="text-primary shadow-[0_0_15px_rgba(34,197,94,0.3)]" />
                  </div>
-                 <CardTitle className="text-3xl font-black text-slate-900 tracking-tight">Curation Filter</CardTitle>
-                 <CardDescription className="font-bold text-slate-500 mt-1">Refine your search across the repo</CardDescription>
+                 <CardTitle className="text-3xl font-black text-white tracking-tight">Curation Filter</CardTitle>
+                 <CardDescription className="font-bold text-slate-500 mt-2 uppercase tracking-widest text-[10px]">Refine your search across the repo</CardDescription>
               </CardHeader>
-               <CardContent className="p-0 space-y-6 sm:y-8">
-                  <div className="space-y-3">
-                     <label className="text-[10px] font-black uppercase tracking-widest text-primary ml-1 block">Search Keywords</label>
+               <CardContent className="p-0 space-y-8">
+                  <div className="space-y-4">
+                     <label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary ml-1 block">Search Keywords</label>
                      <Input 
                        value={search}
                        onChange={(e) => setSearch(e.target.value)}
                        placeholder="Search titles, stacks..." 
-                       className="h-12 sm:h-14 rounded-2xl bg-slate-50 border-none font-bold text-sm" 
+                       className="h-16 rounded-[1.3rem] bg-white/5 border-white/5 focus:border-primary/30 transition-all font-bold text-white pl-6" 
                      />
                   </div>
                  <div className="space-y-4">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-primary ml-1 block">Tech Stack</label>
+                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary ml-1 block">Tech Stack</label>
                     <div className="grid grid-cols-2 gap-3">
                        {['Web Dev', 'AI/ML', 'Mobile', 'Blockchain', 'Cybersecurity', 'Cloud'].map(tag => (
                          <button 
                            key={tag} 
                            onClick={() => setSearch(tag)}
-                           className="flex items-center justify-between px-4 py-3 bg-slate-50 rounded-xl hover:bg-slate-100 transition-colors text-[11px] font-black text-slate-600 group"
+                           className="flex items-center justify-between px-5 py-4 bg-white/5 border border-white/5 rounded-xl hover:bg-white/10 hover:border-white/10 transition-all text-[11px] font-black text-slate-400 group text-left"
                          >
                             {tag}
-                            <ChevronRight size={14} className="opacity-0 group-hover:opacity-100 transition-all group-hover:translate-x-1" />
+                            <ChevronRight size={14} className="opacity-0 group-hover:opacity-100 transition-all group-hover:translate-x-1 text-primary" />
                          </button>
                        ))}
                     </div>
                  </div>
-                 <Button onClick={() => setSearch("")} variant="outline" className="w-full h-14 rounded-2xl font-black text-[10px] uppercase tracking-widest border-2 border-slate-100 mt-4">
+                 <Button onClick={() => setSearch("")} variant="ghost" className="w-full h-14 rounded-2xl font-black text-[10px] uppercase tracking-[0.3em] border border-white/5 hover:bg-white/5 text-slate-500 hover:text-white transition-all mt-4">
                     Reset Sync
                  </Button>
               </CardContent>
@@ -180,16 +180,16 @@ export default function ProjectGalleryPage() {
             <motion.div 
                initial={{ opacity: 0, scale: 0.95 }}
                animate={{ opacity: 1, scale: 1 }}
-               className="h-full min-h-[600px] border-4 border-dashed border-slate-100 rounded-[4rem] flex flex-col items-center justify-center p-12 text-center space-y-10"
+               className="h-full min-h-[600px] border border-white/5 bg-[#1a1c2c]/30 backdrop-blur-xl rounded-[4rem] flex flex-col items-center justify-center p-12 text-center space-y-10"
             >
                <div className="relative">
-                  <div className="h-32 w-32 rounded-[3.5rem] bg-white shadow-2xl flex items-center justify-center ring-1 ring-slate-100 relative z-10">
-                     <Layers size={50} className="text-slate-200" />
+                  <div className="h-32 w-32 rounded-[3.5rem] bg-white/5 border border-white/5 shadow-2xl flex items-center justify-center relative z-10">
+                     <Layers size={50} className="text-slate-700" />
                   </div>
                </div>
-               <div className="space-y-4 max-w-sm mx-auto">
-                  <h2 className="text-4xl font-black text-slate-950 tracking-tight leading-tight">The gallery is waiting.</h2>
-                  <p className="text-slate-400 font-bold text-lg leading-relaxed">
+               <div className="space-y-4 max-w-sm mx-auto overflow-hidden">
+                  <h2 className="text-4xl font-black text-white tracking-tight leading-tight">Gallery Empty.</h2>
+                  <p className="text-slate-500 font-bold text-lg leading-relaxed uppercase tracking-widest text-xs">
                     No matching repositories found on this node.
                   </p>
                </div>
@@ -203,72 +203,73 @@ export default function ProjectGalleryPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.1 }}
                 >
-                  <Card className="border-none shadow-xl hover:shadow-2xl transition-all duration-500 rounded-[3rem] bg-white overflow-hidden border border-slate-50 flex flex-col h-full group">
-                    <div className="relative h-56 overflow-hidden bg-slate-100">
+                  <Card className="border-none shadow-2xl transition-all duration-500 rounded-[3rem] bg-[#1a1c2c]/60 backdrop-blur-xl overflow-hidden border border-white/5 flex flex-col h-full group relative">
+                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[1px] bg-gradient-to-r from-transparent via-primary/50 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
+                    <div className="relative h-64 overflow-hidden bg-white/5">
                        <img 
                          src={project.image_url || `https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80`} 
-                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100" 
                          alt={project.title}
                        />
-                       <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-8 flex items-end justify-end gap-3">
+                       <div className="absolute inset-0 bg-gradient-to-t from-[#0a0b14] via-[#0a0b14]/40 to-transparent opacity-60 group-hover:opacity-90 transition-opacity p-8 flex items-end justify-end gap-3 translate-y-4 group-hover:translate-y-0 duration-500 transition-all">
                           <Link href={project.github_url || "#"} target="_blank">
-                             <Button size="icon" className="rounded-xl bg-white/20 backdrop-blur-md border border-white/20 text-white hover:bg-white hover:text-slate-900 transition-all">
-                                <Github size={18} />
+                             <Button size="icon" className="h-12 w-12 rounded-xl bg-white/5 backdrop-blur-md border border-white/20 text-white hover:bg-white hover:text-slate-900 transition-all">
+                                <Github size={20} />
                              </Button>
                           </Link>
                           <Link href={project.live_url || "#"} target="_blank">
-                             <Button size="icon" className="rounded-xl bg-primary text-white hover:scale-110 transition-all">
-                                <ExternalLink size={18} />
+                             <Button size="icon" className="h-12 w-12 rounded-xl bg-primary text-white hover:scale-110 shadow-[0_0_20px_rgba(34,197,94,0.4)] transition-all">
+                                <ExternalLink size={20} />
                              </Button>
                           </Link>
                        </div>
                     </div>
-                    <CardContent className="p-8 flex-1 flex flex-col">
-                       <div className="flex items-center gap-3 mb-6">
-                          <Avatar className="h-10 w-10 border-2 border-white shadow-sm ring-1 ring-slate-100">
+                    <CardContent className="p-8 sm:p-10 flex-1 flex flex-col">
+                       <div className="flex items-center gap-4 mb-8">
+                          <Avatar className="h-12 w-12 border border-white/10 shadow-xl ring-1 ring-white/10 p-0.5 bg-[#0a0b14]">
                              <AvatarImage src={project.owner?.avatar_url} />
                              <AvatarFallback className="bg-primary/5 text-primary text-xs font-black">
                                 {project.owner?.full_name?.charAt(0)}
                              </AvatarFallback>
                           </Avatar>
                           <div className="flex-1 overflow-hidden">
-                             <p className="text-xs font-black text-slate-900 truncate tracking-tight">{project.owner?.full_name}</p>
-                             <p className="text-[8px] font-black uppercase text-primary tracking-[0.2em] mt-0.5">{project.owner?.tier}</p>
+                             <p className="text-sm font-black text-white truncate tracking-tight leading-none mb-1">{project.owner?.full_name}</p>
+                             <p className="text-[10px] font-black uppercase text-primary tracking-[0.2em]">{project.owner?.tier}</p>
                           </div>
                        </div>
-
-                       <div className="space-y-3 mb-8">
-                          <h3 className="text-2xl font-black text-slate-900 tracking-tight leading-tight group-hover:text-primary transition-colors">{project.title}</h3>
-                          <p className="text-sm font-bold text-slate-500 line-clamp-2 leading-relaxed">
+ 
+                       <div className="space-y-4 mb-8">
+                          <h3 className="text-3xl font-black text-white tracking-tighter leading-none group-hover:text-primary transition-colors">{project.title}</h3>
+                          <p className="text-sm font-bold text-slate-500 line-clamp-2 leading-relaxed uppercase tracking-widest text-[11px]">
                              {project.description}
                           </p>
                        </div>
-
-                       <div className="flex flex-wrap gap-2 mb-8">
+ 
+                       <div className="flex flex-wrap gap-2 mb-10 overflow-hidden">
                           {project.tech_stack?.slice(0, 3).map((lang: string) => (
-                            <span key={lang} className="px-3 py-1 bg-slate-50 border border-slate-100 rounded-lg text-[9px] font-black uppercase tracking-widest text-slate-500">{lang}</span>
+                            <span key={lang} className="px-3 py-1.5 bg-white/5 border border-white/5 rounded-lg text-[10px] font-black uppercase tracking-widest text-slate-400 group-hover:border-primary/20 transition-all">{lang}</span>
                           ))}
                        </div>
-
-                       <div className="mt-auto pt-6 border-t border-slate-50 flex items-center justify-between">
-                          <div className="flex items-center gap-6">
+ 
+                       <div className="mt-auto pt-8 border-t border-white/5 flex items-center justify-between">
+                          <div className="flex items-center gap-8">
                              <button 
-                               onClick={() => handleLike(project.id)}
-                               className="flex items-center gap-2 group/btn"
+                               onClick={(e) => { e.preventDefault(); handleLike(project.id); }}
+                               className="flex items-center gap-3 group/btn"
                              >
-                                <Heart size={18} className="text-slate-300 group-hover/btn:text-rose-500 transition-colors" />
-                                <span className="text-xs font-black text-slate-500">{project.likes?.[0]?.count || 0}</span>
+                                <Heart size={20} className="text-slate-700 group-hover/btn:text-rose-500 transition-colors" />
+                                <span className="text-sm font-black text-slate-500 tabular-nums">{project.likes?.[0]?.count || 0}</span>
                              </button>
-                             <div className="flex items-center gap-2">
-                                <MessageSquare size={18} className="text-slate-300" />
-                                <span className="text-xs font-black text-slate-500">{project.project_comments?.[0]?.count || 0}</span>
+                             <div className="flex items-center gap-3">
+                                <MessageSquare size={20} className="text-slate-700" />
+                                <span className="text-sm font-black text-slate-500 tabular-nums">{project.project_comments?.[0]?.count || 0}</span>
                              </div>
                           </div>
                           <button 
-                            onClick={() => handleShare(project.id)}
-                            className="h-10 w-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400 hover:bg-primary/10 hover:text-primary transition-all"
+                            onClick={(e) => { e.preventDefault(); handleShare(project.id); }}
+                            className="h-12 w-12 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-slate-500 hover:bg-primary/10 hover:text-primary transition-all shadow-inner"
                           >
-                             <Share2 size={16} />
+                             <Share2 size={18} />
                           </button>
                        </div>
                     </CardContent>

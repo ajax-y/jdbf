@@ -110,13 +110,13 @@ export default function JoinEventPage() {
 
   return (
     <div className="max-w-7xl mx-auto space-y-12 pb-24 px-4 sm:px-0">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 bg-slate-900 p-12 sm:p-20 rounded-[4rem] text-white shadow-[0_50px_100px_rgba(0,0,0,0.2)] relative overflow-hidden">
-        <div className="relative z-10 flex-1">
-          <Badge className="bg-primary text-white border-none font-black text-[10px] uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 sm:mb-8">Attendance Link</Badge>
-          <h1 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tighter mb-4 sm:mb-6 leading-none">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 bg-[#1a1c2c]/60 backdrop-blur-2xl p-12 sm:p-20 rounded-[4rem] text-white shadow-[0_50px_100px_rgba(0,0,0,0.4)] relative overflow-hidden border border-white/5">
+        <div className="relative z-10 flex-1 overflow-hidden">
+          <Badge className="bg-primary/20 text-primary border border-primary/20 font-black text-[10px] uppercase tracking-[0.3em] px-5 py-2 rounded-full mb-8 sm:mb-10">Attendance Link</Badge>
+          <h1 className="text-4xl sm:text-5xl md:text-8xl font-black tracking-tighter mb-6 sm:mb-8 leading-none">
             Live <span className="text-primary italic">Events.</span>
           </h1>
-          <p className="text-lg sm:text-xl font-bold text-slate-300 max-w-xl leading-relaxed">
+          <p className="text-lg sm:text-xl font-bold text-slate-400 max-w-xl leading-relaxed uppercase tracking-widest">
             Scan the verified session token to establish your participation node and synchronize merit points.
           </p>
         </div>
@@ -124,39 +124,39 @@ export default function JoinEventPage() {
            {!scanning ? (
              <Button 
                onClick={startScanner}
-               className="w-full sm:w-auto h-20 rounded-[2.5rem] px-12 font-black text-sm uppercase tracking-widest gap-4 shadow-2xl shadow-primary/30 bg-primary text-white hover:scale-105 active:scale-95 transition-all outline-none border-none"
+               className="w-full sm:w-auto h-24 rounded-[3rem] px-16 font-black text-xs uppercase tracking-[0.2em] gap-5 shadow-2xl shadow-primary/20 bg-primary text-white hover:scale-[1.05] active:scale-95 transition-all outline-none border-none ring-offset-[#0a0b14] focus-visible:ring-primary"
              >
-                <Camera size={24} strokeWidth={2.5} />
+                <Camera size={28} strokeWidth={2.5} />
                 Open Scanners
              </Button>
            ) : (
              <Button 
-               variant="secondary"
+               variant="ghost"
                onClick={stopScanner}
-               className="w-full sm:w-auto h-16 rounded-[2rem] px-8 font-black text-xs uppercase tracking-widest gap-2 bg-white text-slate-900 border-none shadow-xl"
+               className="w-full sm:w-auto h-20 rounded-[2.5rem] px-12 font-black text-xs uppercase tracking-[0.2em] gap-3 bg-white/5 text-white border border-white/10 hover:bg-white/10 transition-all shadow-xl"
              >
-                <XCircle size={20} />
+                <XCircle size={24} />
                 Close Relay
              </Button>
            )}
         </div>
         
         {/* Abstract Background Decoration */}
-        <div className="absolute top-0 right-0 p-8 opacity-5 pointer-events-none translate-x-1/4 translate-y-[-1/4]">
-           <Zap size={400} />
+        <div className="absolute top-0 right-0 p-8 opacity-[0.02] pointer-events-none translate-x-1/4 translate-y-[-10%]">
+           <Zap size={600} />
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
         <div className="lg:col-span-2 space-y-10">
-          <Card className={`border-none shadow-2xl overflow-hidden rounded-[2.5rem] sm:rounded-[3.5rem] transition-all duration-700 bg-slate-950 text-white ${scanning ? 'ring-8 ring-primary/20' : 'border border-white/5'}`}>
-             <CardHeader className="bg-white/5 p-8 sm:p-10 border-b border-white/10">
+          <Card className={`border-none shadow-2xl overflow-hidden rounded-[2.5rem] sm:rounded-[3.5rem] transition-all duration-700 bg-[#1a1c2c]/60 backdrop-blur-xl text-white ${scanning ? 'ring-8 ring-primary/10 border-primary/20' : 'border border-white/5'}`}>
+             <CardHeader className="bg-white/5 p-8 sm:p-10 border-b border-white/5">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
-                   <div className="flex items-center gap-4">
-                      <div className={`h-3 w-3 rounded-full ${scanning ? 'bg-primary animate-pulse' : 'bg-slate-700'}`} />
-                      <div>
-                        <CardTitle className="text-xl sm:text-2xl font-black text-white tracking-tight">{scanning ? 'Establishing Handshake...' : 'System Available'}</CardTitle>
-                        <p className="text-[10px] font-bold text-slate-300 uppercase tracking-widest mt-1">Optical Recognition Active</p>
+                   <div className="flex items-center gap-6">
+                      <div className={`h-4 w-4 rounded-full ${scanning ? 'bg-primary shadow-[0_0_15px_rgba(34,197,94,0.5)] animate-pulse' : 'bg-slate-700'}`} />
+                      <div className="overflow-hidden">
+                        <CardTitle className="text-xl sm:text-2xl font-black text-white tracking-tight leading-none truncate">{scanning ? 'Establishing Handshake...' : 'System Available'}</CardTitle>
+                        <p className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mt-3">Optical Recognition Active</p>
                       </div>
                    </div>
                 </div>
@@ -231,54 +231,54 @@ export default function JoinEventPage() {
              </CardContent>
           </Card>
           
-          <div className="flex gap-8 p-10 rounded-[3.5rem] bg-amber-50/50 border border-amber-100 relative group overflow-hidden">
-             <div className="h-16 w-16 rounded-[2rem] bg-white shadow-xl flex items-center justify-center shrink-0 border border-amber-100 relative z-10">
-                <Info className="text-amber-500" size={32} />
+          <div className="flex gap-8 p-10 rounded-[3.5rem] bg-primary/5 border border-primary/10 relative group overflow-hidden">
+             <div className="h-16 w-16 rounded-[1.5rem] bg-[#0a0b14] shadow-xl flex items-center justify-center shrink-0 border border-white/5 relative z-10 ring-1 ring-primary/20">
+                <Info className="text-primary shadow-[0_0_15px_rgba(34,197,94,0.3)]" size={32} />
              </div>
-             <div className="relative z-10">
-                <span className="font-black uppercase tracking-[0.2em] text-[10px] text-amber-600 block mb-2">Protocol Briefing</span>
-                <p className="text-base font-bold text-amber-900/60 leading-relaxed">
+             <div className="relative z-10 overflow-hidden">
+                <span className="font-black uppercase tracking-[0.3em] text-[10px] text-primary block mb-3">Protocol Briefing</span>
+                <p className="text-base font-bold text-slate-400 leading-relaxed uppercase tracking-widest text-[11px]">
                   Encryption keys are unique to each session node. Ensure you are using HTTPS to allow camera operations. Optical detection works best in balanced lighting. 
                 </p>
              </div>
-             <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none group-hover:scale-110 transition-transform">
-                <Sparkles size={100} className="text-amber-900" />
+             <div className="absolute top-0 right-0 p-4 opacity-[0.05] pointer-events-none group-hover:scale-110 transition-transform">
+                <Sparkles size={120} className="text-primary" />
              </div>
           </div>
         </div>
 
         <div className="space-y-10">
-           <Card className="border-none shadow-2xl bg-white overflow-hidden border border-slate-50 rounded-[3.5rem]">
-              <CardHeader className="p-10 pb-4">
-                 <div className="flex items-center gap-4">
-                    <div className="h-14 w-14 rounded-2xl bg-slate-50 flex items-center justify-center border border-slate-100 shadow-sm">
-                       <History className="text-slate-400" size={24} />
+           <Card className="border-none shadow-2xl bg-[#1a1c2c]/60 backdrop-blur-xl overflow-hidden border border-white/5 rounded-[3.5rem] relative">
+              <CardHeader className="p-10 pb-6">
+                 <div className="flex items-center gap-6">
+                    <div className="h-16 w-16 rounded-2xl bg-white/5 flex items-center justify-center border border-white/5 shadow-inner">
+                       <History className="text-slate-500" size={28} />
                     </div>
-                    <div>
-                      <CardTitle className="text-2xl font-black text-slate-950 tracking-tight">Archives</CardTitle>
-                      <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mt-1">Previous Check-ins</p>
+                    <div className="overflow-hidden">
+                      <CardTitle className="text-2xl font-black text-white tracking-tight leading-none truncate">Archives</CardTitle>
+                      <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mt-3">Previous Check-ins</p>
                     </div>
                  </div>
               </CardHeader>
               <CardContent className="px-10 pb-12">
                  {history.length === 0 ? (
-                   <div className="py-20 text-center space-y-6">
+                   <div className="py-24 text-center space-y-8 overflow-hidden">
                       <div className="relative inline-block">
-                        <div className="h-24 w-24 rounded-[2.5rem] bg-slate-50 flex items-center justify-center mx-auto border-2 border-dashed border-slate-200">
-                           <History className="text-slate-200" size={40} />
+                        <div className="h-32 w-32 rounded-[3.5rem] bg-white/5 flex items-center justify-center mx-auto border border-white/5 shadow-2xl ring-1 ring-white/5">
+                           <History className="text-slate-800" size={48} />
                         </div>
                       </div>
-                      <div className="space-y-2">
-                        <p className="text-xs font-black uppercase tracking-widest text-slate-400">Empty Databank</p>
-                        <p className="text-[10px] font-bold text-slate-300 uppercase tracking-widest leading-relaxed">No historical tokens found on this node</p>
+                      <div className="space-y-4">
+                        <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-600">Empty Databank</p>
+                        <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest leading-relaxed">No historical tokens found on this node</p>
                       </div>
                    </div>
                  ) : (
                    <div className="space-y-6">
                    </div>
                  )}
-                 <Button disabled variant="outline" className="w-full rounded-2xl h-14 font-black text-[10px] uppercase tracking-widest opacity-50 border-2 border-slate-50 mt-4 group">
-                    <History size={14} className="group-hover:rotate-[-45deg] transition-transform" />
+                 <Button disabled variant="ghost" className="w-full rounded-2xl h-16 font-black text-[10px] uppercase tracking-[0.3em] opacity-40 border border-white/5 mt-6 group text-slate-600">
+                    <History size={16} className="group-hover:rotate-[-45deg] transition-transform mr-3" />
                     Archives Locked
                  </Button>
               </CardContent>

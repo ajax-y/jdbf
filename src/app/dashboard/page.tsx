@@ -116,24 +116,24 @@ export default function UserDashboard() {
 
   return (
     <div className="max-w-7xl mx-auto space-y-12 pb-20">
-      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8">
-        <div>
-          <h1 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tighter text-slate-950">
+      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 px-4 sm:px-0">
+        <div className="overflow-hidden">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tighter text-white leading-none">
             {isLoading ? "Synchronizing..." : `Welcome, ${profile?.full_name?.split(' ')[0] || 'Member'}.`}
           </h1>
-          <div className="flex items-center gap-4 mt-4">
-             <Badge className="bg-primary/10 text-primary border-none font-black text-[10px] uppercase tracking-widest px-4 py-1.5 rounded-full">
+          <div className="flex items-center gap-4 mt-6">
+             <Badge className="bg-primary/20 text-primary border border-primary/20 font-black text-[10px] uppercase tracking-widest px-4 py-1.5 rounded-full">
                 {profile?.tier || 'Standard Tier'}
              </Badge>
-             <div className="h-1.5 w-1.5 rounded-full bg-slate-300" />
-             <p className="text-slate-500 font-bold text-sm">
+             <div className="h-1 w-1 rounded-full bg-slate-600" />
+             <p className="text-slate-500 font-bold text-xs sm:text-sm uppercase tracking-widest">
                {isLoading ? 'Fetching Cloud Data...' : 'Universal Profile Online'}
              </p>
           </div>
         </div>
-        <Link href="/projects/submit">
-          <Button className="h-16 rounded-[2rem] px-10 font-black text-sm uppercase tracking-widest gap-3 shadow-2xl shadow-primary/30 transition-all hover:scale-105 active:scale-95 bg-primary text-white">
-            <Sparkles size={20} />
+        <Link href="/projects/submit" className="w-full lg:w-auto">
+          <Button className="w-full lg:w-auto h-20 rounded-[2.5rem] px-12 font-black text-xs uppercase tracking-[0.2em] gap-4 shadow-2xl shadow-primary/20 transition-all hover:scale-105 active:scale-95 bg-primary text-white border-none">
+            <Sparkles size={24} />
             Initialize Project
           </Button>
         </Link>
@@ -147,19 +147,19 @@ export default function UserDashboard() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.1 }}
           >
-            <Card className="border-none shadow-xl hover:shadow-2xl transition-all duration-500 rounded-[2.5rem] bg-white group cursor-default border border-slate-50">
-              <CardContent className="p-8">
-                <div className="flex items-center justify-between mb-8">
-                  <div className={`p-4 rounded-2xl ${stat.bg} ${stat.color} transition-transform group-hover:scale-110 duration-500 shadow-sm`}>
+            <Card className="border-none shadow-2xl transition-all duration-500 rounded-[2.5rem] bg-[#1a1c2c]/60 backdrop-blur-xl group cursor-default border border-white/5 overflow-hidden">
+              <CardContent className="p-8 sm:p-10">
+                <div className="flex items-center justify-between mb-10">
+                  <div className={`h-16 w-16 rounded-2xl bg-white/5 flex items-center justify-center ${stat.color} ring-1 ring-white/10 transition-transform group-hover:scale-110 duration-500 shadow-sm`}>
                     <stat.icon size={28} strokeWidth={2.5} />
                   </div>
                 </div>
                 <div className="space-y-4">
-                  <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">{stat.title}</p>
-                  <h3 className="text-4xl sm:text-5xl font-black text-slate-950 tracking-tighter tabular-nums leading-none">
+                  <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">{stat.title}</p>
+                  <h3 className="text-4xl sm:text-5xl font-black text-white tracking-tighter tabular-nums leading-none">
                     {isLoading ? "..." : stat.value}
                   </h3>
-                  <p className="text-xs sm:text-sm font-bold text-slate-500 leading-relaxed">
+                  <p className="text-xs sm:text-sm font-bold text-slate-400 leading-relaxed uppercase tracking-widest">
                     {stat.description}
                   </p>
                 </div>
@@ -204,45 +204,45 @@ export default function UserDashboard() {
           </CardContent>
         </Card>
 
-        <Card className="border-none shadow-2xl bg-white rounded-[3.5rem] overflow-hidden border border-slate-50 flex flex-col">
-          <CardHeader className="p-10 border-b border-slate-50">
-             <div className="flex justify-between items-center">
+        <Card className="border-none shadow-2xl bg-[#1a1c2c]/60 backdrop-blur-xl rounded-[3.5rem] overflow-hidden border border-white/5 flex flex-col">
+          <CardHeader className="p-10 border-b border-white/5 bg-white/5">
+             <div className="flex justify-between items-center text-white">
                 <div>
-                   <CardTitle className="text-2xl font-black text-slate-900 tracking-tight">Cloud Leaderboard</CardTitle>
-                   <CardDescription className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Real-time point sync</CardDescription>
+                   <CardTitle className="text-2xl font-black tracking-tight">Cloud Leaderboard</CardTitle>
+                   <CardDescription className="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">Real-time point sync</CardDescription>
                 </div>
                 <Trophy size={28} className="text-amber-500" />
              </div>
           </CardHeader>
           <CardContent className="p-0 flex-1">
-             <div className="divide-y divide-slate-50">
+             <div className="divide-y divide-white/5">
                 {leaderboard.length > 0 ? leaderboard.map((user, i) => (
-                  <div key={user.id} className="p-6 flex items-center justify-between hover:bg-slate-50 transition-colors">
+                  <div key={user.id} className="p-6 sm:p-8 flex items-center justify-between hover:bg-white/5 transition-colors">
                      <div className="flex items-center gap-4">
-                        <div className="h-10 w-10 rounded-xl bg-slate-50 flex items-center justify-center font-black text-slate-300 border border-slate-100 text-xs">
+                        <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-xl bg-white/5 flex items-center justify-center font-black text-slate-500 border border-white/5 text-xs">
                            #{i + 1}
                         </div>
                         <div>
-                           <p className="text-sm font-black text-slate-900 leading-none">{user.full_name}</p>
-                           <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-1">@{user.username || 'member'}</p>
+                           <p className="text-sm sm:text-base font-black text-white leading-none">{user.full_name}</p>
+                           <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mt-1">@{user.username || 'member'}</p>
                         </div>
                      </div>
                      <div className="text-right">
-                        <p className="text-xl font-black text-primary tracking-tighter">{user.points}</p>
-                        <p className="text-[8px] font-black text-slate-300 uppercase tracking-widest">Points</p>
+                        <p className="text-xl sm:text-2xl font-black text-primary tracking-tighter leading-none">{user.points}</p>
+                        <p className="text-[9px] font-black text-slate-600 uppercase tracking-widest mt-1">Points</p>
                      </div>
                   </div>
                 )) : (
-                  <div className="p-12 text-center text-slate-300 font-bold uppercase tracking-widest text-xs">
+                  <div className="p-16 text-center text-slate-500 font-bold uppercase tracking-widest text-xs">
                     Initializing cloud ranking...
                   </div>
                 )}
              </div>
           </CardContent>
-          <div className="p-6 bg-slate-50/50 mt-auto">
-             <Button variant="ghost" className="w-full text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-primary transition-all">
+          <div className="p-8 bg-white/5 mt-auto">
+             <Button variant="ghost" className="w-full h-12 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-primary transition-all gap-2">
                 Access Global Hall of Fame
-                <ChevronRight size={14} className="ml-1" />
+                <ChevronRight size={14} />
              </Button>
           </div>
         </Card>

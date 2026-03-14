@@ -127,60 +127,61 @@ export default function LiveWallPage() {
 
   return (
     <div className="max-w-7xl mx-auto space-y-12 pb-20 px-4 sm:px-0 mt-8">
-      <div className="flex items-center justify-between mb-4 mt-2">
+      <div className="flex items-center justify-between mb-8 mt-2 px-4 sm:px-0">
          <Link href="/admin/live-wall">
-            <Button variant="outline" className="rounded-xl font-black text-[10px] uppercase tracking-widest gap-2 bg-white border shadow-sm h-10 px-4">
-               <ArrowLeft size={14} />
+            <Button variant="ghost" className="rounded-2xl font-black text-[10px] uppercase tracking-[0.3em] gap-3 bg-white/5 border border-white/10 text-slate-400 hover:text-white hover:bg-white/10 transition-all h-14 px-8">
+               <ArrowLeft size={16} />
                Back to Walls
             </Button>
          </Link>
-         <div className="flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-xl border border-primary/20">
-            <div className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-            <span className="text-[10px] font-black text-primary uppercase tracking-widest leading-none">Live</span>
+         <div className="flex items-center gap-4 px-6 py-3 bg-primary/10 rounded-2xl border border-primary/20 shadow-[0_0_20px_rgba(34,197,94,0.1)]">
+            <div className="h-2 w-2 rounded-full bg-primary animate-ping" />
+            <span className="text-[10px] font-black text-primary uppercase tracking-[0.4em] leading-none">Signal Live</span>
          </div>
       </div>
 
-      <div className="flex flex-col lg:flex-row justify-between items-center bg-slate-900 p-8 sm:p-12 md:p-20 rounded-[3rem] sm:rounded-[3.5rem] text-white shadow-[0_50px_100px_rgba(0,0,0,0.2)] relative overflow-hidden text-center lg:text-left gap-10 sm:gap-12">
-        <div className="absolute top-0 right-0 p-8 opacity-5 pointer-events-none">
-           <Users size={400} />
+      <div className="flex flex-col lg:flex-row justify-between items-center bg-[#1a1c2c]/60 backdrop-blur-3xl p-8 sm:p-12 md:p-20 rounded-[3.5rem] sm:rounded-[4.5rem] text-white shadow-[0_50px_120px_rgba(0,0,0,0.5)] relative overflow-hidden text-center lg:text-left gap-12 sm:gap-16 border border-white/5">
+        <div className="absolute top-0 right-0 p-8 opacity-[0.03] pointer-events-none translate-x-1/4 translate-y-[-10%]">
+           <Users size={600} />
         </div>
         
-        <div className="relative z-10 flex-1">
-          <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 mb-8">
-             <span className="px-4 py-1.5 bg-white/10 rounded-xl text-[10px] font-black uppercase tracking-[0.3em] border border-white/10">Active Stream Wall</span>
+        <div className="relative z-10 flex-1 overflow-hidden">
+          <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 mb-10">
+             <span className="px-5 py-2 bg-white/5 rounded-full text-[10px] font-black uppercase tracking-[0.4em] border border-white/5 text-slate-500">Active Stream Wall</span>
              {eventInfo && (
                <>
-                 <span className="px-4 py-1.5 bg-primary/20 rounded-xl text-[10px] font-black uppercase tracking-[0.3em] border border-primary/30 text-primary">{eventInfo.date}</span>
-                 <span className="px-4 py-1.5 bg-emerald-500/20 rounded-xl text-[10px] font-black uppercase tracking-[0.3em] border border-emerald-500/30 text-emerald-400">{eventInfo.time}</span>
+                 <span className="px-5 py-2 bg-primary/10 rounded-full text-[10px] font-black uppercase tracking-[0.4em] border border-primary/20 text-primary">{eventInfo.date}</span>
+                 <span className="px-5 py-2 bg-white/5 rounded-full text-[10px] font-black uppercase tracking-[0.4em] border border-white/5 text-emerald-400">{eventInfo.time}</span>
                </>
              )}
           </div>
-          <h1 className="text-5xl sm:text-8xl font-black tracking-tighter mb-8 leading-none">
+          <h1 className="text-5xl sm:text-7xl lg:text-9xl font-black tracking-tighter mb-10 leading-none text-white whitespace-normal max-w-4xl">
             {eventInfo?.title || "Loading Session..."}
           </h1>
-          <p className="text-xl font-bold text-slate-300 max-w-xl leading-relaxed">
+          <p className="text-xl font-bold text-slate-400 max-w-xl leading-relaxed uppercase tracking-widest text-sm sm:text-base">
             Real-time participants broadcast. Visual feed activates upon successful token verification.
           </p>
         </div>
         
-        <div className="relative z-10 text-center bg-white/10 backdrop-blur-3xl p-10 sm:p-14 rounded-[3rem] sm:rounded-[4rem] border border-white/10 shadow-2xl min-w-[280px] sm:min-w-[320px]">
-           <p className="text-[10px] font-black uppercase tracking-[0.2em] mb-4 text-primary">Live Count</p>
-           <span className="text-7xl sm:text-8xl md:text-[10rem] font-black tabular-nums leading-none text-white">{count}</span>
+        <div className="relative z-10 text-center bg-white/5 backdrop-blur-2xl p-12 sm:p-16 rounded-[4rem] sm:rounded-[5rem] border border-white/10 shadow-2xl min-w-[300px] sm:min-w-[400px] group transition-all duration-500 hover:border-primary/20">
+           <p className="text-[10px] font-black uppercase tracking-[0.4em] mb-6 text-primary drop-shadow-[0_0_10px_rgba(34,197,94,0.3)]">Participation Index</p>
+           <span className="text-7xl sm:text-[10rem] md:text-[14rem] font-black tabular-nums leading-none text-white transition-all group-hover:scale-110 block">{count}</span>
         </div>
       </div>
 
       {attendees.length === 0 ? (
         <motion.div 
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          className="py-32 flex flex-col items-center text-center space-y-8"
+          className="py-40 flex flex-col items-center text-center space-y-12"
         >
-          <div className="h-40 w-40 rounded-[3.5rem] bg-slate-50 flex items-center justify-center border-2 border-dashed border-slate-200">
-             <QrCode size={64} className="text-slate-200" />
+          <div className="h-48 w-48 rounded-[4rem] bg-white/5 flex items-center justify-center border-2 border-dashed border-white/10 relative">
+             <div className="absolute inset-0 rounded-[4rem] bg-primary opacity-5 animate-pulse" />
+             <QrCode size={80} className="text-slate-800" />
           </div>
-          <div className="space-y-4">
-             <h2 className="text-4xl font-black text-slate-900 tracking-tight">Monitoring Stream...</h2>
-             <p className="text-slate-400 font-bold max-w-sm mx-auto text-lg leading-relaxed">
+          <div className="space-y-6">
+             <h2 className="text-4xl sm:text-5xl font-black text-white tracking-tighter leading-none">Monitoring Ingress Stream...</h2>
+             <p className="text-slate-500 font-bold max-w-sm mx-auto text-lg leading-relaxed uppercase tracking-widest text-xs">
                The server is listening for incoming check-ins. Display this wall on the session screen.
              </p>
           </div>
@@ -195,28 +196,29 @@ export default function LiveWallPage() {
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.8 }}
               >
-                <Card className="border-none shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden bg-white border border-slate-100 rounded-[2.5rem]">
+                <Card className="border-none shadow-2xl hover:translate-y-[-10px] transition-all duration-500 overflow-hidden bg-[#1a1c2c]/60 backdrop-blur-xl border border-white/5 rounded-[3.5rem] group relative">
+                   <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                    <CardContent className="p-10">
                       <div className="flex flex-col items-center text-center gap-8">
                          <div className="relative">
-                            <Avatar className="h-24 w-24 ring-[8px] ring-slate-50 shadow-inner">
+                            <Avatar className="h-28 w-28 ring-4 ring-white/5 shadow-2xl p-1 bg-white/5">
                                <AvatarImage src={attendee.user.avatar_url} />
-                               <AvatarFallback className="text-2xl font-black bg-primary/5 text-primary">
+                               <AvatarFallback className="text-3xl font-black bg-white/5 text-primary">
                                   {attendee.user.full_name.charAt(0)}
                                </AvatarFallback>
                             </Avatar>
-                            <div className="absolute -bottom-2 left-1/2 -translate-x-1/2">
-                               <Badge className="bg-primary text-white border-none font-black text-[8px] uppercase tracking-widest px-3 py-1 rounded-full shadow-lg">
+                            <div className="absolute -bottom-3 left-1/2 -translate-x-1/2">
+                               <Badge className="bg-primary text-white border-none font-black text-[9px] uppercase tracking-[0.3em] px-5 py-2 rounded-full shadow-2xl shadow-primary/20">
                                   {attendee.user.tier}
                                </Badge>
                             </div>
                          </div>
                          
-                         <div>
-                            <h4 className="text-xl font-black text-slate-900 tracking-tight">{attendee.user.full_name}</h4>
-                            <div className="flex items-center justify-center gap-2 mt-2">
-                               <Clock size={12} className="text-slate-400" />
-                               <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">{attendee.time}</p>
+                         <div className="space-y-3">
+                            <h4 className="text-2xl font-black text-white tracking-tighter leading-none group-hover:text-primary transition-colors">{attendee.user.full_name}</h4>
+                            <div className="flex items-center justify-center gap-3">
+                               <Clock size={14} className="text-slate-500" />
+                               <p className="text-[10px] text-slate-500 font-black uppercase tracking-[0.2em]">{attendee.time}</p>
                             </div>
                          </div>
                       </div>

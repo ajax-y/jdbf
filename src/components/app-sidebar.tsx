@@ -76,15 +76,15 @@ export function AppSidebar() {
   };
 
   return (
-    <Sidebar className="border-r border-border/50 bg-card">
+    <Sidebar className="border-r border-white/5 bg-[#0a0b14] text-white">
       <SidebarHeader className="p-4">
         <Link href={isAdmin ? "/admin" : "/dashboard"} className="flex items-center gap-3 group px-2 mt-2">
-          <div className="h-8 w-8 rounded-lg overflow-hidden shadow-lg shadow-primary/20 group-hover:scale-105 transition-transform duration-300 border border-primary/10">
+          <div className="h-8 w-8 rounded-lg overflow-hidden shadow-lg shadow-primary/20 group-hover:scale-105 transition-transform duration-300 border border-primary/20 bg-white/5 p-1">
             <img src="https://media.geeksforgeeks.org/gfg-gg-logo.svg" alt="GfG Logo" className="w-full h-full object-contain" />
           </div>
           <div>
-            <h1 className="font-bold text-xs tracking-tight text-slate-900 leading-none">GfG Club</h1>
-            <p className="text-[8px] text-muted-foreground uppercase tracking-widest font-semibold mt-1">
+            <h1 className="font-bold text-xs tracking-tight text-white leading-none">GfG Club</h1>
+            <p className="text-[8px] text-slate-500 uppercase tracking-widest font-semibold mt-1">
               RIT Campus
             </p>
           </div>
@@ -105,7 +105,7 @@ export function AppSidebar() {
                   <SidebarMenuButton
                     render={<Link href={item.url} />}
                     isActive={pathname === item.url}
-                    className="h-12 px-4 rounded-xl data-[active=true]:bg-primary/10 data-[active=true]:text-primary data-[active=true]:shadow-sm transition-all duration-300 group/item"
+                    className="h-12 px-4 rounded-xl data-[active=true]:bg-primary/10 data-[active=true]:text-primary data-[active=true]:shadow-[0_0_20px_rgba(34,197,94,0.1)] hover:bg-white/5 transition-all duration-300 group/item text-slate-400"
                   >
                     <item.icon className={`h-5 w-5 transition-transform duration-300 ${pathname === item.url ? "scale-110" : "group-hover/item:scale-110"}`} />
                     <span className="font-bold tracking-tight">{item.title}</span>
