@@ -12,15 +12,17 @@ export function RootWrapper({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isAuthPage = pathname === "/";
 
+  const [session, setSession] = useState<string | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    const session = document.cookie.split("; ").find(row => row.startsWith("gfg_session="))?.split("=")[1];
-    setIsAdmin(session === "admin");
+    const s = document.cookie.split("; ").find(row => row.startsWith("gfg_session="))?.split("=")[1];
+    setSession(s || null);
+    setIsAdmin(s === "admin");
   }, [pathname]);
 
-  if (isAuthPage) {
-    return <>{children}</>;
+  if (isAuthPage || !session) {
+    return <div className="min-h-screen w-full bg-[#fafafa]">{children}</div>;
   }
 
   return (
@@ -35,15 +37,15 @@ export function RootWrapper({ children }: { children: React.ReactNode }) {
                   <Avatar className="h-10 w-10 ring-2 ring-primary/10 transition-transform active:scale-95">
                     <AvatarImage src="" />
                     <AvatarFallback className="bg-primary/10 text-primary font-black text-xs">
-                      {isAdmin ? 'AD' : 'JD'}
+                      {isAdmin ? 'AD' : 'GM'}
                     </AvatarFallback>
                   </Avatar>
                   <div className="hidden sm:block">
                      <p className="text-xs font-black text-slate-900 leading-none">
-                       {isAdmin ? 'Overseer' : 'John Doe'}
+                       {isAdmin ? 'Admin Node' : 'Geek Member'}
                      </p>
                      <p className="text-[8px] font-black uppercase tracking-widest text-primary mt-1">
-                       {isAdmin ? 'Admin Console' : 'Member Hub'}
+                       {isAdmin ? 'System Admin' : 'Gold Tier'}
                      </p>
                   </div>
                </div>
