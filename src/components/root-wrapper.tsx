@@ -111,7 +111,7 @@ export function RootWrapper({ children }: { children: React.ReactNode }) {
                   <div className="flex items-center gap-3 sm:gap-4">
                     <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-2xl bg-white shadow-[0_0_20px_rgba(34,197,94,0.2)] flex items-center justify-center p-1 sm:p-1.5 border-2 border-primary/20 relative group overflow-hidden">
                        <div className="absolute inset-0 bg-primary/5 group-hover:bg-primary/10 transition-colors" />
-                       <img src="/logo.png" alt="GfG Logo" className="w-full h-full object-contain relative z-10" />
+                       <img src="https://media.geeksforgeeks.org/gfg-gg-logo.svg" alt="GfG Logo" className="w-full h-full object-contain relative z-10" />
                     </div>
                     <div className="hidden xs:block">
                        <h1 className="font-bold text-xs sm:text-sm tracking-tight text-slate-900 leading-none">GfG Club</h1>

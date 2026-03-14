@@ -66,7 +66,7 @@ export default function LoginPage() {
         <div className="flex flex-col items-center mb-10">
            <div className="h-24 w-24 rounded-[2.5rem] bg-white flex items-center justify-center p-3 shadow-2xl border-2 border-primary/20 mb-6 group relative overflow-hidden">
               <div className="absolute inset-0 bg-primary/5 group-hover:bg-primary/10 transition-colors" />
-              <img src="/logo.png" alt="GfG Logo" className="w-full h-full object-contain relative z-10" />
+              <img src="https://media.geeksforgeeks.org/gfg-gg-logo.svg" alt="GfG Logo" className="w-full h-full object-contain relative z-10" />
            </div>
            <h1 className="text-4xl font-black tracking-tighter text-slate-950">GFG PORTAL</h1>
         </div>

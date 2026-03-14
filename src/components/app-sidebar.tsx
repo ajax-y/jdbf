@@ -80,7 +80,7 @@ export function AppSidebar() {
       <SidebarHeader className="p-4">
         <Link href={isAdmin ? "/admin" : "/dashboard"} className="flex items-center gap-3 group px-2 mt-2">
           <div className="h-8 w-8 rounded-lg overflow-hidden shadow-lg shadow-primary/20 group-hover:scale-105 transition-transform duration-300 border border-primary/10">
-            <img src="/logo.png" alt="GfG Logo" className="w-full h-full object-cover" />
+            <img src="https://media.geeksforgeeks.org/gfg-gg-logo.svg" alt="GfG Logo" className="w-full h-full object-contain" />
           </div>
           <div>
             <h1 className="font-bold text-xs tracking-tight text-slate-900 leading-none">GfG Club</h1>
