@@ -6,13 +6,11 @@ import { supabase } from "@/lib/supabase";
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Users, Activity } from "lucide-react";
+import type { RealtimePostgresInsertPayload } from "@supabase/supabase-js";
 
 type Attendee = {
   id: string;
@@ -43,7 +41,7 @@ export default function LiveWallPage() {
     // Subscribe to REALTIME attendance changes
     const channel = supabase
       .channel('live-attendance')
-      .on('postgres_changes' as any, { event: 'INSERT' as any, table: 'attendance' as any }, (payload: any) => {
+      .on('postgres_changes', { event: 'INSERT', table: 'attendance', schema: 'public' }, (payload: RealtimePostgresInsertPayload<any>) => {
           console.log('New attendance!', payload);
           setCount(prev => prev + 1);
       })
