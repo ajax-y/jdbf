@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import {
   Card,
@@ -10,7 +11,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Github,
   Heart,
@@ -20,6 +21,7 @@ import {
   Plus,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 
 const projects = [
   {
@@ -92,7 +94,7 @@ export default function ProjectGalleryPage() {
             <Card className="border-none shadow-xl bg-card hover:-translate-y-2 transition-all duration-300 overflow-hidden group">
               <div className="h-48 w-full bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center relative">
                  <div className="absolute inset-4 border border-primary/10 rounded-xl" />
-                 <Code size={48} className="text-primary/20 group-hover:scale-110 transition-transform duration-500" />
+                 <CustomCode size={48} className="text-primary/20 group-hover:scale-110 transition-transform duration-500" />
                  <div className="absolute top-4 right-4 flex gap-2">
                     {project.tags.map(tag => (
                       <Badge key={tag} variant="secondary" className="bg-background/80 backdrop-blur-sm border-none font-bold text-[10px] uppercase">
@@ -148,12 +150,17 @@ export default function ProjectGalleryPage() {
                   <ExternalLink size={14} />
                   Demo
                 </Button>
-                <Button asChild className="flex-1 rounded-xl h-11 font-black text-xs uppercase tracking-widest gap-2 shadow-lg shadow-primary/10">
-                  <Link href={project.githubUrl} target="_blank">
-                    <Github size={14} />
-                    Source
-                  </Link>
-                </Button>
+                <Link 
+                  href={project.githubUrl} 
+                  target="_blank"
+                  className={cn(
+                    buttonVariants(),
+                    "flex-1 rounded-xl h-11 font-black text-xs uppercase tracking-widest gap-2 shadow-lg shadow-primary/10"
+                  )}
+                >
+                  <Github size={14} />
+                  Source
+                </Link>
               </CardFooter>
             </Card>
           </motion.div>
@@ -163,7 +170,7 @@ export default function ProjectGalleryPage() {
   );
 }
 
-function Code(props: any) {
+function CustomCode(props: any) {
   return (
     <svg
       {...props}
@@ -182,4 +189,3 @@ function Code(props: any) {
     </svg>
   );
 }
-import Link from "next/link";

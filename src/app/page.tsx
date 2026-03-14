@@ -1,9 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { ArrowRight, Code, Zap, Target, ShieldCheck } from "lucide-react";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 export default function LandingPage() {
   return (
@@ -67,17 +68,25 @@ export default function LandingPage() {
             transition={{ delay: 0.6 }}
             className="flex flex-col sm:flex-row gap-6 justify-center"
           >
-            <Button asChild className="h-16 px-10 rounded-2xl text-sm font-black uppercase tracking-widest gap-3 shadow-2xl shadow-primary/30 group">
-              <Link href="/dashboard">
+            <Link 
+              href="/dashboard"
+              className={cn(
+                buttonVariants(),
+                "h-16 px-10 rounded-2xl text-sm font-black uppercase tracking-widest gap-3 shadow-2xl shadow-primary/30 group"
+              )}
+            >
                 Enter Portal
                 <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-2" />
-              </Link>
-            </Button>
-            <Button asChild variant="outline" className="h-16 px-10 rounded-2xl text-sm font-black uppercase tracking-widest border-2 hover:bg-muted/50">
-              <Link href="/leaderboard">
+            </Link>
+            <Link 
+              href="/leaderboard"
+              className={cn(
+                buttonVariants({ variant: "outline" }),
+                "h-16 px-10 rounded-2xl text-sm font-black uppercase tracking-widest border-2 hover:bg-muted/50"
+              )}
+            >
                 View Leaderboard
-              </Link>
-            </Button>
+            </Link>
           </motion.div>
         </div>
       </section>

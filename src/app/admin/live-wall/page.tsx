@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Users, Pulse } from "lucide-react";
+import { Users, Activity } from "lucide-react";
 
 type Attendee = {
   id: string;
@@ -31,7 +31,6 @@ export default function LiveWallPage() {
   useEffect(() => {
     // Initial fetch
     const fetchInitial = async () => {
-       // In a real app, we'd join with profiles, but mock for now
        setCount(12);
        setAttendees([
          { id: '1', user: { full_name: 'Sarah Chen', avatar_url: '', tier: 'Gold' }, time: 'Just now' },
@@ -44,9 +43,8 @@ export default function LiveWallPage() {
     // Subscribe to REALTIME attendance changes
     const channel = supabase
       .channel('live-attendance')
-      .on('postgres_changes', { event: 'INSERT', table: 'attendance' }, (payload) => {
+      .on('postgres_changes' as any, { event: 'INSERT' as any, table: 'attendance' as any }, (payload: any) => {
           console.log('New attendance!', payload);
-          // Here we would fetch the user profile and add to state
           setCount(prev => prev + 1);
       })
       .subscribe();

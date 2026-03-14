@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { User, Settings, Shield, Bell, Github, Mail, Edit3, Camera } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 export default function ProfilePage() {
   return (
@@ -118,7 +119,7 @@ export default function ProfilePage() {
                  <CardDescription>Manage your showcase items</CardDescription>
               </CardHeader>
               <CardContent className="p-10 text-center py-20 opacity-30">
-                 <Code size={48} className="mx-auto mb-4" />
+                 <CustomCode size={48} className="mx-auto mb-4" />
                  <p className="font-bold">Project management tools coming soon</p>
               </CardContent>
            </Card>
@@ -159,15 +160,7 @@ export default function ProfilePage() {
   );
 }
 
-function Badge({ children, className }: any) {
-  return (
-    <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold bg-primary text-primary-foreground transition-colors ${className}`}>
-      {children}
-    </span>
-  );
-}
-
-function Code(props: any) {
+function CustomCode(props: any) {
   return (
     <svg
       {...props}
