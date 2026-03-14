@@ -12,75 +12,77 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Camera, CheckCircle2, History, Info, XCircle, QrCode, ArrowRight, Zap, Sparkles, Loader2 } from "lucide-react";
+import { Camera, CheckCircle2, History, Info, XCircle, QrCode, ArrowRight, Zap, Sparkles, Loader2, RefreshCcw } from "lucide-react";
 
 export default function JoinEventPage() {
   const [scanning, setScanning] = useState(false);
-  const [isInitializing, setIsInitializing] = useState(false);
   const [result, setResult] = useState<{ status: 'success' | 'error', message: string } | null>(null);
   const [history] = useState([]);
+  const [errorHeader, setErrorHeader] = useState<string | null>(null);
   const scannerRef = useRef<Html5Qrcode | null>(null);
 
-  const startScanner = async () => {
-    setIsInitializing(true);
-    setResult(null);
-    try {
-      // Small delay to ensure the DOM element is rendered
-      setTimeout(async () => {
-        const html5QrCode = new Html5Qrcode("qr-reader");
-        scannerRef.current = html5QrCode;
-        
-        const config = { fps: 10, qrbox: { width: 250, height: 250 } };
-        
-        await html5QrCode.start(
-          { facingMode: "environment" },
-          config,
-          (decodedText) => {
-            try {
-              const data = JSON.parse(decodedText);
-              if (data.secret) {
-                stopScanner();
-                setResult({ status: 'success', message: `Identity verified for ${data.title}. Merit points added to profile.` });
-              }
-            } catch (e) {
-              setResult({ status: 'error', message: "Protocol Error: Invalid Security Token Detected." });
-            }
-          },
-          (errorMessage) => {
-            // Constant probing, ignore errors during scan
-          }
-        );
-        setScanning(true);
-        setIsInitializing(false);
-      }, 300);
-    } catch (err) {
-      console.error("Camera failed:", err);
-      setIsInitializing(false);
-      setResult({ status: 'error', message: "Camera Access Denied: Ensure you are on HTTPS and have granted permissions." });
-    }
-  };
-
   const stopScanner = async () => {
-    if (scannerRef.current && scannerRef.current.isScanning) {
+    if (scannerRef.current) {
       try {
-        await scannerRef.current.stop();
-        scannerRef.current.clear();
+        if (scannerRef.current.isScanning) {
+          await scannerRef.current.stop();
+        }
       } catch (err) {
-        console.error("Failed to stop scanner:", err);
+        console.error("Stop failed", err);
       }
+      scannerRef.current = null;
     }
     setScanning(false);
-    setIsInitializing(false);
-    scannerRef.current = null;
+  };
+
+  const startScanner = async () => {
+    setResult(null);
+    setErrorHeader(null);
+    setScanning(true);
   };
 
   useEffect(() => {
+    if (scanning && !scannerRef.current) {
+      const html5QrCode = new Html5Qrcode("qr-reader");
+      scannerRef.current = html5QrCode;
+
+      const config = { fps: 15, qrbox: { width: 280, height: 280 } };
+
+      html5QrCode.start(
+        { facingMode: "environment" },
+        config,
+        (decodedText) => {
+          try {
+            const data = JSON.parse(decodedText);
+            if (data.secret) {
+              stopScanner();
+              setResult({ status: 'success', message: `Identity verified for ${data.title}. Merit points added to profile.` });
+            }
+          } catch (e) {
+            // Keep scanning, maybe not our JSON
+          }
+        },
+        (errorMessage) => {
+          // ignore scan errors
+        }
+      ).catch(err => {
+        console.error("Camera Start Error:", err);
+        setErrorHeader("Camera Access Denied");
+        setResult({ 
+          status: 'error', 
+          message: "Check permissions or ensure you are on HTTPS. Some browsers block camera on insecure connections." 
+        });
+        setScanning(false);
+        scannerRef.current = null;
+      });
+    }
+
     return () => {
-      if (scannerRef.current) {
-        stopScanner();
+      if (scannerRef.current && scannerRef.current.isScanning) {
+        scannerRef.current.stop().catch(console.error);
       }
     };
-  }, []);
+  }, [scanning]);
 
   return (
     <div className="max-w-7xl mx-auto space-y-12 pb-24 px-4 sm:px-0">
@@ -98,11 +100,10 @@ export default function JoinEventPage() {
            {!scanning ? (
              <Button 
                onClick={startScanner}
-               disabled={isInitializing}
                className="w-full sm:w-auto h-20 rounded-[2.5rem] px-12 font-black text-sm uppercase tracking-widest gap-4 shadow-2xl shadow-primary/30 bg-primary text-white hover:scale-105 active:scale-95 transition-all outline-none border-none"
              >
-                {isInitializing ? <Loader2 className="h-6 w-6 animate-spin" /> : <Camera size={24} strokeWidth={2.5} />}
-                {isInitializing ? "Initializing..." : "Open Scanners"}
+                <Camera size={24} strokeWidth={2.5} />
+                Open Scanners
              </Button>
            ) : (
              <Button 
@@ -138,14 +139,12 @@ export default function JoinEventPage() {
              </CardHeader>
              <CardContent className="p-0">
                 <div className="relative min-h-[550px] flex items-center justify-center bg-slate-50/30">
-                   {isInitializing ? (
-                      <div className="flex flex-col items-center gap-4">
-                         <Loader2 className="h-12 w-12 text-primary animate-spin" />
-                         <p className="font-black text-xs uppercase tracking-widest text-slate-400">Locking Media Stream...</p>
-                      </div>
-                   ) : scanning ? (
-                      <div id="qr-reader" className="w-full h-full max-w-[450px] mx-auto overflow-hidden rounded-[3rem] shadow-inner" />
-                   ) : (
+                   <div 
+                      id="qr-reader" 
+                      className={`w-full h-full max-w-[450px] mx-auto overflow-hidden rounded-[3rem] shadow-inner ${scanning ? 'block' : 'hidden'}`} 
+                   />
+
+                   {!scanning && !result && (
                       <div className="text-center p-12 space-y-8">
                          <div className="relative">
                             <motion.div 
@@ -188,7 +187,7 @@ export default function JoinEventPage() {
                                     )}
                                  </motion.div>
                                  <div className="space-y-4">
-                                    <h2 className="text-4xl font-black tracking-tighter">{result.status === 'success' ? 'Synchronized' : 'System Error'}</h2>
+                                    <h2 className="text-4xl font-black tracking-tighter">{result.status === 'success' ? 'Synchronized' : (errorHeader || 'System Error')}</h2>
                                     <p className="text-lg font-bold opacity-80 leading-relaxed">{result.message}</p>
                                  </div>
                                  <Button 
@@ -196,7 +195,8 @@ export default function JoinEventPage() {
                                    onClick={() => setResult(null)}
                                    className="w-full rounded-[2rem] h-16 font-black text-xs uppercase tracking-widest mt-6 bg-white text-slate-900 border-none shadow-2xl hover:bg-slate-100 transition-all active:scale-95"
                                  >
-                                    Initialize New Signal
+                                    <RefreshCcw size={18} className="mr-2" />
+                                    Reset Protocol
                                  </Button>
                               </CardContent>
                            </Card>
