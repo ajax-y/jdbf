@@ -10,16 +10,22 @@ import { Loader2, User, Lock, ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
+  const [userId, setUserId] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    // Simulate login
+    
+    // Role-based redirection logic
     setTimeout(() => {
       setIsLoading(false);
-      router.push("/dashboard");
+      if (userId.toLowerCase().includes("admin")) {
+        router.push("/admin");
+      } else {
+        router.push("/dashboard");
+      }
     }, 1500);
   };
 
@@ -73,6 +79,8 @@ export default function LoginPage() {
                     <User className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
                     <Input 
                       placeholder="Enter your User ID" 
+                      value={userId}
+                      onChange={(e) => setUserId(e.target.value)}
                       className="h-16 rounded-2xl pl-12 bg-slate-50 border-2 border-transparent focus:border-primary/20 focus:bg-white transition-all font-bold text-slate-900 text-lg placeholder:text-slate-300 placeholder:font-medium"
                       required
                     />
