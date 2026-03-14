@@ -96,21 +96,21 @@ export default function ProjectGalleryPage() {
 
   return (
     <div className="max-w-7xl mx-auto space-y-12 pb-24 px-4 sm:px-0">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 bg-slate-900 p-8 sm:p-12 md:p-20 rounded-[3rem] sm:rounded-[4rem] text-white shadow-[0_50px_100px_rgba(0,0,0,0.2)] relative overflow-hidden">
-        <div className="relative z-10 flex-1">
+      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 bg-slate-900 p-8 sm:p-12 lg:p-20 rounded-[3rem] sm:rounded-[4rem] text-white shadow-[0_50px_100px_rgba(0,0,0,0.2)] relative overflow-hidden">
+        <div className="relative z-10 flex-1 overflow-hidden">
           <Badge className="bg-primary text-white border-none font-black text-[10px] uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 sm:mb-8">Showcase</Badge>
-          <h1 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tighter mb-4 sm:mb-6 leading-none">
+          <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black tracking-tighter mb-4 sm:mb-6 leading-none text-white">
             Project <span className="text-primary italic">Gallery.</span>
           </h1>
           <p className="text-lg sm:text-xl font-bold text-slate-400 max-w-xl leading-relaxed">
             The decentralized archive of RIT Campus innovation. Explore the next generation of software engineering.
           </p>
         </div>
-        <div className="relative z-10 w-full md:w-auto">
+        <div className="relative z-10 w-full lg:w-auto">
            <Link href="/projects/submit" className="w-full sm:w-auto border border-white/10 rounded-[2.5rem] p-1 inline-block">
-              <Button className="w-full h-16 rounded-[2.2rem] px-10 font-black text-xs uppercase tracking-widest gap-3 shadow-2xl transition-all hover:scale-[1.02] active:scale-95 bg-white text-slate-900 border-none">
-                <Plus size={18} />
-                Submit Prototype
+              <Button className="w-full h-16 rounded-[2.2rem] px-10 font-black text-xs uppercase tracking-widest gap-3 shadow-2xl transition-all hover:scale-[1.02] active:scale-95 bg-white text-slate-900 border-none transition-colors">
+                 <Plus size={18} />
+                 Submit Prototype
               </Button>
            </Link>
         </div>
