@@ -94,7 +94,7 @@ export default function LoginPage() {
             <form onSubmit={handleLogin} className="space-y-6">
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <Label className="text-[11px] font-black uppercase tracking-widest ml-1 text-slate-900">User ID</Label>
+                  <Label className="text-[11px] font-black uppercase tracking-widest ml-1 text-slate-900">Username</Label>
                   <div className="relative">
                     <User className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
                     <Input 
