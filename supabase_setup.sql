@@ -67,8 +67,8 @@ CREATE POLICY "Enable all for anyone" ON profiles FOR ALL USING (true) WITH CHEC
 -- These will now work regardless of auth state
 INSERT INTO profiles (id, full_name, role, points, attendance_count, project_count, rank, tier, featured_project, password, username)
 VALUES 
-  ('00000000-0000-0000-0000-000000000001', 'Admin Node', 'admin', 999, 15, 8, '1', 'Elite Node', 'System Core', 'admin123', 'admin'),
-  ('00000000-0000-0000-0000-000000000002', 'Adarsh Gupta', 'user', 0, 0, 1, '--', 'Gold Tier', 'Aurora Engine', 'member123', 'geeks')
+  ('00000000-0000-0000-0000-000000000001', 'Admin Node', 'admin', 0, 0, 0, '--', 'Elite Node', 'System Core', 'admin123', 'admin'),
+  ('00000000-0000-0000-0000-000000000002', 'Adarsh Gupta', 'user', 0, 0, 0, '--', 'Gold Tier', 'Aurora Engine', 'member123', 'geeks')
 ON CONFLICT (id) DO UPDATE SET 
   points = EXCLUDED.points,
   attendance_count = EXCLUDED.attendance_count,

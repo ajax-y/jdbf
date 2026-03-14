@@ -47,10 +47,11 @@ export default function UserDashboard() {
         .select('*', { count: 'exact', head: true })
         .eq('user_id', session);
 
-      // 3. Fetch Leaderboard (Ranked by points)
+      // 3. Fetch Leaderboard (Only show users with points > 0)
       const { data: leaders } = await supabase
         .from('profiles')
         .select('id, full_name, points, username')
+        .gt('points', 0)
         .order('points', { ascending: false })
         .limit(5);
 
