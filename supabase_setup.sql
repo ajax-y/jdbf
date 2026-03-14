@@ -4,9 +4,15 @@
 -- 1. Ensure Extensions
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
--- 2. Repair Profiles Table (Add missing industrial columns)
+-- 2. Repair Profiles Table & Remove Restrictive Constraints
 DO $$ 
 BEGIN 
+    -- Drop the restrictive tier check constraint if it exists
+    -- This allows industry names like 'Elite Node' or 'Gold Tier'
+    IF EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'profiles_tier_check') THEN
+        ALTER TABLE profiles DROP CONSTRAINT profiles_tier_check;
+    END IF;
+
     -- Add 'points' if missing
     IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='profiles' AND column_name='points') THEN
         ALTER TABLE profiles ADD COLUMN points INTEGER DEFAULT 0;
@@ -22,15 +28,12 @@ BEGIN
         ALTER TABLE profiles ADD COLUMN featured_project TEXT DEFAULT 'Aurora Engine';
     END IF;
 
-    -- Adjust 'tier' if it was previously Bronze/Silver/Gold but we want dynamic naming
-    -- (We leave the column but ensure it handles longer strings)
+    -- Ensure 'tier' can hold any length text
     ALTER TABLE profiles ALTER COLUMN tier TYPE TEXT;
 END $$;
 
 -- 3. Synchronize Demo Personas
--- We use a simple name-based matching for the working model
--- or create if not exists
-
+-- We use a zero-UUID approach for demo reliability
 INSERT INTO profiles (id, full_name, role, points, attendance_count, project_count, rank, tier, featured_project)
 VALUES 
   ('00000000-0000-0000-0000-000000000001', 'Admin Node', 'admin', 999, 15, 8, '1', 'Elite Node', 'System Core'),
@@ -43,8 +46,7 @@ ON CONFLICT (id) DO UPDATE SET
   tier = EXCLUDED.tier,
   featured_project = EXCLUDED.featured_project;
 
--- 4. Enable Row Level Security (RLS) check
--- Ensure anyone can see these demo profiles for the hub view
+-- 4. Finalize Security Visibility
 ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS "Enable read access for all users" ON "public"."profiles";
 CREATE POLICY "Enable read access for all users" ON "public"."profiles" FOR SELECT USING (true);
