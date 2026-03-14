@@ -7,7 +7,7 @@ import { MoveLeft, ShieldAlert, Cpu, Globe, Rocket, Terminal } from "lucide-reac
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-[#fafafa] flex items-center justify-center p-6 overflow-hidden relative">
+    <div className="fixed inset-0 z-[100] bg-white flex items-center justify-center p-6 overflow-hidden">
       {/* Background Animated Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div

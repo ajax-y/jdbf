@@ -139,7 +139,7 @@ export function AppSidebar() {
             className="h-12 rounded-2xl text-[9px] font-black uppercase tracking-[0.15em] gap-3 bg-white border border-slate-100 hover:bg-destructive hover:text-white hover:border-destructive transition-all w-full shadow-sm"
           >
             <LogOut className="h-4 w-4" />
-            Terminate
+            End Session Hub
           </Button>
         </div>
       </SidebarFooter>
