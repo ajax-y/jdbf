@@ -140,7 +140,7 @@ export default function LiveWallPage() {
          </div>
       </div>
 
-      <div className="flex flex-col lg:flex-row justify-between items-center bg-slate-900 p-10 sm:p-20 rounded-[3.5rem] text-white shadow-[0_50px_100px_rgba(0,0,0,0.2)] relative overflow-hidden text-center lg:text-left gap-12">
+      <div className="flex flex-col lg:flex-row justify-between items-center bg-slate-900 p-8 sm:p-12 md:p-20 rounded-[3rem] sm:rounded-[3.5rem] text-white shadow-[0_50px_100px_rgba(0,0,0,0.2)] relative overflow-hidden text-center lg:text-left gap-10 sm:gap-12">
         <div className="absolute top-0 right-0 p-8 opacity-5 pointer-events-none">
            <Users size={400} />
         </div>
@@ -163,9 +163,9 @@ export default function LiveWallPage() {
           </p>
         </div>
         
-        <div className="relative z-10 text-center bg-white/10 backdrop-blur-3xl p-14 rounded-[4rem] border border-white/10 shadow-2xl min-w-[320px]">
+        <div className="relative z-10 text-center bg-white/10 backdrop-blur-3xl p-10 sm:p-14 rounded-[3rem] sm:rounded-[4rem] border border-white/10 shadow-2xl min-w-[280px] sm:min-w-[320px]">
            <p className="text-[10px] font-black uppercase tracking-[0.2em] mb-4 text-primary">Live Count</p>
-           <span className="text-[10rem] font-black tabular-nums leading-none">{count}</span>
+           <span className="text-7xl sm:text-8xl md:text-[10rem] font-black tabular-nums leading-none">{count}</span>
         </div>
       </div>
 

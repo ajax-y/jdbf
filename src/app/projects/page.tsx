@@ -96,13 +96,13 @@ export default function ProjectGalleryPage() {
 
   return (
     <div className="max-w-7xl mx-auto space-y-12 pb-24 px-4 sm:px-0">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 bg-slate-900 p-12 sm:p-20 rounded-[4rem] text-white shadow-[0_50px_100px_rgba(0,0,0,0.2)] relative overflow-hidden">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 bg-slate-900 p-8 sm:p-12 md:p-20 rounded-[3rem] sm:rounded-[4rem] text-white shadow-[0_50px_100px_rgba(0,0,0,0.2)] relative overflow-hidden">
         <div className="relative z-10 flex-1">
-          <Badge className="bg-primary text-white border-none font-black text-[10px] uppercase tracking-widest px-4 py-1.5 rounded-full mb-8">Showcase</Badge>
-          <h1 className="text-5xl sm:text-7xl font-black tracking-tighter mb-6 leading-none">
+          <Badge className="bg-primary text-white border-none font-black text-[10px] uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 sm:mb-8">Showcase</Badge>
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tighter mb-4 sm:mb-6 leading-none">
             Project <span className="text-primary italic">Gallery.</span>
           </h1>
-          <p className="text-xl font-bold text-slate-400 max-w-xl leading-relaxed">
+          <p className="text-lg sm:text-xl font-bold text-slate-400 max-w-xl leading-relaxed">
             The decentralized archive of RIT Campus innovation. Explore the next generation of software engineering.
           </p>
         </div>

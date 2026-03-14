@@ -118,7 +118,7 @@ export default function UserDashboard() {
     <div className="max-w-7xl mx-auto space-y-12 pb-20 px-4 sm:px-0">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
         <div>
-          <h1 className="text-5xl md:text-7xl font-black tracking-tighter text-slate-950">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tighter text-slate-950">
             {isLoading ? "Synchronizing..." : `Welcome, ${profile?.full_name?.split(' ')[0] || 'Member'}.`}
           </h1>
           <div className="flex items-center gap-4 mt-4">
@@ -170,8 +170,8 @@ export default function UserDashboard() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <Card className="border-none shadow-2xl bg-slate-950 text-white rounded-[3.5rem] overflow-hidden group">
-          <CardHeader className="p-10 pb-0">
+        <Card className="border-none shadow-2xl bg-slate-950 text-white rounded-[2.5rem] sm:rounded-[3.5rem] overflow-hidden group">
+          <CardHeader className="p-8 sm:p-10 pb-0">
              <div className="flex justify-between items-start">
                <div>
                   <Badge className="bg-primary text-white border-none font-black text-[10px] uppercase tracking-widest px-4 py-1.5 rounded-full mb-6">Spotlight</Badge>
@@ -179,12 +179,12 @@ export default function UserDashboard() {
                     Project of the <br/><span className="text-primary italic">Week.</span>
                   </CardTitle>
                </div>
-               <div className="h-16 w-16 rounded-[2rem] bg-white/5 border border-white/10 flex items-center justify-center">
+               <div className="h-16 w-16 rounded-[1.5rem] sm:rounded-[2rem] bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
                   <Code2 size={32} className="text-primary" />
                </div>
              </div>
           </CardHeader>
-          <CardContent className="p-10 pt-8">
+          <CardContent className="p-8 sm:p-10 pt-8">
             <div className="space-y-6">
                <h3 className="text-xl font-black text-slate-100 flex items-center gap-3">
                  {profile?.featured_project || 'Aurora Engine'}

@@ -162,7 +162,7 @@ export default function JoinEventPage() {
                 </div>
              </CardHeader>
              <CardContent className="p-0">
-                <div className="relative min-h-[550px] flex items-center justify-center bg-slate-50/30">
+                <div className="relative min-h-[400px] sm:min-h-[550px] flex items-center justify-center bg-slate-50/30">
                    <div 
                       id="qr-reader" 
                       className={`w-full h-full max-w-[450px] mx-auto overflow-hidden rounded-[3rem] shadow-inner ${scanning ? 'block' : 'hidden'}`} 

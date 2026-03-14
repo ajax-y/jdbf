@@ -58,10 +58,10 @@ export default function LeaderboardPage() {
     <div className="max-w-6xl mx-auto space-y-12 pb-24">
       <div className="flex flex-col md:flex-row justify-between items-end gap-6 px-4 sm:px-0">
         <div>
-          <h1 className="text-6xl font-black tracking-tighter">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tighter">
             Leader<span className="text-primary italic">board.</span>
           </h1>
-          <p className="text-slate-500 mt-4 text-xl font-bold">
+          <p className="text-slate-500 mt-4 text-lg sm:text-xl font-bold">
             The elite players of the GfG RIT coding community.
           </p>
         </div>
@@ -130,9 +130,10 @@ export default function LeaderboardPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="rounded-[3.5rem] overflow-hidden border border-slate-100 bg-white shadow-2xl mx-4 sm:mx-0"
+            className="rounded-[2.5rem] sm:rounded-[3.5rem] overflow-hidden border border-slate-100 bg-white shadow-2xl mx-0 sm:mx-0 overflow-x-auto"
           >
-            <Table>
+            <div className="min-w-[800px]">
+              <Table>
               <TableHeader className="bg-slate-50/50">
                 <TableRow className="border-b border-slate-100 hover:bg-transparent">
                   <TableHead className="w-[120px] font-black uppercase tracking-[0.2em] text-[10px] p-10 text-slate-400">Rank</TableHead>
@@ -173,7 +174,8 @@ export default function LeaderboardPage() {
                 ))}
               </TableBody>
             </Table>
-          </motion.div>
+          </div>
+        </motion.div>
         </>
       ) : (
         <div className="h-[500px] flex flex-col items-center justify-center text-center p-12 bg-white rounded-[4rem] border-2 border-dashed border-slate-100 mx-4 sm:mx-0">

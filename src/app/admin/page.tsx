@@ -78,7 +78,7 @@ export default function AdminDashboard() {
     <div className="max-w-7xl mx-auto space-y-12 pb-20 px-4 sm:px-0">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
         <div>
-           <h1 className="text-5xl md:text-7xl font-black tracking-tighter">
+           <h1 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tighter">
              <span className="text-slate-950">Admin</span> <span className="text-primary italic">Dashboard.</span>
            </h1>
            <p className="text-slate-500 font-bold text-sm mt-4">Welcome back to the GfG RIT Admin Control Suite.</p>
@@ -102,7 +102,7 @@ export default function AdminDashboard() {
             transition={{ delay: i * 0.1 }}
           >
              <Card className="border-none shadow-xl hover:shadow-2xl transition-all duration-500 rounded-[2.5rem] bg-white group cursor-default border border-slate-50 overflow-hidden relative">
-               <CardContent className="p-8">
+               <CardContent className="p-6 sm:p-8">
                   <div className="flex items-center justify-between mb-8">
                      <div className={`h-14 w-14 rounded-2xl bg-slate-50 flex items-center justify-center ${stat.color} ring-4 ring-slate-50/50`}>
                         <stat.icon size={26} strokeWidth={2.5} />

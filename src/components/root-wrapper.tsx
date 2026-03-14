@@ -100,7 +100,7 @@ export function RootWrapper({ children }: { children: React.ReactNode }) {
       <SidebarProvider defaultOpen={false}>
         <div className="flex min-h-screen w-full relative bg-[#fafafa]">
           <AppSidebar />
-          <main className="flex-1 overflow-y-auto overflow-x-hidden pt-[72px] px-4 md:px-8 pb-10">
+          <main className="flex-1 overflow-y-auto overflow-x-hidden pt-[72px] px-4 sm:px-6 md:px-8 pb-10">
             {/* Global Header with Hamburger */}
             <div className="fixed top-0 left-0 right-0 h-[72px] bg-white/80 backdrop-blur-xl border-b border-slate-100 px-6 flex items-center justify-between z-40">
                <div className="flex items-center gap-4">
@@ -108,16 +108,16 @@ export function RootWrapper({ children }: { children: React.ReactNode }) {
                      <Menu size={22} strokeWidth={2.5} />
                   </SidebarTrigger>
                   
-                  <div className="flex items-center gap-4">
-                    <div className="h-12 w-12 rounded-2xl bg-white shadow-[0_0_20px_rgba(34,197,94,0.2)] flex items-center justify-center p-1.5 border-2 border-primary/20 relative group overflow-hidden">
+                  <div className="flex items-center gap-3 sm:gap-4">
+                    <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-2xl bg-white shadow-[0_0_20px_rgba(34,197,94,0.2)] flex items-center justify-center p-1 sm:p-1.5 border-2 border-primary/20 relative group overflow-hidden">
                        <div className="absolute inset-0 bg-primary/5 group-hover:bg-primary/10 transition-colors" />
                        <img src="/logo.png" alt="GfG Logo" className="w-full h-full object-contain relative z-10" />
                     </div>
-                    <div>
-                      <h1 className="font-bold text-sm tracking-tight text-slate-900 leading-none">GfG Club</h1>
-                      <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-semibold mt-1">
-                        RIT Campus
-                      </p>
+                    <div className="hidden xs:block">
+                       <h1 className="font-bold text-xs sm:text-sm tracking-tight text-slate-900 leading-none">GfG Club</h1>
+                       <p className="text-[9px] sm:text-[10px] text-muted-foreground uppercase tracking-widest font-semibold mt-1">
+                         RIT Campus
+                       </p>
                     </div>
                   </div>
                </div>
