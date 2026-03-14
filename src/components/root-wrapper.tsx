@@ -173,24 +173,26 @@ export function RootWrapper({ children }: { children: React.ReactNode }) {
                           </Avatar>
                         </Button>
                       } />
-                      <DropdownMenuContent className="w-56 rounded-2xl p-2 border-slate-100 shadow-xl" align="end" side="bottom" sideOffset={12}>
-                        <DropdownMenuLabel className="font-bold text-[10px] px-3 py-2 text-slate-400 uppercase tracking-[0.2em]">Session Control</DropdownMenuLabel>
-                        <DropdownMenuSeparator className="mx-2 opacity-50" />
+                      <DropdownMenuContent className="w-56 rounded-[1.5rem] p-2 border-slate-100 shadow-2xl" align="end" side="bottom" sideOffset={12}>
                         <Link href="/profile">
-                          <DropdownMenuItem className="rounded-xl cursor-pointer py-3 px-3 hover:bg-slate-50 transition-colors">
-                             <User className="mr-3 h-4 w-4 text-slate-400" />
+                          <DropdownMenuItem className="rounded-xl cursor-pointer py-3.5 px-4 hover:bg-slate-50 transition-colors gap-3">
+                             <div className="h-8 w-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-500">
+                                <User size={16} />
+                             </div>
                              <span className="font-bold text-sm text-slate-700">Edit Profile</span>
                           </DropdownMenuItem>
                         </Link>
-                        <DropdownMenuSeparator className="mx-2 opacity-50" />
+                        <DropdownMenuSeparator className="my-1 opacity-10 mx-2" />
                         <DropdownMenuItem 
                           onClick={() => {
                             document.cookie = "gfg_session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
                             window.location.href = "/";
                           }} 
-                          className="rounded-xl cursor-pointer py-3 px-3 text-destructive focus:text-destructive focus:bg-destructive/5 font-black"
+                          className="rounded-xl cursor-pointer py-3.5 px-4 text-destructive focus:text-destructive focus:bg-destructive/5 font-black gap-3"
                         >
-                           <LogOut className="mr-3 h-4 w-4" />
+                           <div className="h-8 w-8 rounded-lg bg-destructive/5 flex items-center justify-center">
+                              <LogOut size={16} />
+                           </div>
                            <span className="text-sm">Logout Session</span>
                         </DropdownMenuItem>
                       </DropdownMenuContent>
