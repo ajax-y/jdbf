@@ -1,6 +1,6 @@
 "use client";
 
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { usePathname } from "next/navigation";
@@ -100,9 +100,9 @@ export function RootWrapper({ children }: { children: React.ReactNode }) {
       <SidebarProvider defaultOpen={false}>
         <div className="flex min-h-screen w-full relative bg-[#fafafa]">
           <AppSidebar />
-          <main className="flex-1 overflow-y-auto overflow-x-hidden pt-[72px] px-4 sm:px-6 md:px-8 pb-10">
-            {/* Global Header with Hamburger */}
-            <div className="fixed top-0 left-0 right-0 h-[72px] bg-white/80 backdrop-blur-xl border-b border-slate-100 px-6 flex items-center justify-between z-40">
+          <SidebarInset className="bg-[#fafafa] flex flex-col min-h-screen overflow-x-hidden">
+            {/* Global Header with Hamburger - Sticky within Inset */}
+            <div className="sticky top-0 h-[72px] bg-white/80 backdrop-blur-xl border-b border-slate-100 px-4 sm:px-6 flex items-center justify-between z-40 w-full">
                <div className="flex items-center gap-4">
                   <SidebarTrigger className="h-11 w-11 rounded-2xl bg-white border-2 border-slate-100 shadow-sm flex items-center justify-center text-slate-600 hover:text-primary hover:border-primary/20 transition-all active:scale-90">
                      <Menu size={22} strokeWidth={2.5} />
@@ -202,10 +202,10 @@ export function RootWrapper({ children }: { children: React.ReactNode }) {
                </div>
             </div>
 
-            <div className="mt-8">
+            <div className="flex-1 p-4 sm:p-6 md:p-8 pb-10">
               {children}
             </div>
-          </main>
+          </SidebarInset>
         </div>
       </SidebarProvider>
     </TooltipProvider>

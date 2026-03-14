@@ -98,8 +98,8 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="max-w-5xl mx-auto py-4 sm:py-8 px-4 sm:px-0 space-y-12 pb-24">
-      <div className="flex flex-col items-center md:items-start md:flex-row gap-8 sm:gap-12 mb-10 sm:mb-16 bg-white p-6 sm:p-12 rounded-[2.5rem] sm:rounded-[4rem] shadow-xl border border-slate-50 relative overflow-hidden text-center md:text-left">
+    <div className="max-w-5xl mx-auto py-4 sm:py-8 space-y-12 pb-24">
+      <div className="flex flex-col items-center lg:items-start lg:flex-row gap-8 sm:gap-12 mb-10 sm:mb-16 bg-white p-6 sm:p-12 rounded-[2.5rem] sm:rounded-[4rem] shadow-xl border border-slate-50 relative overflow-hidden text-center lg:text-left">
         {/* Background Accent */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         
@@ -119,19 +119,19 @@ export default function ProfilePage() {
           </button>
         </motion.div>
         
-        <div className="flex-1 pt-4 sm:pt-6 z-10 w-full">
-           <div className="flex flex-col md:flex-row items-center gap-4 sm:gap-5 mb-4 sm:mb-6">
-              <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tighter text-slate-900 leading-none">
+        <div className="flex-1 pt-4 sm:pt-6 z-10 w-full overflow-hidden">
+           <div className="flex flex-col lg:flex-row items-center gap-4 sm:gap-5 mb-4 sm:mb-6">
+              <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tighter text-slate-900 leading-none truncate">
                 {profile?.full_name?.split(' ')[0]} <span className="text-primary italic underline underline-offset-8 decoration-primary/10">{profile?.full_name?.split(' ')[1]}.</span>
               </h1>
               <Badge className="bg-primary/10 text-primary border-none font-black px-5 py-2 uppercase tracking-[0.2em] text-[10px] rounded-full shrink-0">
                 {profile?.tier || 'Member'}
               </Badge>
            </div>
-           <p className="text-lg sm:text-xl text-slate-500 font-bold mb-8 sm:mb-10 max-w-xl leading-relaxed mx-auto md:mx-0">
+           <p className="text-lg sm:text-xl text-slate-500 font-bold mb-8 sm:mb-10 max-w-xl leading-relaxed mx-auto lg:mx-0">
              {profile?.bio || 'Building the future of RIT Campus innovation, one line of code at a time.'}
            </p>
-            <div className="flex flex-col sm:flex-row justify-center md:justify-start gap-3 sm:gap-4">
+            <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-3 sm:gap-4">
                <Link href={profile?.github_link || "#"} target="_blank" className="w-full sm:w-auto">
                  <Button variant="outline" className="w-full sm:w-auto rounded-2xl h-14 px-8 font-black text-[10px] uppercase tracking-widest gap-3 border-2 border-slate-100 hover:bg-slate-50 hover:text-primary transition-all shadow-sm">
                     <Github size={18} />

@@ -75,8 +75,8 @@ export default function AdminDashboard() {
   }, []);
 
   return (
-    <div className="max-w-7xl mx-auto space-y-12 pb-20 px-4 sm:px-0">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+    <div className="max-w-7xl mx-auto space-y-12 pb-20">
+      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8">
         <div>
            <h1 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tighter">
              <span className="text-slate-950">Admin</span> <span className="text-primary italic">Dashboard.</span>
