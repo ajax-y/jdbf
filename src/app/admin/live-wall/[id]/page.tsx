@@ -158,14 +158,14 @@ export default function LiveWallPage() {
           <h1 className="text-5xl sm:text-8xl font-black tracking-tighter mb-8 leading-none">
             {eventInfo?.title || "Loading Session..."}
           </h1>
-          <p className="text-xl font-bold text-slate-400 max-w-xl leading-relaxed">
+          <p className="text-xl font-bold text-slate-300 max-w-xl leading-relaxed">
             Real-time participants broadcast. Visual feed activates upon successful token verification.
           </p>
         </div>
         
         <div className="relative z-10 text-center bg-white/10 backdrop-blur-3xl p-10 sm:p-14 rounded-[3rem] sm:rounded-[4rem] border border-white/10 shadow-2xl min-w-[280px] sm:min-w-[320px]">
            <p className="text-[10px] font-black uppercase tracking-[0.2em] mb-4 text-primary">Live Count</p>
-           <span className="text-7xl sm:text-8xl md:text-[10rem] font-black tabular-nums leading-none">{count}</span>
+           <span className="text-7xl sm:text-8xl md:text-[10rem] font-black tabular-nums leading-none text-white">{count}</span>
         </div>
       </div>
 

@@ -116,7 +116,7 @@ export default function JoinEventPage() {
           <h1 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tighter mb-4 sm:mb-6 leading-none">
             Live <span className="text-primary italic">Events.</span>
           </h1>
-          <p className="text-lg sm:text-xl font-bold text-slate-400 max-w-xl leading-relaxed">
+          <p className="text-lg sm:text-xl font-bold text-slate-300 max-w-xl leading-relaxed">
             Scan the verified session token to establish your participation node and synchronize merit points.
           </p>
         </div>
@@ -156,7 +156,7 @@ export default function JoinEventPage() {
                       <div className={`h-3 w-3 rounded-full ${scanning ? 'bg-primary animate-pulse' : 'bg-slate-700'}`} />
                       <div>
                         <CardTitle className="text-xl sm:text-2xl font-black text-white tracking-tight">{scanning ? 'Establishing Handshake...' : 'System Available'}</CardTitle>
-                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Optical Recognition Active</p>
+                        <p className="text-[10px] font-bold text-slate-300 uppercase tracking-widest mt-1">Optical Recognition Active</p>
                       </div>
                    </div>
                 </div>
@@ -182,7 +182,7 @@ export default function JoinEventPage() {
                          </div>
                          <div className="space-y-4">
                            <h3 className="text-3xl font-black text-white tracking-tight leading-none">Signal Lost</h3>
-                           <p className="text-slate-400 font-bold max-w-xs mx-auto text-base">Activate the optical scanner to detect the club session security token.</p>
+                           <p className="text-slate-200 font-bold max-w-xs mx-auto text-base">Activate the optical scanner to detect the club session security token.</p>
                          </div>
                       </div>
                    )}

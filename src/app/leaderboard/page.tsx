@@ -103,8 +103,8 @@ export default function LeaderboardPage() {
                   </div>
                 </div>
 
-                <div>
-                  <h3 className="text-3xl font-black tracking-tighter leading-none mb-3">{leader.full_name}</h3>
+                <div className="z-10">
+                  <h3 className={`text-3xl font-black tracking-tighter leading-none mb-3 ${index === 0 ? 'text-white' : 'text-slate-950'}`}>{leader.full_name}</h3>
                   <Badge className={`mt-2 border-none font-black uppercase tracking-widest text-[10px] px-4 py-1.5 rounded-full ${
                     index === 0 ? 'bg-primary text-white' : 'bg-slate-100 text-slate-500'
                   }`}>
@@ -112,16 +112,16 @@ export default function LeaderboardPage() {
                   </Badge>
                 </div>
 
-                <div className="grid grid-cols-2 w-full gap-6 pt-8 border-t border-current/10 tabular-nums">
-                   <div>
-                      <p className="text-[10px] uppercase font-black opacity-40 tracking-widest mb-1">Points</p>
-                      <p className="text-2xl font-black text-primary">{leader.points}</p>
-                   </div>
-                   <div>
-                      <p className="text-[10px] uppercase font-black opacity-40 tracking-widest mb-1">Projects</p>
-                      <p className="text-2xl font-black">{leader.project_count || 0}</p>
-                   </div>
-                </div>
+                 <div className="grid grid-cols-2 w-full gap-6 pt-8 border-t border-current/10 tabular-nums z-10">
+                    <div>
+                       <p className={`text-[10px] uppercase font-black tracking-widest mb-1 ${index === 0 ? 'text-white/40' : 'text-slate-400'}`}>Points</p>
+                       <p className="text-2xl font-black text-primary">{leader.points}</p>
+                    </div>
+                    <div>
+                       <p className={`text-[10px] uppercase font-black tracking-widest mb-1 ${index === 0 ? 'text-white/40' : 'text-slate-400'}`}>Projects</p>
+                       <p className={`text-2xl font-black ${index === 0 ? 'text-white' : 'text-slate-900'}`}>{leader.project_count || 0}</p>
+                    </div>
+                 </div>
               </motion.div>
             ))}
           </div>

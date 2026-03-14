@@ -102,7 +102,7 @@ export default function ProjectGalleryPage() {
           <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black tracking-tighter mb-4 sm:mb-6 leading-none text-white">
             Project <span className="text-primary italic">Gallery.</span>
           </h1>
-          <p className="text-lg sm:text-xl font-bold text-slate-400 max-w-xl leading-relaxed">
+          <p className="text-lg sm:text-xl font-bold text-slate-300 max-w-xl leading-relaxed">
             The decentralized archive of RIT Campus innovation. Explore the next generation of software engineering.
           </p>
         </div>
@@ -164,10 +164,10 @@ export default function ProjectGalleryPage() {
               <div className="h-12 w-12 sm:h-14 sm:w-14 rounded-2xl bg-white/10 flex items-center justify-center text-white shrink-0 group-hover:bg-white group-hover:text-primary transition-all duration-500 shadow-xl">
                   <Github className="h-6 w-6 sm:h-7 sm:w-7" />
               </div>
-              <div className="overflow-hidden">
-                 <p className="text-sm font-black transition-colors">Join Organization</p>
-                 <p className="text-[10px] font-bold text-slate-400 mt-0.5 group-hover:text-white/70 transition-colors truncate">rit-geeks@github</p>
-              </div>
+               <div className="overflow-hidden">
+                  <p className="text-sm font-black transition-colors text-white">Join Organization</p>
+                  <p className="text-[10px] font-bold text-slate-300 mt-0.5 group-hover:text-white/70 transition-colors truncate">rit-geeks@github</p>
+               </div>
            </div>
         </div>
 

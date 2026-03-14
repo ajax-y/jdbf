@@ -269,11 +269,11 @@ export default function ProfilePage() {
         <div className="space-y-12">
           <Card className="border-none shadow-2xl bg-slate-900 text-white rounded-[3.5rem] p-10 overflow-hidden relative group">
              <div className="relative z-10">
-                <h3 className="text-2xl font-black mb-6 flex items-center gap-3">
+                <h3 className="text-2xl font-black mb-6 flex items-center gap-3 text-white">
                    <Edit3 className="text-primary" />
                    Profile Sync
                 </h3>
-                <p className="font-bold text-slate-400 text-sm leading-relaxed mb-8">
+                <p className="font-bold text-slate-300 text-sm leading-relaxed mb-8">
                    All changes are synchronized instantly with the cloud repository. Ensure your handles are unique across the campus network.
                 </p>
                 <div className="space-y-4">

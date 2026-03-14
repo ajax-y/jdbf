@@ -186,10 +186,10 @@ export default function UserDashboard() {
           </CardHeader>
           <CardContent className="p-8 sm:p-10 pt-8">
             <div className="space-y-6">
-               <h3 className="text-xl font-black text-slate-100 flex items-center gap-3">
+               <h3 className="text-xl font-black text-white flex items-center gap-3">
                  {profile?.featured_project || 'Aurora Engine'}
                </h3>
-               <p className="text-slate-400 font-bold text-base leading-relaxed">
+               <p className="text-slate-300 font-bold text-base leading-relaxed">
                  Advanced cloud-native architecture optimized for real-time data streaming and secure member authorization.
                </p>
                <div className="flex flex-wrap gap-2">
