@@ -56,29 +56,29 @@ export default function LeaderboardPage() {
 
   return (
     <div className="max-w-6xl mx-auto space-y-12 pb-24">
-      <div className="flex flex-col md:flex-row justify-between items-end gap-6 px-4 sm:px-0">
-        <div>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tighter">
+      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 mb-12">
+        <div className="flex-1 overflow-hidden">
+          <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black tracking-tighter text-slate-900 leading-none truncate">
             Leader<span className="text-primary italic">board.</span>
           </h1>
-          <p className="text-slate-500 mt-4 text-lg sm:text-xl font-bold">
+          <p className="text-slate-500 mt-4 text-base sm:text-lg lg:text-xl font-bold max-w-xl leading-relaxed">
             The elite players of the GfG RIT coding community.
           </p>
         </div>
-        <div className="bg-primary/10 border-2 border-primary/20 rounded-3xl px-8 py-6 flex items-center gap-5 shadow-xl shadow-primary/10">
-           <div className="h-12 w-12 rounded-2xl bg-primary flex items-center justify-center text-white shadow-lg">
-              <TrendingUp size={24} strokeWidth={3} />
+        <div className="bg-primary/10 border-2 border-primary/20 rounded-[2rem] sm:rounded-3xl px-6 sm:px-8 py-5 sm:py-6 flex items-center gap-4 sm:gap-5 shadow-xl shadow-primary/10 w-full sm:w-auto shrink-0">
+           <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-xl sm:rounded-2xl bg-primary flex items-center justify-center text-white shadow-lg shrink-0">
+              <TrendingUp className="h-5 w-5 sm:h-6 sm:w-6" strokeWidth={3} />
            </div>
-           <div>
-              <p className="text-[10px] uppercase font-black tracking-[0.2em] text-primary leading-none mb-2">Global Rank</p>
-              <p className="text-3xl font-black text-slate-900 tracking-tighter">#{userRank} <span className="text-sm font-bold text-slate-300 ml-1 tracking-normal italic">Ranked</span></p>
+           <div className="overflow-hidden">
+              <p className="text-[9px] sm:text-[10px] uppercase font-black tracking-[0.2em] text-primary leading-none mb-1.5 sm:mb-2">Global Rank</p>
+              <p className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tighter truncate">#{userRank} <span className="text-xs sm:text-sm font-bold text-slate-300 ml-1 tracking-normal italic">Ranked</span></p>
            </div>
         </div>
       </div>
 
       {leaders.length > 0 ? (
         <>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-10 mb-10 sm:mb-16 px-4 sm:px-0 pt-6 sm:pt-10">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-10 mb-10 sm:mb-16 px-4 sm:px-0 pt-6 sm:pt-10">
             {leaders.slice(0, 3).map((leader, index) => (
               <motion.div
                 key={leader.id}
@@ -86,7 +86,7 @@ export default function LeaderboardPage() {
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className={`relative rounded-[3rem] sm:rounded-[4rem] p-8 sm:p-12 flex flex-col items-center text-center gap-6 sm:gap-8 overflow-hidden shadow-2xl transition-all hover:translate-y-[-10px] ${
-                  index === 0 ? 'bg-slate-950 text-white order-1 md:order-2 scale-100 md:scale-110 z-10 border-4 border-primary/30' : 'bg-white text-slate-900 md:order-1 border border-slate-100'
+                  index === 0 ? 'bg-slate-950 text-white order-1 lg:order-2 scale-100 lg:scale-110 z-10 border-4 border-primary/30' : 'bg-white text-slate-900 lg:order-1 border border-slate-100'
                 }`}
               >
                 {index === 0 && <Crown className="absolute top-6 right-6 sm:top-8 sm:right-8 h-12 w-12 sm:h-16 sm:w-16 text-primary opacity-50 rotate-12" />}
