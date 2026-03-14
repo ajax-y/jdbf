@@ -79,8 +79,8 @@ export function AppSidebar() {
     <Sidebar className="border-r border-border/50 bg-card">
       <SidebarHeader className="p-4">
         <Link href={isAdmin ? "/admin" : "/dashboard"} className="flex items-center gap-3 group px-2 mt-2">
-          <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground font-bold text-lg group-hover:scale-105 transition-transform duration-300 shadow-lg shadow-primary/20">
-            G
+          <div className="h-8 w-8 rounded-lg overflow-hidden shadow-lg shadow-primary/20 group-hover:scale-105 transition-transform duration-300 border border-primary/10">
+            <img src="/logo.png" alt="GfG Logo" className="w-full h-full object-cover" />
           </div>
           <div>
             <h1 className="font-bold text-xs tracking-tight text-slate-900 leading-none">GfG Club</h1>

@@ -109,8 +109,8 @@ export function RootWrapper({ children }: { children: React.ReactNode }) {
                   </SidebarTrigger>
                   
                   <div className="flex items-center gap-3">
-                    <div className="h-10 w-10 rounded-xl bg-primary flex items-center justify-center text-primary-foreground font-bold text-xl shadow-lg shadow-primary/20">
-                      G
+                    <div className="h-10 w-10 rounded-xl overflow-hidden shadow-lg shadow-primary/20 border-2 border-primary/10">
+                      <img src="/logo.png" alt="GfG Logo" className="w-full h-full object-cover" />
                     </div>
                     <div>
                       <h1 className="font-bold text-sm tracking-tight text-slate-900 leading-none">GfG Club</h1>
