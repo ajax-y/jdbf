@@ -115,27 +115,6 @@ export function AppSidebar() {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
-
-        {/* Workspace Switcher Simulation */}
-        <SidebarGroup className="mt-auto">
-           <SidebarGroupContent>
-              <div 
-                onClick={() => {
-                  const target = isAdmin ? "/dashboard" : "/admin";
-                  router.push(target);
-                }}
-                className="flex items-center gap-3 p-4 rounded-2xl bg-muted/30 cursor-pointer hover:bg-muted transition-colors border border-border/10"
-              >
-                 <div className="h-8 w-8 rounded-lg bg-background flex items-center justify-center border border-border/10">
-                    <Layout className="h-4 w-4 text-muted-foreground" />
-                 </div>
-                 <div className="flex-1 overflow-hidden">
-                    <p className="text-[10px] font-black uppercase tracking-widest opacity-50">Switch To</p>
-                    <p className="text-xs font-bold truncate">{isAdmin ? 'Member Dashboard' : 'Admin Console'}</p>
-                 </div>
-              </div>
-           </SidebarGroupContent>
-        </SidebarGroup>
       </SidebarContent>
 
       <SidebarFooter className="p-4">
