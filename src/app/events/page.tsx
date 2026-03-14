@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Html5QrcodeScanner } from "html5-qrcode";
+import { Html5Qrcode } from "html5-qrcode";
 import {
   Card,
   CardContent,
@@ -12,44 +12,75 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Camera, CheckCircle2, History, Info, XCircle, QrCode, ArrowRight, Zap, Sparkles } from "lucide-react";
+import { Camera, CheckCircle2, History, Info, XCircle, QrCode, ArrowRight, Zap, Sparkles, Loader2 } from "lucide-react";
 
 export default function JoinEventPage() {
   const [scanning, setScanning] = useState(false);
+  const [isInitializing, setIsInitializing] = useState(false);
   const [result, setResult] = useState<{ status: 'success' | 'error', message: string } | null>(null);
   const [history] = useState([]);
+  const scannerRef = useRef<Html5Qrcode | null>(null);
+
+  const startScanner = async () => {
+    setIsInitializing(true);
+    setResult(null);
+    try {
+      // Small delay to ensure the DOM element is rendered
+      setTimeout(async () => {
+        const html5QrCode = new Html5Qrcode("qr-reader");
+        scannerRef.current = html5QrCode;
+        
+        const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+        
+        await html5QrCode.start(
+          { facingMode: "environment" },
+          config,
+          (decodedText) => {
+            try {
+              const data = JSON.parse(decodedText);
+              if (data.secret) {
+                stopScanner();
+                setResult({ status: 'success', message: `Identity verified for ${data.title}. Merit points added to profile.` });
+              }
+            } catch (e) {
+              setResult({ status: 'error', message: "Protocol Error: Invalid Security Token Detected." });
+            }
+          },
+          (errorMessage) => {
+            // Constant probing, ignore errors during scan
+          }
+        );
+        setScanning(true);
+        setIsInitializing(false);
+      }, 300);
+    } catch (err) {
+      console.error("Camera failed:", err);
+      setIsInitializing(false);
+      setResult({ status: 'error', message: "Camera Access Denied: Ensure you are on HTTPS and have granted permissions." });
+    }
+  };
+
+  const stopScanner = async () => {
+    if (scannerRef.current && scannerRef.current.isScanning) {
+      try {
+        await scannerRef.current.stop();
+        scannerRef.current.clear();
+      } catch (err) {
+        console.error("Failed to stop scanner:", err);
+      }
+    }
+    setScanning(false);
+    setIsInitializing(false);
+    scannerRef.current = null;
+  };
 
   useEffect(() => {
-    let scanner: Html5QrcodeScanner;
-    if (scanning) {
-      scanner = new Html5QrcodeScanner(
-        "qr-reader",
-        { fps: 15, qrbox: { width: 280, height: 280 } },
-        false
-      );
-      
-      scanner.render((decodedText) => {
-        try {
-          const data = JSON.parse(decodedText);
-          if (data.secret) {
-            setResult({ status: 'success', message: `Identity verified for ${data.title}. Merit points added to profile.` });
-            setScanning(false);
-            scanner.clear();
-          }
-        } catch (e) {
-          setResult({ status: 'error', message: "Protocal Error: Invalid or Malformed Security Token." });
-        }
-      }, (error) => {
-        // console.warn(error);
-      });
-    }
-
     return () => {
-      if (scanner) {
-        scanner.clear();
+      if (scannerRef.current) {
+        stopScanner();
       }
     };
-  }, [scanning]);
+  }, []);
 
   return (
     <div className="max-w-7xl mx-auto space-y-12 pb-24 px-4 sm:px-0">
@@ -66,16 +97,17 @@ export default function JoinEventPage() {
         <div className="relative z-10 w-full md:w-auto">
            {!scanning ? (
              <Button 
-               onClick={() => setScanning(true)}
+               onClick={startScanner}
+               disabled={isInitializing}
                className="w-full sm:w-auto h-20 rounded-[2.5rem] px-12 font-black text-sm uppercase tracking-widest gap-4 shadow-2xl shadow-primary/30 bg-primary text-white hover:scale-105 active:scale-95 transition-all outline-none border-none"
              >
-                <Camera size={24} strokeWidth={2.5} />
-                Open Scanners
+                {isInitializing ? <Loader2 className="h-6 w-6 animate-spin" /> : <Camera size={24} strokeWidth={2.5} />}
+                {isInitializing ? "Initializing..." : "Open Scanners"}
              </Button>
            ) : (
              <Button 
                variant="secondary"
-               onClick={() => setScanning(false)}
+               onClick={stopScanner}
                className="w-full sm:w-auto h-16 rounded-[2rem] px-8 font-black text-xs uppercase tracking-widest gap-2 bg-white text-slate-900 border-none shadow-xl"
              >
                 <XCircle size={20} />
@@ -106,7 +138,12 @@ export default function JoinEventPage() {
              </CardHeader>
              <CardContent className="p-0">
                 <div className="relative min-h-[550px] flex items-center justify-center bg-slate-50/30">
-                   {scanning ? (
+                   {isInitializing ? (
+                      <div className="flex flex-col items-center gap-4">
+                         <Loader2 className="h-12 w-12 text-primary animate-spin" />
+                         <p className="font-black text-xs uppercase tracking-widest text-slate-400">Locking Media Stream...</p>
+                      </div>
+                   ) : scanning ? (
                       <div id="qr-reader" className="w-full h-full max-w-[450px] mx-auto overflow-hidden rounded-[3rem] shadow-inner" />
                    ) : (
                       <div className="text-center p-12 space-y-8">
@@ -128,7 +165,7 @@ export default function JoinEventPage() {
                    )}
 
                    <AnimatePresence>
-                      {result && (
+                      {result && !scanning && (
                         <motion.div 
                           initial={{ opacity: 0, scale: 0.9, y: 30 }}
                           animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -177,7 +214,7 @@ export default function JoinEventPage() {
              <div className="relative z-10">
                 <span className="font-black uppercase tracking-[0.2em] text-[10px] text-amber-600 block mb-2">Protocol Briefing</span>
                 <p className="text-base font-bold text-amber-900/60 leading-relaxed">
-                  Encryption keys are unique to each session node. Attempting to scan expired or unauthorized tokens will trigger a system lockout for 10 minutes. 
+                  Encryption keys are unique to each session node. Ensure you are using HTTPS to allow camera operations. Optical detection works best in balanced lighting. 
                 </p>
              </div>
              <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none group-hover:scale-110 transition-transform">
@@ -214,7 +251,6 @@ export default function JoinEventPage() {
                    </div>
                  ) : (
                    <div className="space-y-6">
-                      {/* Populated if user joins events */}
                    </div>
                  )}
                  <Button disabled variant="outline" className="w-full rounded-2xl h-14 font-black text-[10px] uppercase tracking-widest opacity-50 border-2 border-slate-50 mt-4 group">
@@ -222,16 +258,6 @@ export default function JoinEventPage() {
                     Archives Locked
                  </Button>
               </CardContent>
-           </Card>
-
-           <Card className="border-none shadow-2xl bg-primary text-white p-10 rounded-[3.5rem] overflow-hidden relative group cursor-pointer hover:bg-primary/90 transition-all">
-              <div className="relative z-10">
-                 <h4 className="text-2xl font-black mb-2 flex items-center gap-2">Need Support? <ArrowRight size={20} /></h4>
-                 <p className="text-[11px] font-bold text-white/70 uppercase tracking-widest">Contact Club Administration</p>
-              </div>
-              <div className="absolute top-0 right-0 p-8 opacity-10 pointer-events-none group-hover:scale-125 transition-transform duration-700">
-                 <Info size={180} />
-              </div>
            </Card>
         </div>
       </div>
