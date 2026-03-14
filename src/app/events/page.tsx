@@ -11,7 +11,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Camera, CheckCircle2, History, Info, XCircle } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Camera, CheckCircle2, History, Info, XCircle, QrCode, ArrowRight, Zap, Sparkles } from "lucide-react";
 
 export default function JoinEventPage() {
   const [scanning, setScanning] = useState(false);
@@ -23,7 +24,7 @@ export default function JoinEventPage() {
     if (scanning) {
       scanner = new Html5QrcodeScanner(
         "qr-reader",
-        { fps: 10, qrbox: { width: 250, height: 250 } },
+        { fps: 15, qrbox: { width: 280, height: 280 } },
         false
       );
       
@@ -31,12 +32,12 @@ export default function JoinEventPage() {
         try {
           const data = JSON.parse(decodedText);
           if (data.secret) {
-            setResult({ status: 'success', message: `Signed into ${data.title}!` });
+            setResult({ status: 'success', message: `Identity verified for ${data.title}. Merit points added to profile.` });
             setScanning(false);
             scanner.clear();
           }
         } catch (e) {
-          setResult({ status: 'error', message: "Invalid QR code" });
+          setResult({ status: 'error', message: "Protocal Error: Invalid or Malformed Security Token." });
         }
       }, (error) => {
         // console.warn(error);
@@ -51,50 +52,77 @@ export default function JoinEventPage() {
   }, [scanning]);
 
   return (
-    <div className="max-w-5xl mx-auto space-y-12 pb-12 px-4 sm:px-0">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-        <div>
-          <h1 className="text-4xl md:text-5xl font-black tracking-tight text-slate-900">
+    <div className="max-w-7xl mx-auto space-y-12 pb-24 px-4 sm:px-0">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 bg-slate-900 p-12 sm:p-20 rounded-[4rem] text-white shadow-[0_50px_100px_rgba(0,0,0,0.2)] relative overflow-hidden">
+        <div className="relative z-10 flex-1">
+          <Badge className="bg-primary text-white border-none font-black text-[10px] uppercase tracking-widest px-4 py-1.5 rounded-full mb-8">Attendance Link</Badge>
+          <h1 className="text-5xl sm:text-7xl font-black tracking-tighter mb-6 leading-none">
             Live <span className="text-primary italic">Events.</span>
           </h1>
-          <p className="text-slate-500 mt-2 text-lg font-bold">
-            Scan session QR to verify attendance and earn points.
+          <p className="text-xl font-bold text-slate-400 max-w-xl leading-relaxed">
+            Scan the verified session token to establish your participation node and synchronize merit points.
           </p>
+        </div>
+        <div className="relative z-10 w-full md:w-auto">
+           {!scanning ? (
+             <Button 
+               onClick={() => setScanning(true)}
+               className="w-full sm:w-auto h-20 rounded-[2.5rem] px-12 font-black text-sm uppercase tracking-widest gap-4 shadow-2xl shadow-primary/30 bg-primary text-white hover:scale-105 active:scale-95 transition-all outline-none border-none"
+             >
+                <Camera size={24} strokeWidth={2.5} />
+                Open Scanners
+             </Button>
+           ) : (
+             <Button 
+               variant="secondary"
+               onClick={() => setScanning(false)}
+               className="w-full sm:w-auto h-16 rounded-[2rem] px-8 font-black text-xs uppercase tracking-widest gap-2 bg-white text-slate-900 border-none shadow-xl"
+             >
+                <XCircle size={20} />
+                Close Relay
+             </Button>
+           )}
+        </div>
+        
+        {/* Abstract Background Decoration */}
+        <div className="absolute top-0 right-0 p-8 opacity-5 pointer-events-none translate-x-1/4 translate-y-[-1/4]">
+           <Zap size={400} />
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-2 space-y-8">
-          <Card className={`border-none shadow-2xl overflow-hidden transition-all duration-500 ${scanning ? 'ring-4 ring-primary/20' : 'border border-slate-100'}`}>
-             <CardHeader className="bg-slate-50/50 p-8 border-b border-slate-100">
-                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                   <div className="flex items-center gap-3">
-                      <div className={`h-2.5 w-2.5 rounded-full ${scanning ? 'bg-primary animate-pulse' : 'bg-slate-300'}`} />
-                      <CardTitle className="text-2xl font-black text-slate-900">{scanning ? 'Scanning Network...' : 'Scanner Ready'}</CardTitle>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
+        <div className="lg:col-span-2 space-y-10">
+          <Card className={`border-none shadow-2xl overflow-hidden rounded-[3.5rem] transition-all duration-700 bg-white ${scanning ? 'ring-8 ring-primary/10' : 'border border-slate-50'}`}>
+             <CardHeader className="bg-slate-50/50 p-10 border-b border-slate-100">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
+                   <div className="flex items-center gap-4">
+                      <div className={`h-3 w-3 rounded-full ${scanning ? 'bg-primary animate-pulse' : 'bg-slate-300'}`} />
+                      <div>
+                        <CardTitle className="text-2xl font-black text-slate-950 tracking-tight">{scanning ? 'Establishing Handshake...' : 'System Available'}</CardTitle>
+                        <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Optical Recognition Active</p>
+                      </div>
                    </div>
-                   {!scanning && (
-                     <Button 
-                       onClick={() => setScanning(true)}
-                       className="w-full sm:w-auto rounded-xl font-black text-[10px] uppercase tracking-widest gap-2 h-12 px-8 bg-primary text-white shadow-lg shadow-primary/20"
-                     >
-                        <Camera size={18} />
-                        Enable Camera
-                     </Button>
-                   )}
                 </div>
              </CardHeader>
              <CardContent className="p-0">
-                <div className="relative min-h-[450px] flex items-center justify-center bg-slate-50/30">
+                <div className="relative min-h-[550px] flex items-center justify-center bg-slate-50/30">
                    {scanning ? (
-                      <div id="qr-reader" className="w-full" />
+                      <div id="qr-reader" className="w-full h-full max-w-[450px] mx-auto overflow-hidden rounded-[3rem] shadow-inner" />
                    ) : (
-                      <div className="text-center p-12 space-y-6">
-                         <div className="h-48 w-48 rounded-[3rem] bg-white shadow-xl flex items-center justify-center mx-auto border border-slate-100">
-                            <QrCode size={80} className="text-slate-100" />
+                      <div className="text-center p-12 space-y-8">
+                         <div className="relative">
+                            <motion.div 
+                              animate={{ rotate: 360 }}
+                              transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+                              className="absolute inset-[-30px] border-2 border-dashed border-slate-200 rounded-[4rem]"
+                            />
+                            <div className="h-48 w-48 rounded-[4rem] bg-white shadow-2xl flex items-center justify-center mx-auto ring-1 ring-slate-100 relative z-10">
+                               <QrCode size={80} className="text-slate-100" />
+                            </div>
                          </div>
-                         <div className="space-y-2">
-                           <h3 className="text-2xl font-black text-slate-900 tracking-tight">System Idle</h3>
-                           <p className="text-slate-400 font-bold max-w-xs mx-auto">Open the verified scanner to detect the club session QR code.</p>
+                         <div className="space-y-4">
+                           <h3 className="text-3xl font-black text-slate-950 tracking-tight leading-none">Signal Lost</h3>
+                           <p className="text-slate-400 font-bold max-w-xs mx-auto text-base">Activate the optical scanner to detect the club session security token.</p>
                          </div>
                       </div>
                    )}
@@ -102,36 +130,36 @@ export default function JoinEventPage() {
                    <AnimatePresence>
                       {result && (
                         <motion.div 
-                          initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                          initial={{ opacity: 0, scale: 0.9, y: 30 }}
                           animate={{ opacity: 1, scale: 1, y: 0 }}
                           exit={{ opacity: 0, scale: 0.9 }}
-                          className="absolute inset-4 sm:inset-10 flex items-center justify-center z-50 pointer-events-none"
+                          className="absolute inset-6 sm:inset-12 flex items-center justify-center z-50 pointer-events-none"
                         >
-                           <Card className={`pointer-events-auto border-none shadow-[0_40px_100px_rgba(0,0,0,0.2)] rounded-[3rem] overflow-hidden w-full max-w-md ${
-                             result.status === 'success' ? 'bg-primary text-white' : 'bg-destructive text-white'
+                           <Card className={`pointer-events-auto border-none shadow-[0_50px_120px_rgba(0,0,0,0.25)] rounded-[4.5rem] overflow-hidden w-full max-w-md ${
+                             result.status === 'success' ? 'bg-slate-900 text-white' : 'bg-destructive text-white'
                            }`}>
-                              <CardContent className="p-12 text-center flex flex-col items-center gap-8">
+                              <CardContent className="p-16 text-center flex flex-col items-center gap-10">
                                  <motion.div
-                                   initial={{ scale: 0 }}
-                                   animate={{ scale: 1 }}
-                                   className="h-24 w-24 rounded-full bg-white/20 flex items-center justify-center"
+                                   initial={{ scale: 0, rotate: -45 }}
+                                   animate={{ scale: 1, rotate: 0 }}
+                                   className={`h-28 w-28 rounded-full flex items-center justify-center shadow-2xl ${result.status === 'success' ? 'bg-primary text-white shadow-primary/20' : 'bg-white/20'}`}
                                  >
                                     {result.status === 'success' ? (
-                                      <CheckCircle2 size={60} />
+                                      <CheckCircle2 size={60} strokeWidth={2.5} />
                                     ) : (
-                                      <XCircle size={60} />
+                                      <XCircle size={60} strokeWidth={2.5} />
                                     )}
                                  </motion.div>
-                                 <div className="space-y-2">
-                                    <h2 className="text-4xl font-black tracking-tight">{result.status === 'success' ? 'Verified' : 'Error'}</h2>
-                                    <p className="text-lg font-bold opacity-80">{result.message}</p>
+                                 <div className="space-y-4">
+                                    <h2 className="text-4xl font-black tracking-tighter">{result.status === 'success' ? 'Synchronized' : 'System Error'}</h2>
+                                    <p className="text-lg font-bold opacity-80 leading-relaxed">{result.message}</p>
                                  </div>
                                  <Button 
                                    variant="secondary"
                                    onClick={() => setResult(null)}
-                                   className="w-full rounded-2xl h-14 font-black text-xs uppercase tracking-widest mt-4 bg-white text-slate-900 border-none shadow-xl"
+                                   className="w-full rounded-[2rem] h-16 font-black text-xs uppercase tracking-widest mt-6 bg-white text-slate-900 border-none shadow-2xl hover:bg-slate-100 transition-all active:scale-95"
                                  >
-                                    Dismiss
+                                    Initialize New Signal
                                  </Button>
                               </CardContent>
                            </Card>
@@ -142,78 +170,71 @@ export default function JoinEventPage() {
              </CardContent>
           </Card>
           
-          <div className="flex gap-5 p-8 rounded-[2.5rem] bg-slate-50 border border-slate-100">
-             <div className="h-10 w-10 rounded-xl bg-white shadow-sm flex items-center justify-center shrink-0 border border-slate-100">
-                <Info className="text-primary" size={20} />
+          <div className="flex gap-8 p-10 rounded-[3.5rem] bg-amber-50/50 border border-amber-100 relative group overflow-hidden">
+             <div className="h-16 w-16 rounded-[2rem] bg-white shadow-xl flex items-center justify-center shrink-0 border border-amber-100 relative z-10">
+                <Info className="text-amber-500" size={32} />
              </div>
-             <div>
-                <span className="font-black uppercase tracking-[0.2em] text-[10px] text-primary block mb-1">Operational Briefing</span>
-                <p className="text-sm font-bold text-slate-500 leading-relaxed">
-                  Verification tokens are unique to your User ID. Ensure your camera lens is clean and the QR code is centered within the frame for optimal detection.
+             <div className="relative z-10">
+                <span className="font-black uppercase tracking-[0.2em] text-[10px] text-amber-600 block mb-2">Protocol Briefing</span>
+                <p className="text-base font-bold text-amber-900/60 leading-relaxed">
+                  Encryption keys are unique to each session node. Attempting to scan expired or unauthorized tokens will trigger a system lockout for 10 minutes. 
                 </p>
+             </div>
+             <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none group-hover:scale-110 transition-transform">
+                <Sparkles size={100} className="text-amber-900" />
              </div>
           </div>
         </div>
 
-        <div className="space-y-8">
-           <Card className="border-none shadow-xl bg-white overflow-hidden border border-slate-100">
-              <CardHeader className="p-8 pb-4">
-                 <div className="flex items-center gap-3">
-                    <div className="h-10 w-10 rounded-xl bg-slate-50 flex items-center justify-center">
-                       <History className="text-slate-400" size={20} />
+        <div className="space-y-10">
+           <Card className="border-none shadow-2xl bg-white overflow-hidden border border-slate-50 rounded-[3.5rem]">
+              <CardHeader className="p-10 pb-4">
+                 <div className="flex items-center gap-4">
+                    <div className="h-14 w-14 rounded-2xl bg-slate-50 flex items-center justify-center border border-slate-100 shadow-sm">
+                       <History className="text-slate-400" size={24} />
                     </div>
-                    <CardTitle className="text-xl font-black text-slate-900">Event History</CardTitle>
+                    <div>
+                      <CardTitle className="text-2xl font-black text-slate-950 tracking-tight">Archives</CardTitle>
+                      <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mt-1">Previous Check-ins</p>
+                    </div>
                  </div>
               </CardHeader>
-              <CardContent className="px-8 pb-10">
+              <CardContent className="px-10 pb-12">
                  {history.length === 0 ? (
-                   <div className="py-12 text-center space-y-4">
-                      <div className="h-16 w-16 rounded-2xl bg-slate-50 flex items-center justify-center mx-auto">
-                         <History className="text-slate-200" size={32} />
+                   <div className="py-20 text-center space-y-6">
+                      <div className="relative inline-block">
+                        <div className="h-24 w-24 rounded-[2.5rem] bg-slate-50 flex items-center justify-center mx-auto border-2 border-dashed border-slate-200">
+                           <History className="text-slate-200" size={40} />
+                        </div>
                       </div>
-                      <p className="text-xs font-black uppercase tracking-widest text-slate-300">No History recorded</p>
+                      <div className="space-y-2">
+                        <p className="text-xs font-black uppercase tracking-widest text-slate-400">Empty Databank</p>
+                        <p className="text-[10px] font-bold text-slate-300 uppercase tracking-widest leading-relaxed">No historical tokens found on this node</p>
+                      </div>
                    </div>
                  ) : (
-                   <div className="space-y-4">
+                   <div className="space-y-6">
                       {/* Populated if user joins events */}
                    </div>
                  )}
-                 <Button disabled variant="outline" className="w-full rounded-xl h-12 font-black text-[10px] uppercase tracking-widest opacity-50 border-slate-100">
+                 <Button disabled variant="outline" className="w-full rounded-2xl h-14 font-black text-[10px] uppercase tracking-widest opacity-50 border-2 border-slate-50 mt-4 group">
+                    <History size={14} className="group-hover:rotate-[-45deg] transition-transform" />
                     Archives Locked
                  </Button>
               </CardContent>
            </Card>
+
+           <Card className="border-none shadow-2xl bg-primary text-white p-10 rounded-[3.5rem] overflow-hidden relative group cursor-pointer hover:bg-primary/90 transition-all">
+              <div className="relative z-10">
+                 <h4 className="text-2xl font-black mb-2 flex items-center gap-2">Need Support? <ArrowRight size={20} /></h4>
+                 <p className="text-[11px] font-bold text-white/70 uppercase tracking-widest">Contact Club Administration</p>
+              </div>
+              <div className="absolute top-0 right-0 p-8 opacity-10 pointer-events-none group-hover:scale-125 transition-transform duration-700">
+                 <Info size={180} />
+              </div>
+           </Card>
         </div>
       </div>
     </div>
-  );
-}
-
-function QrCode(props: any) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <rect width="5" height="5" x="3" y="3" rx="1" />
-      <rect width="5" height="5" x="16" y="3" rx="1" />
-      <rect width="5" height="5" x="3" y="16" rx="1" />
-      <path d="M21 16V21H16" />
-      <path d="M21 9V10" />
-      <path d="M10 21H9" />
-      <path d="M10 3V10H3" />
-      <path d="M14 14H15V15H14V14Z" />
-      <path d="M17 17H18V18H17V17Z" />
-      <path d="M14 17H15V18H14V17Z" />
-      <path d="M17 14H18V15H17V14Z" />
-    </svg>
   );
 }

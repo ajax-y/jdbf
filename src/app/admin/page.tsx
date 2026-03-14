@@ -1,149 +1,194 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { 
-  Card, 
-  CardContent, 
-  CardHeader, 
-  CardTitle, 
-  CardDescription 
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
 } from "@/components/ui/card";
 import { 
+  ShieldCheck, 
   Users, 
   Calendar, 
-  TrendingUp, 
-  Shield, 
+  Settings, 
+  Activity, 
+  Clock, 
+  Plus, 
   ArrowUpRight,
+  Monitor,
   Database,
-  BarChart3,
-  Search
+  Globe,
+  Bell
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
 
 const adminStats = [
-  { title: "Active Members", value: "0", icon: Users, color: "text-blue-500", trend: "0%" },
-  { title: "Total Sessions", value: "0", icon: Calendar, color: "text-emerald-500", trend: "New" },
-  { title: "Pending Reviews", value: "0", icon: Database, color: "text-amber-500", trend: "Clean" },
-  { title: "System Health", value: "Optimal", icon: Shield, color: "text-primary", trend: "100%" },
+  { title: "Active Members", value: "0", icon: Users, color: "text-blue-500", trend: "Offline" },
+  { title: "Total Sessions", value: "0", icon: Calendar, color: "text-emerald-500", trend: "0% Growth" },
+  { title: "Pending Reviews", value: "0", icon: Clock, color: "text-amber-500", trend: "Safe" },
+  { title: "Server Uptime", value: "99.9%", icon: Monitor, color: "text-indigo-500", trend: "Stable" },
+];
+
+const logs = [
+  { id: 1, action: "Admin Authorize", user: "Principal Node", time: "Just now", status: "success" },
+  { id: 2, action: "Middleware Guard", user: "System", time: "2 mins ago", status: "success" },
+  { id: 3, action: "Database Sync", user: "Supabase", time: "10 mins ago", status: "success" },
 ];
 
 export default function AdminDashboard() {
   return (
-    <div className="space-y-8 max-w-7xl mx-auto px-4 sm:px-0 pb-12">
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          <div className="flex items-center gap-3 mb-2">
-             <div className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-             <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary">Live Command Center</span>
-          </div>
-          <h1 className="text-4xl md:text-5xl font-black tracking-tight mb-2 text-slate-900">
-            Administrative <span className="text-primary italic">Node.</span>
-          </h1>
-          <p className="text-slate-500 text-lg font-bold">
-            Portal secure. No active events detected on the network.
-          </p>
-        </motion.div>
-        
-        <div className="flex flex-col sm:flex-row gap-4">
-           <Button variant="outline" className="rounded-2xl h-14 px-8 font-black text-[10px] uppercase tracking-widest border-2 border-slate-200">
-             Network Config
-           </Button>
-           <Button className="rounded-2xl h-14 px-8 font-black text-[10px] uppercase tracking-widest bg-primary text-white shadow-xl shadow-primary/20">
-             Initialize Event
+    <div className="max-w-7xl mx-auto space-y-12 pb-20 px-4 sm:px-0">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+        <div>
+           <h1 className="text-5xl md:text-7xl font-black tracking-tighter text-slate-950">
+             Command <span className="text-primary italic underline decoration-8 decoration-primary/10">Center.</span>
+           </h1>
+           <div className="flex items-center gap-4 mt-6">
+              <div className="flex -space-x-3">
+                 {[1,2,3].map(i => (
+                   <div key={i} className="h-8 w-8 rounded-full border-2 border-white bg-slate-100 flex items-center justify-center text-[8px] font-black">AI</div>
+                 ))}
+              </div>
+              <p className="text-slate-500 font-bold text-sm">3 Active Admin Nodes</p>
+              <div className="h-1.5 w-1.5 rounded-full bg-slate-300" />
+              <div className="flex items-center gap-2">
+                 <div className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+                 <span className="text-[10px] font-black uppercase tracking-widest text-emerald-600 leading-none">Global Network Online</span>
+              </div>
+           </div>
+        </div>
+        <div className="flex gap-4 w-full md:w-auto">
+           <Link href="/admin/create-event" className="flex-1 md:flex-none">
+              <Button className="w-full h-16 rounded-[2rem] px-10 font-black text-xs uppercase tracking-widest gap-3 shadow-2xl shadow-primary/30 transition-all hover:scale-105 active:scale-95 bg-primary text-white">
+                <Plus size={18} />
+                Deploy Node
+              </Button>
+           </Link>
+           <Button variant="outline" className="h-16 w-16 rounded-[2rem] p-0 border-2 border-slate-100 hover:bg-slate-50 transition-all active:scale-90 shadow-xl">
+              <Bell size={24} className="text-slate-400" />
            </Button>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {adminStats.map((stat, index) => (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        {adminStats.map((stat, i) => (
           <motion.div
             key={stat.title}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
+            transition={{ delay: i * 0.1 }}
           >
-            <Card className="border-none shadow-md bg-white hover:shadow-2xl transition-all duration-500 group relative overflow-hidden border border-slate-100">
-               <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-                <stat.icon size={80} />
-              </div>
-              <CardHeader className="p-8 pb-3">
-                <CardDescription className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 mb-1">
-                   {stat.title}
-                </CardDescription>
-                <div className="flex items-center gap-3">
-                   <CardTitle className="text-3xl font-black text-slate-900">{stat.value}</CardTitle>
-                   <span className={`text-[10px] font-black px-2.5 py-1 rounded-full bg-slate-50 border border-slate-100 ${stat.color}`}>
-                     {stat.trend}
-                   </span>
-                </div>
-              </CardHeader>
-              <CardContent className="px-8 pb-8">
-                 <div className="h-1.5 w-full bg-slate-50 rounded-full overflow-hidden mt-2">
-                    <motion.div 
-                      initial={{ width: 0 }}
-                      animate={{ width: stat.title === 'System Health' ? '100%' : '5%' }}
-                      className={`h-full ${stat.title === 'System Health' ? 'bg-primary' : 'bg-slate-200'}`}
-                    />
-                 </div>
-              </CardContent>
-            </Card>
+             <Card className="border-none shadow-xl hover:shadow-2xl transition-all duration-500 rounded-[2.5rem] bg-white group cursor-default border border-slate-50 overflow-hidden relative">
+               <CardContent className="p-8">
+                  <div className="flex items-center justify-between mb-8">
+                     <div className={`h-14 w-14 rounded-2xl bg-slate-50 flex items-center justify-center ${stat.color} ring-4 ring-slate-50/50`}>
+                        <stat.icon size={26} strokeWidth={2.5} />
+                     </div>
+                     <Badge variant="outline" className="rounded-full font-black text-[9px] uppercase tracking-widest border-slate-100 text-slate-400">{stat.trend}</Badge>
+                  </div>
+                  <div className="space-y-2">
+                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">{stat.title}</p>
+                    <h3 className="text-5xl font-black text-slate-950 tracking-tighter tabular-nums leading-none">
+                       {stat.value}
+                    </h3>
+                  </div>
+               </CardContent>
+               <div className="absolute bottom-0 left-0 right-0 h-1 bg-slate-50 shadow-inner group-hover:bg-primary/20 transition-colors" />
+             </Card>
           </motion.div>
         ))}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-         <Card className="lg:col-span-2 border-none shadow-md bg-white border border-slate-100">
-            <CardHeader className="p-8 sm:p-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-               <div>
-                  <CardTitle className="text-2xl font-black text-slate-900">Traffic Analytics</CardTitle>
-                  <CardDescription className="font-bold">Real-time user engagement monitoring</CardDescription>
-               </div>
-               <div className="relative w-full sm:w-auto">
-                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
-                 <Input placeholder="Filter by Node..." className="h-10 rounded-xl pl-10 bg-slate-50 border-none w-full sm:w-64" />
-               </div>
-            </CardHeader>
-            <CardContent className="p-10 pt-0">
-               <div className="h-72 w-full flex items-center justify-center bg-slate-50 rounded-[2rem] border-2 border-dashed border-slate-100">
-                  <div className="text-center space-y-3">
-                     <BarChart3 className="mx-auto text-slate-200" size={48} />
-                     <p className="text-slate-400 font-black uppercase tracking-widest text-[10px]">Awaiting Data Stream</p>
+         <Card className="lg:col-span-2 border-none shadow-2xl bg-white rounded-[3.5rem] overflow-hidden border border-slate-50">
+            <CardHeader className="p-10 border-b border-slate-50 bg-slate-50/30">
+               <div className="flex justify-between items-center">
+                  <div>
+                     <CardTitle className="text-3xl font-black text-slate-950 tracking-tight">System Logs</CardTitle>
+                     <CardDescription className="font-bold text-slate-500 mt-1">Live authentication and node lifecycle events</CardDescription>
                   </div>
+                  <Badge className="bg-emerald-100 text-emerald-700 hover:bg-emerald-100 font-black text-[10px] uppercase tracking-widest px-4 py-1.5 rounded-full border-none">Live Monitor</Badge>
                </div>
-            </CardContent>
-         </Card>
-
-         <Card className="border-none shadow-md bg-primary/5 border border-primary/10">
-            <CardHeader className="p-8 sm:p-10">
-               <CardTitle className="text-2xl font-black flex items-center gap-3 text-slate-900">
-                  <TrendingUp className="text-primary" />
-                  Audit Log
-               </CardTitle>
-               <CardDescription className="font-bold">Most recent administrative actions</CardDescription>
             </CardHeader>
-            <CardContent className="p-10 pt-0 space-y-6">
-               {[1, 2, 3].map(i => (
-                 <div key={i} className="flex items-center gap-4 opacity-30">
-                    <div className="h-12 w-12 rounded-2xl bg-slate-200/50 flex items-center justify-center">
-                      <Shield className="text-slate-400" size={20} />
+            <CardContent className="p-0">
+               <div className="divide-y divide-slate-50">
+                  {logs.map((log) => (
+                    <div key={log.id} className="p-8 flex items-center justify-between hover:bg-slate-50 transition-all duration-300">
+                       <div className="flex items-center gap-6">
+                          <div className={`h-12 w-12 rounded-xl flex items-center justify-center ${log.status === 'success' ? 'bg-emerald-50 text-emerald-600' : 'bg-amber-50 text-amber-600'} shrink-0 border border-slate-100`}>
+                             <Activity size={20} />
+                          </div>
+                          <div>
+                             <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">{log.user}</p>
+                             <p className="text-lg font-black text-slate-900 leading-none">{log.action}</p>
+                          </div>
+                       </div>
+                       <div className="text-right">
+                          <p className="text-xs font-black text-slate-400 uppercase tracking-widest">{log.time}</p>
+                       </div>
                     </div>
-                    <div className="flex-1">
-                       <p className="font-black text-sm text-slate-900">System Trace {i}</p>
-                       <p className="text-[10px] uppercase font-bold text-slate-400">0.00ms latency</p>
-                    </div>
-                 </div>
-               ))}
-               <div className="pt-6 border-t border-slate-200/50">
-                  <Button disabled variant="ghost" className="w-full rounded-2xl h-14 font-black text-xs uppercase tracking-widest bg-white shadow-sm opacity-50">
-                     No Logs Available
+                  ))}
+               </div>
+               <div className="p-10 text-center bg-slate-50/50">
+                  <Button variant="ghost" className="rounded-xl font-black text-[10px] uppercase tracking-widest gap-2 text-slate-400 hover:text-primary transition-all">
+                     View Complete Archives
+                     <ArrowUpRight size={14} />
                   </Button>
                </div>
             </CardContent>
          </Card>
+
+         <div className="space-y-8">
+            <Card className="border-none shadow-2xl bg-slate-950 text-white rounded-[3.5rem] p-10 overflow-hidden relative group">
+               <div className="relative z-10">
+                  <div className="h-14 w-14 rounded-2xl bg-white/10 flex items-center justify-center mb-10 border border-white/10">
+                     <Database className="text-primary" size={28} />
+                  </div>
+                  <h4 className="text-3xl font-black tracking-tight mb-4">Core Node <span className="text-primary italic">Status.</span></h4>
+                  <p className="text-slate-400 font-bold mb-8 leading-relaxed">
+                     Hardware health, storage capacity, and network handshake latency.
+                  </p>
+                  <div className="space-y-6">
+                     {[
+                       { label: 'CPU Usage', val: '12%', color: 'bg-emerald-500' },
+                       { label: 'Memory', val: '2.4 / 8GB', color: 'bg-blue-500' },
+                     ].map((s) => (
+                       <div key={s.label} className="space-y-3">
+                          <div className="flex justify-between text-[11px] font-black uppercase tracking-widest">
+                             <span className="text-slate-100">{s.label}</span>
+                             <span className="text-primary">{s.val}</span>
+                          </div>
+                          <div className="h-2 w-full bg-white/10 rounded-full overflow-hidden">
+                             <motion.div initial={{ width: 0 }} animate={{ width: s.val === '12%' ? '12%' : '30%' }} className={`h-full ${s.color}`} />
+                          </div>
+                       </div>
+                     ))}
+                  </div>
+               </div>
+               <div className="absolute -bottom-10 -right-10 opacity-5 pointer-events-none group-hover:scale-110 transition-transform duration-1000">
+                  <Globe size={300} />
+               </div>
+            </Card>
+
+            <Card className="border-none shadow-2xl bg-white rounded-[3.5rem] p-10 border border-slate-50 group hover:border-primary/20 transition-all duration-500">
+               <div className="flex items-center gap-6 mb-8">
+                  <div className="h-16 w-16 rounded-2xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500">
+                     <Settings size={28} strokeWidth={2.5} />
+                  </div>
+                  <div>
+                     <h4 className="text-2xl font-black text-slate-900">Config Portal</h4>
+                     <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mt-1">System Globals</p>
+                  </div>
+               </div>
+               <Button variant="outline" className="w-full h-14 rounded-2xl font-black text-[10px] uppercase tracking-widest border-2 border-slate-100 hover:bg-slate-50 transition-all">
+                  Open Global Registry
+               </Button>
+            </Card>
+         </div>
       </div>
     </div>
   );
