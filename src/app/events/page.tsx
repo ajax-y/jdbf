@@ -18,8 +18,9 @@ import { supabase } from "@/lib/supabase";
 export default function JoinEventPage() {
   const [scanning, setScanning] = useState(false);
   const [result, setResult] = useState<{ status: 'success' | 'error', message: string } | null>(null);
-  const [history] = useState([]);
+  const [history, setHistory] = useState<any[]>([]);
   const [errorHeader, setErrorHeader] = useState<string | null>(null);
+  const [loadingHistory, setLoadingHistory] = useState(true);
   const scannerRef = useRef<Html5Qrcode | null>(null);
 
   const stopScanner = async () => {
@@ -41,6 +42,35 @@ export default function JoinEventPage() {
     setErrorHeader(null);
     setScanning(true);
   };
+
+  const fetchHistory = async () => {
+    const userId = document.cookie.split("; ").find(row => row.startsWith("gfg_session="))?.split("=")[1];
+    if (!userId) return;
+
+    setLoadingHistory(true);
+    const { data, error } = await supabase
+      .from('attendance')
+      .select(`
+        id,
+        created_at,
+        events (
+          title,
+          location,
+          date
+        )
+      `)
+      .eq('user_id', userId)
+      .order('created_at', { ascending: false });
+
+    if (data) {
+      setHistory(data);
+    }
+    setLoadingHistory(false);
+  };
+
+  useEffect(() => {
+    fetchHistory();
+  }, []);
 
   useEffect(() => {
     if (scanning && !scannerRef.current) {
@@ -115,8 +145,14 @@ export default function JoinEventPage() {
 
                   // 4. Create Notification
                   await supabase.from('notifications').insert([
-                     { text: `✅ Entry Verified: Joined "${data.title}". Earned 10 merit points. Current Rank: ${newTier}.`, type: 'success' }
+                     { 
+                       text: `✅ Entry Verified: Joined "${data.title}". Earned 10 merit points. Current Rank: ${newTier}.`, 
+                       type: 'success',
+                       user_id: userId // Add user_id so it's private
+                     }
                   ]);
+
+                  fetchHistory(); // Refresh archives
 
                   setResult({ 
                     status: 'success', 
@@ -306,7 +342,11 @@ export default function JoinEventPage() {
                  </div>
               </CardHeader>
               <CardContent className="px-10 pb-12">
-                 {history.length === 0 ? (
+                 {loadingHistory ? (
+                   <div className="py-24 flex items-center justify-center">
+                     <Loader2 className="h-8 w-8 animate-spin text-slate-200" />
+                   </div>
+                 ) : history.length === 0 ? (
                    <div className="py-24 text-center space-y-8 overflow-hidden">
                       <div className="relative inline-block">
                         <div className="h-32 w-32 rounded-[3.5rem] bg-slate-50 shadow-inner flex items-center justify-center mx-auto border border-slate-100">
@@ -320,12 +360,30 @@ export default function JoinEventPage() {
                    </div>
                  ) : (
                    <div className="space-y-6">
+                      {history.map((item) => (
+                        <div key={item.id} className="p-6 rounded-[2rem] bg-slate-50 border border-slate-100 group hover:bg-white hover:shadow-xl transition-all duration-500">
+                           <div className="flex justify-between items-start mb-4">
+                              <Badge variant="outline" className="font-black text-[8px] uppercase tracking-widest px-3 py-1 rounded-lg border-primary/20 text-primary">Synchronized</Badge>
+                              <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">{new Date(item.created_at).toLocaleDateString()}</span>
+                           </div>
+                           <h4 className="font-black text-slate-900 tracking-tight text-lg leading-none mb-2">{item.events?.title || 'Unknown Event'}</h4>
+                           <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">{item.events?.location || 'RIT Node'}</p>
+                        </div>
+                      ))}
                    </div>
                  )}
-                 <Button disabled variant="ghost" className="w-full rounded-2xl h-16 font-black text-[10px] uppercase tracking-[0.3em] opacity-40 border border-white/5 mt-6 group text-slate-600">
-                    <History size={16} className="group-hover:rotate-[-45deg] transition-transform mr-3" />
-                    Archives Locked
-                 </Button>
+                  {history.length > 0 && (
+                    <div className="flex items-center gap-2 p-4 bg-slate-50 rounded-2xl border border-slate-100 mt-6">
+                      <History size={14} className="text-slate-400" />
+                      <span className="text-[9px] font-black uppercase tracking-widest text-slate-400">Archival Registry Verified</span>
+                    </div>
+                  )}
+                  {history.length === 0 && (
+                    <Button disabled variant="ghost" className="w-full rounded-2xl h-16 font-black text-[10px] uppercase tracking-[0.3em] opacity-40 border border-white/5 mt-6 group text-slate-600">
+                        <History size={16} className="group-hover:rotate-[-45deg] transition-transform mr-3" />
+                        Archives Locked
+                    </Button>
+                  )}
               </CardContent>
            </Card>
         </div>

@@ -57,6 +57,7 @@ export function RootWrapper({ children }: { children: React.ReactNode }) {
        const { data } = await supabase
          .from('notifications')
          .select('*')
+         .or(`user_id.is.null,user_id.eq.${s}`)
          .order('created_at', { ascending: false })
          .limit(20);
        
@@ -79,6 +80,8 @@ export function RootWrapper({ children }: { children: React.ReactNode }) {
         { event: 'INSERT', table: 'notifications', schema: 'public' }, 
         (payload: RealtimePostgresInsertPayload<any>) => {
           const newN = payload.new as any;
+          if (newN.user_id && newN.user_id !== s) return; // Skip private notifications for others
+          
           setNotifications(prev => [{
             id: newN.id,
             text: newN.text,
@@ -100,9 +103,19 @@ export function RootWrapper({ children }: { children: React.ReactNode }) {
     setNotifications(prev => prev.map(n => ({ ...n, read: true })));
     
     // 2. Update Cloud
+    const s = document.cookie.split("; ").find(row => row.startsWith("gfg_session="))?.split("=")[1];
+    if (!s) return;
+
     await supabase
       .from('notifications')
       .update({ read: true })
+      .match({ user_id: s, read: false });
+    
+    // Also mark global ones as read for this user session locally (in a real app you'd track this per user)
+    await supabase
+      .from('notifications')
+      .update({ read: true })
+      .filter('user_id', 'is', null)
       .eq('read', false);
   };
 
