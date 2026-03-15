@@ -154,22 +154,24 @@ export default function AdminDashboard() {
             <CardContent className="p-0">
                <div className="divide-y divide-slate-100">
                    {leaderboard.length > 0 ? leaderboard.map((user) => (
-                    <div key={user.id} className="p-8 sm:p-10 flex items-center justify-between hover:bg-slate-50/50 transition-all duration-500 group/item">
-                       <div className="flex items-center gap-6 sm:gap-8">
-                          <div className="h-12 w-12 sm:h-16 sm:w-16 rounded-2xl bg-slate-50 flex items-center justify-center font-black text-slate-400 border border-slate-100 shrink-0 text-sm sm:text-xl group-hover/item:text-primary transition-colors">
+                    <div key={user.id} className="p-6 sm:p-10 flex flex-col sm:flex-row items-start sm:items-center justify-between hover:bg-slate-50/50 transition-all duration-500 group/item gap-6">
+                       <div className="flex items-center gap-4 sm:gap-8 w-full sm:w-auto">
+                          <div className="h-10 w-10 sm:h-16 sm:w-16 rounded-2xl bg-slate-50 flex items-center justify-center font-black text-slate-400 border border-slate-100 shrink-0 text-xs sm:text-xl group-hover/item:text-primary transition-colors">
                              #{user.rank}
                           </div>
-                          <div className="h-12 w-12 sm:h-16 sm:w-16 rounded-full bg-primary/5 flex items-center justify-center text-primary font-black shrink-0 text-sm sm:text-2xl border border-primary/10">
+                          <div className="h-10 w-10 sm:h-16 sm:w-16 rounded-full bg-primary/5 flex items-center justify-center text-primary font-black shrink-0 text-xs sm:text-2xl border border-primary/10">
                              {user.avatar}
                           </div>
-                          <div className="overflow-hidden">
-                             <p className="text-xl sm:text-2xl font-black text-slate-900 leading-none truncate mb-2 group-hover/item:text-primary transition-colors">{user.name}</p>
-                             <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] mt-1">Geek Member Node</p>
+                          <div className="overflow-hidden flex-1 sm:flex-none">
+                             <p className="text-lg sm:text-2xl font-black text-slate-900 leading-none truncate mb-2 group-hover/item:text-primary transition-colors">{user.name}</p>
+                             <p className="text-[9px] sm:text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] mt-1">Geek Member Node</p>
                           </div>
                        </div>
-                        <div className="text-right">
-                           <p className="text-3xl sm:text-4xl font-black text-primary tracking-tighter tabular-nums leading-none drop-shadow-[0_0_15px_rgba(47,141,70,0.2)]">{user.points}</p>
-                           <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mt-3">Points</p>
+                        <div className="flex flex-row sm:flex-col items-center sm:items-end justify-between sm:justify-center w-full sm:w-auto pt-4 sm:pt-0 border-t sm:border-t-0 border-slate-50">
+                           <div className="sm:text-right">
+                              <p className="text-2xl sm:text-4xl font-black text-primary tracking-tighter tabular-nums leading-none drop-shadow-[0_0_15px_rgba(47,141,70,0.2)]">{user.points}</p>
+                              <p className="text-[9px] sm:text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mt-2 sm:mt-3">Points</p>
+                           </div>
                         </div>
                     </div>
                   )) : (

@@ -43,6 +43,7 @@ export default function LoginPage() {
       router.push(role === 'admin' ? "/admin" : "/dashboard");
       router.refresh();
     } catch (err: any) {
+      console.error("Login Error:", err);
       setIsLoading(false);
       setError(err.message || "Authentication failed.");
     }

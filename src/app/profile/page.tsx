@@ -140,8 +140,8 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="max-w-5xl mx-auto py-4 sm:py-8 space-y-12 pb-24 px-4 sm:px-0">
-      <div className="flex flex-col items-center lg:items-start lg:flex-row gap-8 sm:gap-16 mb-12 sm:mb-20 bg-white p-8 sm:p-16 rounded-[3rem] sm:rounded-[5rem] shadow-[0_40px_100px_rgba(0,0,0,0.04)] border border-slate-100 relative overflow-hidden text-center lg:text-left">
+    <div className="max-w-5xl mx-auto py-4 sm:py-8 space-y-8 sm:y-12 pb-24 px-4 sm:px-0">
+      <div className="flex flex-col items-center lg:items-start lg:flex-row gap-8 sm:gap-16 mb-8 sm:mb-20 bg-white p-6 sm:p-16 rounded-[2rem] sm:rounded-[5rem] shadow-[0_40px_100px_rgba(0,0,0,0.04)] border border-slate-100 relative overflow-hidden text-center lg:text-left">
         {/* Background Accent */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         <div className="absolute top-0 right-0 p-12 opacity-[0.03] pointer-events-none translate-x-1/4 translate-y-[-20%]">
@@ -228,8 +228,8 @@ export default function ProfilePage() {
                   </div>
                </div>
             </CardHeader>
-            <CardContent className="p-10 sm:p-12 space-y-12">
-               <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+            <CardContent className="p-6 sm:p-12 space-y-8 sm:space-y-12">
+               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10">
                   <div className="space-y-4">
                      <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary ml-1">Full Signature (Name)</Label>
                       <div className="relative group">
@@ -293,7 +293,7 @@ export default function ProfilePage() {
                   </div>
                </div>
             </CardHeader>
-            <CardContent className="p-10 sm:p-12 space-y-12">
+            <CardContent className="p-6 sm:p-12 space-y-8 sm:space-y-12">
                <div className="space-y-4">
                   <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary ml-1">Core Expertise (comma separated)</Label>
                   <Input 
@@ -304,7 +304,7 @@ export default function ProfilePage() {
                   />
                </div>
   
-               <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10">
                   <div className="space-y-4">
                      <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary ml-1">GitHub Endpoint</Label>
                      <div className="relative group">

@@ -43,7 +43,7 @@ BEGIN
         ALTER TABLE profiles ADD COLUMN bio TEXT;
     END IF;
     IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='profiles' AND column_name='username') THEN
-        ALTER TABLE profiles ADD COLUMN username TEXT;
+        ALTER TABLE profiles ADD COLUMN username TEXT UNIQUE;
     END IF;
     IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='profiles' AND column_name='core_expertise') THEN
         ALTER TABLE profiles ADD COLUMN core_expertise TEXT;
