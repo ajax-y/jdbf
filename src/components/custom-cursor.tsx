@@ -27,19 +27,19 @@ export function CustomCursor() {
       mouseY.set(e.clientY);
 
       // Add a sparkly particle
-      if (Math.random() > 0.7) { // Rate limit sparkles
-        const id = Date.now();
-        const size = Math.random() * 15 + 5;
-        // Add some localized randomness to position
-        const x = e.clientX + (Math.random() - 0.5) * 20;
-        const y = e.clientY + (Math.random() - 0.5) * 20;
+      if (Math.random() > 0.2) { // More frequent sparkles for a long tail
+        const id = Math.random();
+        const size = Math.random() * 10 + 2;
+        // Subtle random offset for a vapor-like trail
+        const x = e.clientX + (Math.random() - 0.5) * 10;
+        const y = e.clientY + (Math.random() - 0.5) * 10;
         
-        setSparkles(prev => [...prev.slice(-15), { id, x, y, size }]);
+        setSparkles(prev => [...prev.slice(-60), { id, x, y, size }]); // Keep more particles
         
-        // Auto-remove after animation
+        // Auto-remove after longer duration
         setTimeout(() => {
           setSparkles(prev => prev.filter(s => s.id !== id));
-        }, 800);
+        }, 1500);
       }
       
       const target = e.target as HTMLElement;
@@ -73,7 +73,8 @@ export function CustomCursor() {
           <motion.div
             key={s.id}
             initial={{ opacity: 1, scale: 0, rotate: 0 }}
-            animate={{ opacity: 0, scale: 1.5, rotate: 180 }}
+            animate={{ opacity: 0, scale: 1.2, rotate: 270, y: s.y + 20 }} // Slight downward drift
+            transition={{ duration: 1.5, ease: "easeOut" }}
             exit={{ opacity: 0 }}
             className="fixed top-0 left-0 text-primary pointer-events-none z-[9998] hidden lg:block"
             style={{
