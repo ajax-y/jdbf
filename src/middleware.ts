@@ -4,8 +4,9 @@ import type { NextRequest } from "next/server";
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   
-  // 1. Get the session cookie
+  // 1. Get the cookies
   const session = request.cookies.get("gfg_session");
+  const role = request.cookies.get("gfg_role");
 
   // 2. Define protected routes
   const isProtectedRoute = 
@@ -20,14 +21,14 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/", request.url));
   }
 
-  // 4. Admin Guard: Only 'admin' session can access /admin
-  if (pathname.startsWith("/admin") && session?.value !== "admin") {
+  // 4. Admin Guard: Only 'admin' role can access /admin
+  if (pathname.startsWith("/admin") && role?.value !== "admin") {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
-  // 5. Prevent double login: Redirect to dashboard if logged in and trying to access /
+  // 5. Prevent double login: Redirect if logged in and trying to access /
   if (pathname === "/" && session) {
-    return NextResponse.redirect(new URL(session.value === "admin" ? "/admin" : "/dashboard", request.url));
+    return NextResponse.redirect(new URL(role?.value === "admin" ? "/admin" : "/dashboard", request.url));
   }
 
   return NextResponse.next();
