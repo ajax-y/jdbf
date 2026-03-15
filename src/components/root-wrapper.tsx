@@ -35,8 +35,9 @@ export function RootWrapper({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const checkSession = () => {
       const s = document.cookie.split("; ").find(row => row.startsWith("gfg_session="))?.split("=")[1];
+      const r = document.cookie.split("; ").find(row => row.startsWith("gfg_role="))?.split("=")[1];
       setSession(s || null);
-      setIsAdmin(s === "admin");
+      setIsAdmin(r === "admin");
     };
     checkSession();
   }, [pathname]);
@@ -203,6 +204,7 @@ export function RootWrapper({ children }: { children: React.ReactNode }) {
                         <DropdownMenuItem 
                           onClick={() => {
                             document.cookie = "gfg_session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+                            document.cookie = "gfg_role=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
                             window.location.href = "/";
                           }} 
                           className="rounded-xl cursor-pointer py-3.5 px-4 text-rose-400 focus:text-rose-400 focus:bg-rose-500/10 font-black gap-3"

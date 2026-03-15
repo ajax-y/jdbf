@@ -59,11 +59,11 @@ export function AppSidebar() {
   const [sessionUser, setSessionUser] = useState<{name: string, role: string}>({ name: 'Guest', role: 'Member' });
 
   useEffect(() => {
-    const session = document.cookie.split("; ").find(row => row.startsWith("gfg_session="))?.split("=")[1];
-    if (session === "admin") {
+    const role = document.cookie.split("; ").find(row => row.startsWith("gfg_role="))?.split("=")[1];
+    if (role === "admin") {
       setIsAdmin(true);
       setSessionUser({ name: 'Admin Node', role: 'System Admin' });
-    } else if (session === "user") {
+    } else {
       setIsAdmin(false);
       setSessionUser({ name: 'Geek Member', role: 'Gold Tier' });
     }
@@ -71,6 +71,7 @@ export function AppSidebar() {
 
   const handleLogout = () => {
     document.cookie = "gfg_session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    document.cookie = "gfg_role=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
     router.push("/");
     setTimeout(() => window.location.reload(), 100);
   };
