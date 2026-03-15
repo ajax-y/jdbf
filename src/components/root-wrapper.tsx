@@ -146,7 +146,11 @@ export function RootWrapper({ children }: { children: React.ReactNode }) {
                </div>
                
                <div className="flex items-center gap-4">
-                  <DropdownMenu onOpenChange={(open) => open && markAllAsRead()}>
+                  <DropdownMenu onOpenChange={(open) => {
+                    if (open) {
+                      setTimeout(markAllAsRead, 0);
+                    }
+                  }}>
                     <DropdownMenuTrigger render={
                       <Button variant="ghost" size="icon-sm" className="h-12 w-12 rounded-2xl bg-slate-100 border border-transparent shadow-sm text-slate-500 hover:text-primary transition-all relative outline-none focus:ring-0">
                          <Bell size={22} />
