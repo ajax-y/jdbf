@@ -17,15 +17,20 @@ function DropdownMenuPortal({ ...props }: MenuPrimitive.Portal.Props) {
 
 function DropdownMenuTrigger({
   className,
+  render,
   ...props
-}: MenuPrimitive.Trigger.Props) {
-  return (
-    <MenuPrimitive.Trigger
-      data-slot="dropdown-menu-trigger"
-      className={cn(className)}
-      {...props}
-    />
-  )
+}: MenuPrimitive.Trigger.Props & { render?: React.ReactElement }) {
+  return useRender({
+    defaultTagName: "button",
+    props: mergeProps(
+      {
+        className: cn(className),
+        "data-slot": "dropdown-menu-trigger",
+      },
+      props
+    ),
+    render,
+  })
 }
 
 function DropdownMenuContent({

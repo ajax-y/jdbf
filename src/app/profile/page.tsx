@@ -29,6 +29,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
+import { useRef } from "react";
 
 export default function ProfilePage() {
   const [loading, setLoading] = useState(true);
@@ -43,6 +44,8 @@ export default function ProfilePage() {
     github_link: "",
     contact_info: ""
   });
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [uploading, setUploading] = useState(false);
 
   const fetchProfile = async () => {
     const userId = document.cookie.split("; ").find(row => row.startsWith("gfg_session="))?.split("=")[1];
@@ -89,6 +92,45 @@ export default function ProfilePage() {
     setSaving(false);
   };
 
+  const handleAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploading(true);
+    try {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${profile.id}-${Math.random()}.${fileExt}`;
+      const filePath = `${fileName}`;
+
+      // 1. Upload to Supabase Storage
+      const { error: uploadError } = await supabase.storage
+        .from('avatars')
+        .upload(filePath, file);
+
+      if (uploadError) throw uploadError;
+
+      // 2. Get Public URL
+      const { data: { publicUrl } } = supabase.storage
+        .from('avatars')
+        .getPublicUrl(filePath);
+
+      // 3. Update Profile in Database
+      const { error: updateError } = await supabase
+        .from('profiles')
+        .update({ avatar_url: publicUrl })
+        .eq('id', profile.id);
+
+      if (updateError) throw updateError;
+
+      alert("Profile picture updated!");
+      fetchProfile();
+    } catch (error: any) {
+      alert("Error uploading: " + error.message);
+    } finally {
+      setUploading(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="h-full min-h-[400px] flex items-center justify-center">
@@ -122,8 +164,19 @@ export default function ProfilePage() {
               {profile?.full_name?.charAt(0)}
             </AvatarFallback>
           </Avatar>
-          <button className="absolute bottom-4 right-4 p-5 bg-primary text-white rounded-2xl shadow-2xl hover:scale-110 active:scale-95 transition-all shadow-primary/30">
-             <Camera size={24} />
+          <input 
+            type="file" 
+            ref={fileInputRef} 
+            className="hidden" 
+            accept="image/*"
+            onChange={handleAvatarUpload}
+          />
+          <button 
+            onClick={() => fileInputRef.current?.click()}
+            disabled={uploading}
+            className="absolute bottom-4 right-4 p-5 bg-primary text-white rounded-2xl shadow-2xl hover:scale-110 active:scale-95 transition-all shadow-primary/30 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+             {uploading ? <Loader2 size={24} className="animate-spin" /> : <Camera size={24} />}
           </button>
         </motion.div>
         

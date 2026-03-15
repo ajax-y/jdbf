@@ -172,31 +172,37 @@ export function RootWrapper({ children }: { children: React.ReactNode }) {
                        </div>
                        <DropdownMenuSeparator className="m-0 border-slate-100" />
                        <div className="p-5 bg-slate-50/30 text-center">
-                          <Button variant="ghost" className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500 hover:text-primary transition-all p-0 h-auto">Clear All History</Button>
+                          <Button 
+                            variant="ghost" 
+                            onClick={() => setNotifications([])}
+                            className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500 hover:text-primary transition-all p-0 h-auto"
+                          >
+                            Clear All History
+                          </Button>
                        </div>
                     </DropdownMenuContent>
                  </DropdownMenu>
 
                  <div className="flex items-center gap-3 pl-4 border-l border-white/5">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger render={
-                         <Button variant="ghost" className="flex items-center gap-3 h-auto p-1.5 pr-2 sm:pr-3 hover:bg-white/5 rounded-2xl transition-all outline-none focus:ring-0">
-                           <div className="text-right hidden sm:block">
-                              <p className="text-xs font-black text-slate-900 leading-none">
-                                {isAdmin ? 'Admin Node' : 'Geek Member'}
-                              </p>
-                              <p className="text-[8px] font-black uppercase tracking-widest text-primary mt-1">
-                                {isAdmin ? 'System Admin' : (userProfile?.tier || 'Bronze') + ' Tier'}
-                              </p>
-                           </div>
-                          <Avatar className="h-10 w-10 ring-2 ring-primary/10 shadow-sm">
-                            <AvatarImage src="" />
-                            <AvatarFallback className="bg-primary/10 text-primary font-black text-xs">
-                              {isAdmin ? 'AD' : 'GM'}
-                            </AvatarFallback>
-                          </Avatar>
-                        </Button>
-                      } />
+                     <DropdownMenu>
+                       <DropdownMenuTrigger render={
+                          <Button variant="ghost" className="flex items-center gap-3 h-auto p-1.5 pr-2 sm:pr-3 hover:bg-white/5 rounded-2xl transition-all outline-none focus:ring-0">
+                            <div className="text-right hidden sm:block">
+                               <p className="text-xs font-black text-slate-900 leading-none">
+                                 {isAdmin ? 'Admin Node' : 'Geek Member'}
+                               </p>
+                               <p className="text-[8px] font-black uppercase tracking-widest text-primary mt-1">
+                                 {isAdmin ? 'System Admin' : (userProfile?.tier || 'Bronze') + ' Tier'}
+                               </p>
+                            </div>
+                           <Avatar className="h-10 w-10 ring-2 ring-primary/10 shadow-sm">
+                             <AvatarImage src={userProfile?.avatar_url} />
+                             <AvatarFallback className="bg-primary/10 text-primary font-black text-xs">
+                               {(userProfile?.full_name || 'G').charAt(0)}
+                             </AvatarFallback>
+                           </Avatar>
+                         </Button>
+                       } />
                        <DropdownMenuContent className="w-56 rounded-[1.5rem] p-2 border-slate-200 bg-white shadow-2xl text-slate-900" align="end" side="bottom" sideOffset={12}>
                         <Link href="/profile">
                           <DropdownMenuItem className="rounded-xl cursor-pointer py-3.5 px-4 hover:bg-white/5 transition-colors gap-3">
