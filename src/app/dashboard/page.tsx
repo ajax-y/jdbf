@@ -25,14 +25,19 @@ import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 
 export default function UserDashboard() {
+  const [isMounted, setIsMounted] = useState(false);
   const [profile, setProfile] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [leaderboard, setLeaderboard] = useState<any[]>([]);
 
   useEffect(() => {
+    setIsMounted(true);
     async function fetchData() {
       const session = document.cookie.split("; ").find(row => row.startsWith("gfg_session="))?.split("=")[1];
-      if (!session) return;
+      if (!session) {
+        setIsLoading(false);
+        return;
+      }
       
       // 1. Fetch Profile
       const { data: profileData } = await supabase
@@ -78,6 +83,8 @@ export default function UserDashboard() {
     }
     fetchData();
   }, []);
+
+  if (!isMounted) return null;
 
   const metrics = [
     {
