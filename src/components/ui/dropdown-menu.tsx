@@ -17,14 +17,12 @@ function DropdownMenuPortal({ ...props }: MenuPrimitive.Portal.Props) {
 
 function DropdownMenuTrigger({
   className,
-  render,
   ...props
 }: MenuPrimitive.Trigger.Props) {
   return (
     <MenuPrimitive.Trigger
       data-slot="dropdown-menu-trigger"
       className={cn(className)}
-      render={render}
       {...props}
     />
   )

@@ -123,7 +123,7 @@ export function RootWrapper({ children }: { children: React.ReactNode }) {
       .eq('read', false);
   };
 
-  const unreadCount = notifications.filter(n => !n.read).length;
+  const unreadCount = Number(notifications.filter(n => !n.read).length);
 
   if (isAuthPage || !session) {
     return <div className="min-h-screen w-full bg-slate-50">{children}</div>;
@@ -164,11 +164,7 @@ export function RootWrapper({ children }: { children: React.ReactNode }) {
                </div>
                
                <div className="flex items-center gap-4">
-                  <DropdownMenu onOpenChange={(open) => {
-                    if (open) {
-                      setTimeout(markAllAsRead, 0);
-                    }
-                  }}>
+                  <DropdownMenu>
                     <DropdownMenuTrigger render={
                       <Button variant="ghost" size="icon-sm" className="h-12 w-12 rounded-2xl bg-slate-100 border border-transparent shadow-sm text-slate-500 hover:text-primary transition-all relative outline-none focus:ring-0">
                          <Bell size={22} />
@@ -178,7 +174,12 @@ export function RootWrapper({ children }: { children: React.ReactNode }) {
                     <DropdownMenuContent className="w-96 p-0 rounded-[2.5rem] border-slate-200 bg-white shadow-2xl mr-4 overflow-hidden text-slate-900" align="end">
                        <div className="p-8 border-b border-slate-50 flex justify-between items-center bg-slate-50/50">
                          <DropdownMenuLabel className="font-black text-xs uppercase tracking-[0.2em] text-slate-900 p-0">Notifications</DropdownMenuLabel>
-                         {unreadCount > 0 && <Badge className="bg-primary text-white h-6 px-2.5 min-w-6 flex items-center justify-center text-[10px] rounded-full border-none font-black">{unreadCount}</Badge>}
+                         <div className="flex items-center gap-3">
+                           {unreadCount > 0 && (
+                             <Button onClick={markAllAsRead} variant="ghost" className="h-6 px-2 text-[8px] uppercase tracking-widest font-black text-primary hover:bg-primary/5 rounded-full">Mark all Read</Button>
+                           )}
+                           {unreadCount > 0 && <Badge className="bg-primary text-white h-6 px-2.5 min-w-6 flex items-center justify-center text-[10px] rounded-full border-none font-black">{unreadCount.toString()}</Badge>}
+                         </div>
                        </div>
                        <div className="max-h-[400px] overflow-y-auto p-3 no-scrollbar space-y-2">
                           {notifications.length === 0 ? (
@@ -186,8 +187,8 @@ export function RootWrapper({ children }: { children: React.ReactNode }) {
                           ) : (
                             notifications.map((n: any) => (
                               <div key={n.id} className={`p-5 rounded-[1.5rem] transition-all ${n.read ? 'hover:bg-slate-50' : 'bg-primary/5 border border-primary/10'}`}>
-                                 <p className="text-sm font-bold text-slate-800 leading-relaxed">{n.text}</p>
-                                 <p className="text-[10px] text-slate-500 uppercase font-black tracking-widest mt-3">{n.time}</p>
+                                 <p className="text-sm font-bold text-slate-800 leading-relaxed">{`${n.text || ''}`}</p>
+                                 <p className="text-[10px] text-slate-500 uppercase font-black tracking-widest mt-3">{`${n.time || ''}`}</p>
                               </div>
                             ))
                           )}
@@ -214,7 +215,7 @@ export function RootWrapper({ children }: { children: React.ReactNode }) {
                                  {isAdmin ? 'Admin Node' : 'Geek Member'}
                                </p>
                                <p className="text-[8px] font-black uppercase tracking-widest text-primary mt-1">
-                                 {isAdmin ? 'System Admin' : (userProfile?.tier || 'Bronze') + ' Tier'}
+                                 {`${isAdmin ? 'System Admin' : (userProfile?.tier || 'Bronze') + ' Tier'}`}
                                </p>
                             </div>
                            <Avatar className="h-10 w-10 ring-2 ring-primary/10 shadow-sm">
@@ -226,14 +227,12 @@ export function RootWrapper({ children }: { children: React.ReactNode }) {
                          </Button>
                        } />
                        <DropdownMenuContent className="w-56 rounded-[1.5rem] p-2 border-slate-200 bg-white shadow-2xl text-slate-900" align="end" side="bottom" sideOffset={12}>
-                        <Link href="/profile">
-                          <DropdownMenuItem className="rounded-xl cursor-pointer py-3.5 px-4 hover:bg-white/5 transition-colors gap-3">
+                        <DropdownMenuItem className="rounded-xl cursor-pointer py-3.5 px-4 hover:bg-white/5 transition-colors gap-3" render={<Link href="/profile" />}>
                              <div className="h-8 w-8 rounded-lg bg-white/5 flex items-center justify-center text-slate-400">
                                 <User size={16} />
                              </div>
                              <span className="font-bold text-sm text-slate-700">Edit Profile</span>
-                          </DropdownMenuItem>
-                        </Link>
+                        </DropdownMenuItem>
                         <DropdownMenuSeparator className="my-1 opacity-5 mx-2 bg-white" />
                         <DropdownMenuItem 
                           onClick={() => {
