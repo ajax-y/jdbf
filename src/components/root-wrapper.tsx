@@ -23,6 +23,7 @@ import type { RealtimePostgresInsertPayload } from "@supabase/supabase-js";
 import Link from "next/link";
 import { User, LogOut } from "lucide-react";
 import { CustomCursor } from "@/components/custom-cursor";
+import { Toaster, toast } from "@/components/ui/toaster";
 
 export function RootWrapper({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -82,6 +83,9 @@ export function RootWrapper({ children }: { children: React.ReactNode }) {
           const newN = payload.new as any;
           if (newN.user_id && newN.user_id !== s) return; // Skip private notifications for others
           
+          // Trigger Global Toast
+          toast(newN.text, newN.type as any || 'info');
+
           setNotifications(prev => [{
             id: newN.id,
             text: newN.text,
@@ -128,6 +132,7 @@ export function RootWrapper({ children }: { children: React.ReactNode }) {
   return (
     <TooltipProvider>
       <CustomCursor />
+      <Toaster />
       <SidebarProvider defaultOpen={false}>
         <div className="flex min-h-screen w-full relative bg-[#f8fafc] text-slate-900 selection:bg-primary/20">
           <AppSidebar />

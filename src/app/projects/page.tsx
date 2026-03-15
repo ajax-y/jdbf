@@ -29,6 +29,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { toast } from "@/components/ui/toaster";
 
 export default function ProjectGalleryPage() {
   const [projects, setProjects] = useState<any[]>([]);
@@ -86,7 +87,7 @@ export default function ProjectGalleryPage() {
 
   const handleShare = (projectId: string) => {
     navigator.clipboard.writeText(`${window.location.origin}/projects/${projectId}`);
-    alert("Project link copied to clipboard.");
+    toast("Project link copied to clipboard.", "success");
   };
 
   const filteredProjects = projects.filter(p => 
