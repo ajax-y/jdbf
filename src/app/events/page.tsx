@@ -110,21 +110,21 @@ export default function JoinEventPage() {
 
   return (
     <div className="max-w-7xl mx-auto space-y-12 pb-24 px-4 sm:px-0">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 bg-white p-12 sm:p-20 rounded-[4rem] text-slate-900 shadow-[0_40px_100px_rgba(0,0,0,0.04)] relative overflow-hidden border border-slate-100">
-        <div className="relative z-10 flex-1 overflow-hidden">
+      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-10 bg-white p-12 sm:p-20 rounded-[4rem] text-slate-900 shadow-[0_40px_100px_rgba(0,0,0,0.04)] relative overflow-hidden border border-slate-100">
+        <div className="relative z-10 flex-1 min-w-0">
           <Badge className="bg-primary/10 text-primary border border-primary/20 font-black text-[10px] uppercase tracking-[0.3em] px-5 py-2 rounded-full mb-8 sm:mb-10 block w-fit">Attendance Link</Badge>
-          <h1 className="text-4xl sm:text-5xl md:text-8xl font-black tracking-tighter mb-6 sm:mb-8 leading-none text-slate-900">
+          <h1 className="text-5xl md:text-7xl xl:text-8xl font-black tracking-tighter mb-6 sm:mb-8 leading-[0.9] text-slate-900 break-words">
             Live <span className="text-primary italic">Events.</span>
           </h1>
           <p className="text-lg sm:text-xl font-bold text-slate-600 max-w-xl leading-relaxed uppercase tracking-widest">
             Scan the verified session token to establish your participation node and synchronize merit points.
           </p>
         </div>
-        <div className="relative z-10 w-full md:w-auto">
+        <div className="relative z-10 w-full lg:w-auto shrink-0 mt-8 lg:mt-0">
            {!scanning ? (
              <Button 
                onClick={startScanner}
-               className="w-full sm:w-auto h-24 rounded-[3rem] px-16 font-black text-xs uppercase tracking-[0.2em] gap-5 shadow-2xl shadow-primary/20 bg-primary text-white hover:scale-[1.05] active:scale-95 transition-all outline-none border-none ring-offset-[#0a0b14] focus-visible:ring-primary"
+               className="w-full lg:w-auto h-24 rounded-[3rem] px-16 font-black text-xs uppercase tracking-[0.2em] gap-5 shadow-2xl shadow-primary/20 bg-primary text-white hover:scale-[1.05] active:scale-95 transition-all outline-none border-none ring-offset-[#0a0b14] focus-visible:ring-primary"
              >
                 <Camera size={28} strokeWidth={2.5} />
                 Open Scanners
@@ -133,7 +133,7 @@ export default function JoinEventPage() {
              <Button 
                variant="ghost"
                onClick={stopScanner}
-                className="w-full sm:w-auto h-20 rounded-[2.5rem] px-12 font-black text-xs uppercase tracking-[0.2em] gap-3 bg-slate-100 text-slate-600 border border-slate-200 hover:bg-slate-200 transition-all shadow-sm"
+                className="w-full lg:w-auto h-20 rounded-[2.5rem] px-12 font-black text-xs uppercase tracking-[0.2em] gap-3 bg-slate-100 text-slate-600 border border-slate-200 hover:bg-slate-200 transition-all shadow-sm"
              >
                 <XCircle size={24} />
                 Close Relay
