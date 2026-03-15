@@ -13,6 +13,7 @@ import { Badge } from "@/components/ui/badge";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -173,7 +174,9 @@ export function RootWrapper({ children }: { children: React.ReactNode }) {
                     } />
                     <DropdownMenuContent className="w-96 p-0 rounded-[2.5rem] border-slate-200 bg-white shadow-2xl mr-4 overflow-hidden text-slate-900" align="end">
                        <div className="p-8 border-b border-slate-50 flex justify-between items-center bg-slate-50/50">
-                         <DropdownMenuLabel className="font-black text-xs uppercase tracking-[0.2em] text-slate-900 p-0">Notifications</DropdownMenuLabel>
+                         <DropdownMenuGroup>
+                           <DropdownMenuLabel className="font-black text-xs uppercase tracking-[0.2em] text-slate-900 p-0">Notifications</DropdownMenuLabel>
+                         </DropdownMenuGroup>
                          <div className="flex items-center gap-3">
                            {unreadCount > 0 && (
                              <Button onClick={markAllAsRead} variant="ghost" className="h-6 px-2 text-[8px] uppercase tracking-widest font-black text-primary hover:bg-primary/5 rounded-full">Mark all Read</Button>
