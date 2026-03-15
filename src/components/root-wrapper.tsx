@@ -37,6 +37,8 @@ export function RootWrapper({ children }: { children: React.ReactNode }) {
     setSession(s || null);
     setIsAdmin(s === "admin");
 
+    if (!s) return;
+
     // Load initial notifications from Cloud
     const loadNotifications = async () => {
        const { data } = await supabase
@@ -77,7 +79,7 @@ export function RootWrapper({ children }: { children: React.ReactNode }) {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [pathname]);
+  }, []); // Only run on mount to keep connection stable
 
   const markAllAsRead = async () => {
     // 1. Update local state

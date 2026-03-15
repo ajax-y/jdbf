@@ -73,6 +73,14 @@ export default function UserDashboard() {
           points: profileData.points || 0,
           rank: (rankCount || 0) + 1
         });
+      } else {
+        // Fallback for missing profile
+        setProfile({
+          full_name: "Member",
+          points: 0,
+          attendance_count: attendanceCount || 0,
+          rank: 0
+        });
       }
 
       if (leaders) {
