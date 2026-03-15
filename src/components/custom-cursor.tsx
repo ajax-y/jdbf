@@ -13,6 +13,10 @@ export function CustomCursor() {
   const cursorX = useSpring(mouseX, springConfig);
   const cursorY = useSpring(mouseY, springConfig);
 
+  const dotSpringConfig = { damping: 40, stiffness: 600 };
+  const dotX = useSpring(mouseX, dotSpringConfig);
+  const dotY = useSpring(mouseY, dotSpringConfig);
+
   useEffect(() => {
     setIsMounted(true);
     const handleMouseMove = (e: MouseEvent) => {
@@ -52,8 +56,8 @@ export function CustomCursor() {
       <motion.div
         className="fixed top-0 left-0 w-2 h-2 rounded-full bg-primary pointer-events-none z-[9999] hidden lg:block shadow-[0_0_10px_#2f8d46]"
         style={{
-          x: useSpring(mouseX, { damping: 40, stiffness: 600 }),
-          y: useSpring(mouseY, { damping: 40, stiffness: 600 }),
+          x: dotX,
+          y: dotY,
           translateX: "-50%",
           translateY: "-50%",
         }}

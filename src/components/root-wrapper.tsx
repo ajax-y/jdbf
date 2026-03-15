@@ -33,10 +33,16 @@ export function RootWrapper({ children }: { children: React.ReactNode }) {
   const [notifications, setNotifications] = useState<{id: string, text: string, time: string, read: boolean}[]>([]);
 
   useEffect(() => {
-    const s = document.cookie.split("; ").find(row => row.startsWith("gfg_session="))?.split("=")[1];
-    setSession(s || null);
-    setIsAdmin(s === "admin");
+    const checkSession = () => {
+      const s = document.cookie.split("; ").find(row => row.startsWith("gfg_session="))?.split("=")[1];
+      setSession(s || null);
+      setIsAdmin(s === "admin");
+    };
+    checkSession();
+  }, [pathname]);
 
+  useEffect(() => {
+    const s = document.cookie.split("; ").find(row => row.startsWith("gfg_session="))?.split("=")[1];
     if (!s) return;
 
     // Load initial notifications from Cloud
@@ -79,7 +85,8 @@ export function RootWrapper({ children }: { children: React.ReactNode }) {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, []); // Only run on mount to keep connection stable
+  }, []); 
+
 
   const markAllAsRead = async () => {
     // 1. Update local state
