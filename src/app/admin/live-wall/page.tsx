@@ -69,17 +69,17 @@ export default function LiveWallSelector() {
 
   return (
     <div className="max-w-7xl mx-auto space-y-12 pb-20 px-4 sm:px-0">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-10 mb-16">
-        <div>
-          <h1 className="text-5xl md:text-8xl font-black tracking-tighter text-slate-900 leading-none">
+      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 mb-16 relative">
+        <div className="flex-1 min-w-0">
+          <h1 className="text-5xl md:text-7xl xl:text-8xl font-black tracking-tighter text-slate-900 leading-[0.9] break-words">
             Attendance <span className="text-primary italic underline underline-offset-[12px] decoration-primary/20">Walls.</span>
           </h1>
-          <p className="text-slate-500 mt-10 text-xl font-bold max-w-2xl uppercase tracking-widest leading-relaxed">
+          <p className="text-slate-500 mt-8 text-lg md:text-xl font-bold max-w-2xl uppercase tracking-widest leading-relaxed">
             Monitor real-time participation feeds for your active nodes.
           </p>
         </div>
-        <Link href="/admin/create-event" className="w-full md:w-auto">
-           <Button className="w-full md:w-auto rounded-[2.5rem] h-20 px-12 font-black text-xs uppercase tracking-[0.2em] bg-primary text-white border-none shadow-[0_20px_40px_rgba(34,197,94,0.3)] hover:scale-[1.05] active:scale-95 transition-all">
+        <Link href="/admin/create-event" className="w-full lg:w-auto shrink-0">
+           <Button className="w-full lg:w-auto rounded-[2.5rem] h-20 px-12 font-black text-xs uppercase tracking-[0.2em] bg-primary text-white border-none shadow-[0_20px_40px_rgba(34,197,94,0.3)] hover:scale-[1.05] active:scale-95 transition-all">
               Initialize New Stream
            </Button>
         </Link>
