@@ -62,12 +62,12 @@ export default function LoginPage() {
           className="absolute bottom-[-15%] left-[-10%] w-[50%] h-[50%] bg-primary/5 blur-[120px] rounded-full"
         />
         <div className="absolute inset-0 opacity-[0.5]" style={{ backgroundImage: `radial-gradient(circle at 2px 2px, #cbd5e1 1.5px, transparent 0)`, backgroundSize: '48px 48px' }} />
-        <div className="absolute top-0 right-0 p-24 opacity-[0.03] pointer-events-none translate-x-1/4 translate-y-[-20%]">
+        <div className="absolute top-0 right-0 p-24 opacity-[0.1] text-primary pointer-events-none translate-x-1/4 translate-y-[-20%]">
           <motion.div
             animate={{ rotate: 360 }}
-            transition={{ duration: 80, repeat: Infinity, ease: "linear" }}
+            transition={{ duration: 100, repeat: Infinity, ease: "linear" }}
           >
-            <Sparkles size={600} />
+            <Sparkles size={800} fill="currentColor" />
           </motion.div>
         </div>
       </div>
@@ -89,14 +89,14 @@ export default function LoginPage() {
                    <img src="https://media.geeksforgeeks.org/gfg-gg-logo.svg" alt="GfG Logo" className="w-40 h-40 object-contain drop-shadow-[0_25px_50px_rgba(47,141,70,0.2)]" />
                 </motion.div>
                 {/* Vector Sparkles - Increased visibility */}
-                {[...Array(8)].map((_, i) => (
+                {[...Array(12)].map((_, i) => (
                   <motion.div
                     key={i}
                     animate={{ 
-                      scale: [1, 1.4, 1],
-                      opacity: [0.3, 0.8, 0.3],
+                      scale: [1, 1.5, 1],
+                      opacity: [0.4, 0.9, 0.4],
                     }}
-                    transition={{ duration: 3 + i, repeat: Infinity, delay: i * 0.4 }}
+                    transition={{ duration: 2 + i * 0.5, repeat: Infinity, delay: i * 0.3 }}
                     className="absolute text-primary"
                     style={{
                       top: `${Math.random() * 100}%`,
