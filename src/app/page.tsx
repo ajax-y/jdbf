@@ -61,7 +61,15 @@ export default function LoginPage() {
           transition={{ duration: 20, repeat: Infinity, ease: "easeInOut", delay: 2 }}
           className="absolute bottom-[-15%] left-[-10%] w-[50%] h-[50%] bg-primary/5 blur-[120px] rounded-full"
         />
-        <div className="absolute inset-0 opacity-[0.5]" style={{ backgroundImage: `radial-gradient(circle at 2px 2px, #e2e8f0 1.5px, transparent 0)`, backgroundSize: '48px 48px' }} />
+        <div className="absolute inset-0 opacity-[0.5]" style={{ backgroundImage: `radial-gradient(circle at 2px 2px, #cbd5e1 1.5px, transparent 0)`, backgroundSize: '48px 48px' }} />
+        <div className="absolute top-0 right-0 p-24 opacity-[0.03] pointer-events-none translate-x-1/4 translate-y-[-20%]">
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 80, repeat: Infinity, ease: "linear" }}
+          >
+            <Sparkles size={600} />
+          </motion.div>
+        </div>
       </div>
 
       <motion.div
@@ -80,29 +88,29 @@ export default function LoginPage() {
                >
                    <img src="https://media.geeksforgeeks.org/gfg-gg-logo.svg" alt="GfG Logo" className="w-40 h-40 object-contain drop-shadow-[0_25px_50px_rgba(47,141,70,0.2)]" />
                 </motion.div>
-                {/* Vector Sparkles */}
-                {[...Array(6)].map((_, i) => (
+                {/* Vector Sparkles - Increased visibility */}
+                {[...Array(8)].map((_, i) => (
                   <motion.div
                     key={i}
                     animate={{ 
-                      scale: [1, 1.3, 1],
-                      opacity: [0.2, 0.5, 0.2],
+                      scale: [1, 1.4, 1],
+                      opacity: [0.3, 0.8, 0.3],
                     }}
-                    transition={{ duration: 4 + i, repeat: Infinity, delay: i * 0.5 }}
-                    className="absolute text-primary/30"
+                    transition={{ duration: 3 + i, repeat: Infinity, delay: i * 0.4 }}
+                    className="absolute text-primary"
                     style={{
                       top: `${Math.random() * 100}%`,
                       left: `${Math.random() * 100}%`,
                       zIndex: 0
                     }}
                   >
-                    <Sparkles size={20 + Math.random() * 24} />
+                    <Sparkles size={16 + Math.random() * 20} fill="currentColor" />
                   </motion.div>
                 ))}
              </div>
              <h1 className="text-5xl font-black tracking-tight text-slate-900 mb-3 uppercase">Club Hub</h1>
              <p className="text-primary font-black text-[11px] uppercase tracking-[0.4em] mb-12">Authorized Node Access</p>
-        
+         
 
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
@@ -132,39 +140,29 @@ export default function LoginPage() {
               <div className="space-y-6">
                 <div className="space-y-4">
                   <div className="relative">
-                    <User className="absolute left-6 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400 group-focus-within:text-primary transition-colors" />
+                    <User className="absolute left-6 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-500 group-focus-within:text-primary transition-colors" />
                     <Input 
                       value={userId}
                       onChange={(e) => setUserId(e.target.value)}
                       placeholder="Ident-ID / Username" 
-                      className="h-16 rounded-[1.8rem] pl-16 bg-slate-50 border-slate-100 focus:border-primary/20 focus:bg-white font-bold text-slate-900 transition-all outline-none ring-0 placeholder:text-slate-300"
+                      className="h-16 rounded-[1.8rem] pl-16 bg-slate-50 border-slate-200 focus:border-primary/40 focus:bg-white font-bold text-slate-900 transition-all outline-none ring-0 placeholder:text-slate-400"
                       required
                     />
                   </div>
                 </div>
                 <div className="space-y-4">
                   <div className="relative">
-                    <Lock className="absolute left-6 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400 group-focus-within:text-primary transition-colors" />
+                    <Lock className="absolute left-6 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-500 group-focus-within:text-primary transition-colors" />
                     <Input 
                       type="password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="Security Token" 
-                      className="h-16 rounded-[1.8rem] pl-16 bg-slate-50 border-slate-100 focus:border-primary/20 focus:bg-white font-bold text-slate-900 transition-all outline-none ring-0 placeholder:text-slate-300"
+                      className="h-16 rounded-[1.8rem] pl-16 bg-slate-50 border-slate-200 focus:border-primary/40 focus:bg-white font-bold text-slate-900 transition-all outline-none ring-0 placeholder:text-slate-400"
                       required
                     />
                   </div>
                 </div>
-              </div>
-
-              <div className="flex items-center justify-between px-2">
-                 <label className="flex items-center gap-2 cursor-pointer group/check">
-                    <div className="h-5 w-5 rounded-lg border-2 border-white/10 flex items-center justify-center p-1 group-hover/check:border-primary/50 transition-colors">
-                       <div className="h-full w-full bg-primary rounded-[2px] opacity-0 group-hover/check:opacity-20" />
-                    </div>
-                    <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">Auto-Recall</span>
-                 </label>
-                 <button type="button" className="text-[10px] font-black uppercase tracking-widest text-primary/60 hover:text-primary transition-colors">D-Sync Request?</button>
               </div>
 
               <Button 
@@ -181,8 +179,8 @@ export default function LoginPage() {
           </div>
         </motion.div>
         
-        <p className="mt-12 text-center text-[10px] font-bold text-slate-600 uppercase tracking-[0.3em]">
-          Designed by <span className="text-slate-400">Vector Matrix</span> • Powered by <span className="text-primary italic">GeeksforGeeks</span>
+        <p className="mt-12 text-center text-[10px] font-black text-slate-500 uppercase tracking-[0.3em]">
+          Designed by <span className="text-slate-600">Vector Matrix</span> • Powered by <span className="text-primary italic">GeeksforGeeks</span>
         </p>
       </motion.div>
     </div>

@@ -102,7 +102,7 @@ export default function ProjectGalleryPage() {
           <h1 className="text-4xl sm:text-6xl lg:text-9xl font-black tracking-tighter mb-8 sm:mb-10 leading-none text-slate-900">
             Project <span className="text-primary italic underline underline-offset-[16px] decoration-primary/20">Gallery.</span>
           </h1>
-          <p className="text-lg font-bold text-slate-500 max-w-xl leading-relaxed uppercase tracking-widest text-xs sm:text-base">
+          <p className="text-lg font-bold text-slate-700 max-w-xl leading-relaxed uppercase tracking-widest text-xs sm:text-base">
             The decentralized archive of RIT Campus innovation. Explore the next generation of software engineering.
           </p>
         </div>
@@ -115,7 +115,9 @@ export default function ProjectGalleryPage() {
            </Link>
         </div>
         <div className="absolute top-0 right-0 p-8 opacity-[0.03] pointer-events-none translate-x-1/4 translate-y-[-10%]">
-           <Code2 size={600} />
+           <motion.div animate={{ rotate: 360 }} transition={{ duration: 60, repeat: Infinity, ease: 'linear' }}>
+              <Code2 size={600} />
+           </motion.div>
         </div>
       </div>
 
@@ -127,7 +129,7 @@ export default function ProjectGalleryPage() {
                     <Search size={28} className="text-primary" />
                  </div>
                  <CardTitle className="text-3xl font-black text-slate-900 tracking-tight">Curation Filter</CardTitle>
-                 <CardDescription className="font-bold text-slate-400 mt-2 uppercase tracking-widest text-[10px]">Refine your search across the repo</CardDescription>
+                 <CardDescription className="font-bold text-slate-500 mt-2 uppercase tracking-widest text-[10px]">Refine your search across the repo</CardDescription>
               </CardHeader>
                <CardContent className="p-0 space-y-8">
                   <div className="space-y-4">

@@ -102,6 +102,14 @@ export default function ProfilePage() {
       <div className="flex flex-col items-center lg:items-start lg:flex-row gap-8 sm:gap-16 mb-12 sm:mb-20 bg-white p-8 sm:p-16 rounded-[3rem] sm:rounded-[5rem] shadow-[0_40px_100px_rgba(0,0,0,0.04)] border border-slate-100 relative overflow-hidden text-center lg:text-left">
         {/* Background Accent */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <div className="absolute top-0 right-0 p-12 opacity-[0.03] pointer-events-none translate-x-1/4 translate-y-[-20%]">
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
+          >
+            <User size={400} />
+          </motion.div>
+        </div>
         
         <motion.div 
           initial={{ opacity: 0, scale: 0.8 }}
@@ -128,7 +136,7 @@ export default function ProfilePage() {
                 {profile?.tier || 'Member'}
               </Badge>
            </div>
-           <p className="text-base sm:text-lg text-slate-400 font-bold mb-12 max-w-xl leading-relaxed mx-auto lg:mx-0 uppercase tracking-widest">
+           <p className="text-base sm:text-lg text-slate-600 font-bold mb-12 max-w-xl leading-relaxed mx-auto lg:mx-0 uppercase tracking-widest">
              {profile?.bio || 'Building the future of RIT Campus innovation, one line of code at a time.'}
            </p>
             <div className="flex flex-col sm:flex-row lg:flex-row justify-center lg:justify-start gap-3 sm:gap-4">
@@ -156,7 +164,7 @@ export default function ProfilePage() {
                   </div>
                   <div className="overflow-hidden">
                     <CardTitle className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight text-left leading-none mb-3 truncate">Identity Node</CardTitle>
-                    <CardDescription className="font-bold text-slate-400 text-left uppercase tracking-[0.2em] text-[10px]">Core parameters of your club presence</CardDescription>
+                    <CardDescription className="font-bold text-slate-500 text-left uppercase tracking-[0.2em] text-[10px]">Core parameters of your club presence</CardDescription>
                   </div>
                </div>
             </CardHeader>
@@ -221,7 +229,7 @@ export default function ProfilePage() {
                   </div>
                   <div className="overflow-hidden">
                     <CardTitle className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight text-left leading-none mb-3 truncate">Technical Protocol</CardTitle>
-                    <CardDescription className="font-bold text-slate-400 text-left uppercase tracking-[0.2em] text-[10px]">Professional links and expertise nodes</CardDescription>
+                    <CardDescription className="font-bold text-slate-500 text-left uppercase tracking-[0.2em] text-[10px]">Professional links and expertise nodes</CardDescription>
                   </div>
                </div>
             </CardHeader>

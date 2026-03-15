@@ -84,7 +84,7 @@ export function AppSidebar() {
           </div>
           <div>
             <h1 className="font-extrabold text-sm tracking-tight text-slate-900 leading-none">Club Hub</h1>
-            <p className="text-[10px] text-slate-400 uppercase tracking-widest font-black mt-1.5">
+            <p className="text-[10px] text-slate-500 uppercase tracking-widest font-black mt-1.5 underline decoration-primary/30 underline-offset-4">
               RIT Campus Node
             </p>
           </div>
@@ -105,10 +105,10 @@ export function AppSidebar() {
                   <SidebarMenuButton
                     render={<Link href={item.url} />}
                     isActive={pathname === item.url}
-                    className="h-14 px-5 rounded-[1.2rem] data-[active=true]:bg-primary data-[active=true]:text-white data-[active=true]:shadow-lg data-[active=true]:shadow-primary/20 hover:bg-slate-50 transition-all duration-300 group/item text-slate-500"
+                    className="h-14 px-5 rounded-[1.2rem] data-[active=true]:bg-primary data-[active=true]:text-white data-[active=true]:shadow-lg data-[active=true]:shadow-primary/20 hover:bg-slate-50 transition-all duration-300 group/item text-slate-700 hover:scale-[1.02]"
                   >
                     <item.icon className={`h-5 w-5 transition-transform duration-300 ${pathname === item.url ? "scale-110" : "group-hover/item:scale-110"}`} />
-                    <span className="font-extrabold tracking-tight text-xs uppercase tracking-widest">{item.title}</span>
+                    <span className="font-extrabold tracking-tight text-xs uppercase tracking-widest leading-none">{item.title}</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}

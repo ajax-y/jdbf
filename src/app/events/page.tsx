@@ -116,7 +116,7 @@ export default function JoinEventPage() {
           <h1 className="text-4xl sm:text-5xl md:text-8xl font-black tracking-tighter mb-6 sm:mb-8 leading-none text-slate-900">
             Live <span className="text-primary italic">Events.</span>
           </h1>
-          <p className="text-lg sm:text-xl font-bold text-slate-400 max-w-xl leading-relaxed uppercase tracking-widest">
+          <p className="text-lg sm:text-xl font-bold text-slate-600 max-w-xl leading-relaxed uppercase tracking-widest">
             Scan the verified session token to establish your participation node and synchronize merit points.
           </p>
         </div>
@@ -133,7 +133,7 @@ export default function JoinEventPage() {
              <Button 
                variant="ghost"
                onClick={stopScanner}
-                className="w-full sm:w-auto h-20 rounded-[2.5rem] px-12 font-black text-xs uppercase tracking-[0.2em] gap-3 bg-slate-50 text-slate-400 border border-slate-200 hover:bg-slate-100 transition-all shadow-sm"
+                className="w-full sm:w-auto h-20 rounded-[2.5rem] px-12 font-black text-xs uppercase tracking-[0.2em] gap-3 bg-slate-100 text-slate-600 border border-slate-200 hover:bg-slate-200 transition-all shadow-sm"
              >
                 <XCircle size={24} />
                 Close Relay
@@ -142,8 +142,10 @@ export default function JoinEventPage() {
         </div>
         
         {/* Abstract Background Decoration */}
-        <div className="absolute top-0 right-0 p-8 opacity-[0.02] pointer-events-none translate-x-1/4 translate-y-[-10%]">
-           <Zap size={600} />
+        <div className="absolute top-0 right-0 p-8 opacity-[0.03] pointer-events-none translate-x-1/4 translate-y-[-10%]">
+           <motion.div animate={{ rotate: 360 }} transition={{ duration: 50, repeat: Infinity, ease: 'linear' }}>
+            <Zap size={600} />
+           </motion.div>
         </div>
       </div>
 

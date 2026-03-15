@@ -81,7 +81,23 @@ export default function AdminDashboard() {
            <h1 className="text-4xl sm:text-5xl md:text-8xl font-black tracking-tighter leading-none text-slate-900">
              Admin <span className="text-primary italic underline underline-offset-[12px] decoration-primary/20">Dashboard.</span>
            </h1>
-           <p className="text-slate-500 font-bold text-base mt-8 uppercase tracking-[0.2em]">Welcome back to the GfG RIT Admin Control Suite.</p>
+           <p className="text-slate-600 font-bold text-base mt-8 uppercase tracking-[0.2em]">Welcome back to the GfG RIT Admin Control Suite.</p>
+        </div>
+        <div className="absolute top-0 right-0 p-12 opacity-[0.03] pointer-events-none translate-x-1/4 translate-y-[-20%]">
+          <motion.div
+            animate={{ rotate: -360 }}
+            transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
+          >
+            <ShieldCheck size={500} />
+          </motion.div>
+        </div>
+        <div className="absolute bottom-0 left-0 p-24 opacity-[0.02] pointer-events-none -translate-x-1/4 translate-y-1/4">
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 80, repeat: Infinity, ease: "linear" }}
+          >
+            <Database size={600} />
+          </motion.div>
         </div>
         <div className="flex gap-4 w-full md:w-auto">
            <Link href="/admin/create-event" className="w-full md:w-auto">
@@ -100,17 +116,18 @@ export default function AdminDashboard() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.1 }}
+            whileHover={{ y: -10, scale: 1.02 }}
           >
              <Card className="border-none shadow-[0_30px_60px_rgba(0,0,0,0.03)] transition-all duration-500 rounded-[2.5rem] bg-white group cursor-default border border-slate-100 overflow-hidden relative">
                <CardContent className="p-8 sm:p-10">
                   <div className="flex items-center justify-between mb-10">
-                     <div className={`h-16 w-16 rounded-2xl bg-slate-50 flex items-center justify-center ${stat.color} border border-slate-100 shadow-inner group-hover:scale-110 transition-transform duration-500`}>
+                     <div className={`h-16 w-16 rounded-2xl bg-slate-50 flex items-center justify-center ${stat.color} border border-slate-100 shadow-inner group-hover:bg-primary group-hover:text-white group-hover:rotate-12 transition-all duration-500`}>
                         <stat.icon size={28} strokeWidth={2.5} />
                      </div>
-                     <Badge variant="outline" className="rounded-full font-black text-[9px] uppercase tracking-[0.2em] border-primary/20 text-primary bg-primary/5 px-3 py-1">{stat.trend}</Badge>
+                     <Badge variant="outline" className="rounded-full font-black text-[9px] uppercase tracking-[0.2em] border-primary/20 text-primary bg-primary/5 px-3 py-1 shadow-sm transition-all group-hover:border-primary group-hover:bg-primary/10">{stat.trend}</Badge>
                   </div>
                   <div className="space-y-4">
-                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">{stat.title}</p>
+                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">{stat.title}</p>
                     <h3 className="text-4xl sm:text-5xl font-black text-slate-900 tracking-tighter tabular-nums leading-none">
                        {stat.value}
                     </h3>
@@ -128,7 +145,7 @@ export default function AdminDashboard() {
                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
                   <div className="overflow-hidden">
                      <CardTitle className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tighter leading-none mb-3 truncate">Live Leaderboard</CardTitle>
-                     <p className="font-bold text-slate-400 text-xs uppercase tracking-[0.2em] mt-3">Real-time member rankings based on club points</p>
+                     <p className="font-bold text-slate-500 text-xs uppercase tracking-[0.2em] mt-3">Real-time member rankings based on club points</p>
                   </div>
                   <Badge className="bg-primary/10 text-primary border border-primary/20 font-black text-[10px] uppercase tracking-[0.3em] px-5 py-2 rounded-full whitespace-nowrap">Active Season</Badge>
                </div>
@@ -146,13 +163,13 @@ export default function AdminDashboard() {
                           </div>
                           <div className="overflow-hidden">
                              <p className="text-xl sm:text-2xl font-black text-slate-900 leading-none truncate mb-2 group-hover/item:text-primary transition-colors">{user.name}</p>
-                             <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mt-1">Geek Member</p>
+                             <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] mt-1">Geek Member Node</p>
                           </div>
                        </div>
-                       <div className="text-right">
-                          <p className="text-3xl sm:text-4xl font-black text-primary tracking-tighter tabular-nums leading-none drop-shadow-[0_0_15px_rgba(47,141,70,0.2)]">{user.points}</p>
-                          <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mt-3">Points</p>
-                       </div>
+                        <div className="text-right">
+                           <p className="text-3xl sm:text-4xl font-black text-primary tracking-tighter tabular-nums leading-none drop-shadow-[0_0_15px_rgba(47,141,70,0.2)]">{user.points}</p>
+                           <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mt-3">Points</p>
+                        </div>
                     </div>
                   )) : (
                     <div className="p-24 text-center text-slate-300 font-bold uppercase tracking-widest text-xs">No data available in cloud.</div>

@@ -125,11 +125,19 @@ export default function UserDashboard() {
              <Badge className="bg-primary/10 text-primary border border-primary/20 font-black text-[10px] uppercase tracking-widest px-4 py-1.5 rounded-full">
                 {profile?.tier || 'Standard Tier'}
              </Badge>
-             <div className="h-1 w-1 rounded-full bg-slate-300" />
-             <p className="text-slate-400 font-bold text-xs sm:text-sm uppercase tracking-widest">
+             <div className="h-1 w-1 rounded-full bg-slate-400" />
+             <p className="text-slate-500 font-bold text-xs sm:text-sm uppercase tracking-widest">
                {isLoading ? 'Fetching Cloud Data...' : 'Universal Profile Online'}
              </p>
           </div>
+        </div>
+        <div className="absolute top-0 right-0 p-12 opacity-[0.03] pointer-events-none translate-x-1/4 translate-y-[-20%]">
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
+          >
+            <Sparkles size={400} />
+          </motion.div>
         </div>
         <Link href="/projects/submit" className="w-full lg:w-auto">
           <Button className="w-full lg:w-auto h-20 rounded-[2.5rem] px-12 font-black text-xs uppercase tracking-[0.2em] gap-4 shadow-2xl shadow-primary/20 transition-all hover:scale-105 active:scale-95 bg-primary text-white border-none">
@@ -146,20 +154,22 @@ export default function UserDashboard() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.1 }}
+            whileHover={{ y: -10, scale: 1.02 }}
           >
-            <Card className="border-none shadow-[0_20px_50px_rgba(0,0,0,0.03)] transition-all duration-500 rounded-[2.5rem] bg-white group cursor-default border border-slate-100 overflow-hidden">
+            <Card className="border-none shadow-[0_20px_50px_rgba(0,0,0,0.03)] transition-all duration-500 rounded-[2.5rem] bg-white group cursor-default border border-slate-100 overflow-hidden relative">
+              <div className="absolute top-0 left-0 w-full h-1 bg-primary/0 group-hover:bg-primary/40 transition-all" />
               <CardContent className="p-8 sm:p-10">
                 <div className="flex items-center justify-between mb-10">
-                  <div className={`h-16 w-16 rounded-2xl bg-slate-50 flex items-center justify-center ${stat.color} border border-slate-100 transition-transform group-hover:scale-110 duration-500 shadow-sm`}>
+                  <div className={`h-16 w-16 rounded-2xl bg-slate-50 flex items-center justify-center ${stat.color} border border-slate-100 transition-all group-hover:bg-primary group-hover:text-white group-hover:rotate-12 duration-500 shadow-sm`}>
                     <stat.icon size={28} strokeWidth={2.5} />
                   </div>
                 </div>
                 <div className="space-y-4">
-                  <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">{stat.title}</p>
+                  <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">{stat.title}</p>
                   <h3 className="text-4xl sm:text-5xl font-black text-slate-900 tracking-tighter tabular-nums leading-none">
                     {isLoading ? "..." : stat.value}
                   </h3>
-                  <p className="text-xs sm:text-sm font-bold text-slate-400 leading-relaxed uppercase tracking-widest">
+                  <p className="text-xs sm:text-sm font-bold text-slate-600 leading-relaxed uppercase tracking-widest">
                     {stat.description}
                   </p>
                 </div>
@@ -232,11 +242,11 @@ export default function UserDashboard() {
                      </div>
                      <div className="text-right">
                         <p className="text-xl sm:text-2xl font-black text-primary tracking-tighter leading-none">{user.points}</p>
-                        <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mt-1">Points</p>
+                        <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest mt-1">Points</p>
                      </div>
                   </div>
                 )) : (
-                  <div className="p-16 text-center text-slate-300 font-bold uppercase tracking-widest text-xs">
+                  <div className="p-16 text-center text-slate-400 font-bold uppercase tracking-widest text-xs">
                     Initializing cloud ranking...
                   </div>
                 )}

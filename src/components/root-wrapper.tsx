@@ -22,6 +22,7 @@ import { supabase } from "@/lib/supabase";
 import type { RealtimePostgresInsertPayload } from "@supabase/supabase-js";
 import Link from "next/link";
 import { User, LogOut } from "lucide-react";
+import { CustomCursor } from "@/components/custom-cursor";
 
 export function RootWrapper({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -97,6 +98,7 @@ export function RootWrapper({ children }: { children: React.ReactNode }) {
 
   return (
     <TooltipProvider>
+      <CustomCursor />
       <SidebarProvider defaultOpen={false}>
         <div className="flex min-h-screen w-full relative bg-[#f8fafc] text-slate-900 selection:bg-primary/20">
           <AppSidebar />
@@ -120,7 +122,7 @@ export function RootWrapper({ children }: { children: React.ReactNode }) {
                     </div>
                     <div className="hidden xs:block">
                        <h1 className="font-extrabold text-base tracking-tight text-slate-900 leading-none">Club Hub</h1>
-                       <p className="text-[10px] text-slate-400 uppercase tracking-widest font-black mt-1.5">
+                       <p className="text-[10px] text-slate-500 uppercase tracking-widest font-black mt-1.5">
                          RIT Campus Node
                        </p>
                     </div>
@@ -147,14 +149,14 @@ export function RootWrapper({ children }: { children: React.ReactNode }) {
                             notifications.map((n: any) => (
                               <div key={n.id} className={`p-5 rounded-[1.5rem] transition-all ${n.read ? 'hover:bg-slate-50' : 'bg-primary/5 border border-primary/10'}`}>
                                  <p className="text-sm font-bold text-slate-800 leading-relaxed">{n.text}</p>
-                                 <p className="text-[10px] text-slate-400 uppercase font-black tracking-widest mt-3">{n.time}</p>
+                                 <p className="text-[10px] text-slate-500 uppercase font-black tracking-widest mt-3">{n.time}</p>
                               </div>
                             ))
                           )}
                        </div>
                        <DropdownMenuSeparator className="m-0 border-slate-100" />
                        <div className="p-5 bg-slate-50/30 text-center">
-                          <Button variant="ghost" className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 hover:text-primary transition-all p-0 h-auto">Clear All History</Button>
+                          <Button variant="ghost" className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500 hover:text-primary transition-all p-0 h-auto">Clear All History</Button>
                        </div>
                     </DropdownMenuContent>
                  </DropdownMenu>
@@ -185,7 +187,7 @@ export function RootWrapper({ children }: { children: React.ReactNode }) {
                              <div className="h-8 w-8 rounded-lg bg-white/5 flex items-center justify-center text-slate-400">
                                 <User size={16} />
                              </div>
-                             <span className="font-bold text-sm text-slate-200">Edit Profile</span>
+                             <span className="font-bold text-sm text-slate-700">Edit Profile</span>
                           </DropdownMenuItem>
                         </Link>
                         <DropdownMenuSeparator className="my-1 opacity-5 mx-2 bg-white" />

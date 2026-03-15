@@ -64,23 +64,28 @@ export default function SubmitProjectPage() {
       <AnimatePresence>
         {showSuccess && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-[#0a0b14]/90 backdrop-blur-2xl p-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-white/80 backdrop-blur-2xl p-6"
           >
-            <Card className="max-w-md w-full border border-white/10 shadow-[0_50px_120px_rgba(0,0,0,0.6)] rounded-[4rem] text-center p-12 sm:p-16 space-y-10 bg-[#1a1c2c]/80">
-               <div className="h-32 w-32 rounded-full bg-primary text-white flex items-center justify-center mx-auto shadow-[0_0_40px_rgba(34,197,94,0.4)] relative">
-                  <div className="absolute inset-0 rounded-full bg-primary animate-ping opacity-20" />
-                  <CheckCircle2 size={64} strokeWidth={2.5} />
-               </div>
-               <div className="space-y-6">
-                  <h2 className="text-4xl sm:text-5xl font-black tracking-tighter text-white leading-none">Successfully Deployed</h2>
-                  <p className="text-slate-400 font-bold text-lg leading-relaxed uppercase tracking-[0.1em]">Your project node has been synchronized with the global gallery repository.</p>
-               </div>
-               <div className="pt-6">
-                  <Badge className="bg-primary/20 text-primary border border-primary/20 px-6 py-2 rounded-full font-black text-[10px] uppercase tracking-[0.3em]">Redirecting to Gallery...</Badge>
-               </div>
-            </Card>
+            <motion.div
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+            >
+              <Card className="max-w-md w-full border border-slate-200 shadow-[0_50px_120px_rgba(0,0,0,0.1)] rounded-[4.5rem] text-center p-12 sm:p-16 space-y-10 bg-white">
+                 <div className="h-32 w-32 rounded-full bg-primary text-white flex items-center justify-center mx-auto shadow-[0_20px_50px_rgba(47,141,70,0.4)] relative">
+                    <div className="absolute inset-0 rounded-full bg-primary animate-ping opacity-20" />
+                    <CheckCircle2 size={64} strokeWidth={2.5} />
+                 </div>
+                 <div className="space-y-6">
+                    <h2 className="text-4xl sm:text-5xl font-black tracking-tighter text-slate-900 leading-none">Successfully Deployed</h2>
+                    <p className="text-slate-600 font-bold text-lg leading-relaxed uppercase tracking-[0.1em]">Your project node has been synchronized with the global gallery repository.</p>
+                 </div>
+                 <div className="pt-6">
+                    <Badge className="bg-primary/10 text-primary border border-primary/20 px-6 py-2 rounded-full font-black text-[10px] uppercase tracking-[0.3em]">Redirecting to Gallery...</Badge>
+                 </div>
+              </Card>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -89,7 +94,7 @@ export default function SubmitProjectPage() {
         <h1 className="text-4xl sm:text-7xl md:text-8xl font-black tracking-tighter text-slate-900 leading-none">
           Share your <span className="text-primary italic underline underline-offset-[12px] decoration-primary/20">Vision.</span>
         </h1>
-        <p className="text-slate-500 mt-10 text-lg sm:text-xl font-bold max-w-2xl uppercase tracking-widest leading-relaxed">
+        <p className="text-slate-600 mt-10 text-lg sm:text-xl font-bold max-w-2xl uppercase tracking-widest leading-relaxed">
           Upload your latest breakthrough to the campus project gallery. Earn merit points and industry visibility.
         </p>
       </div>
@@ -99,7 +104,7 @@ export default function SubmitProjectPage() {
           <Card className="border-none shadow-2xl bg-white overflow-hidden rounded-[3.5rem] border border-slate-100">
              <CardHeader className="bg-slate-50/50 p-10 sm:p-12 border-b border-slate-100">
                 <CardTitle className="text-3xl font-black text-slate-900 tracking-tight leading-none mb-3">Project Node Configuration</CardTitle>
-                <CardDescription className="font-bold text-xs text-slate-400 uppercase tracking-[0.2em]">Define the engineering parameters of your creation</CardDescription>
+                <CardDescription className="font-bold text-xs text-slate-500 uppercase tracking-[0.2em]">Define the engineering parameters of your creation</CardDescription>
              </CardHeader>
              <CardContent className="p-10 sm:p-12">
                 <form onSubmit={handleSubmit} className="space-y-8">
@@ -186,28 +191,35 @@ export default function SubmitProjectPage() {
         </div>
 
         <div className="space-y-8">
-           <Card className="border-none shadow-2xl bg-slate-900 text-white rounded-[3.5rem] p-10 overflow-hidden relative group">
-              <h3 className="text-2xl font-black mb-6 flex items-center gap-3 relative z-10">
-                <Sparkles className="text-primary" />
-                Submission Protocol
-              </h3>
-              <ul className="space-y-6 relative z-10">
-                 {[
-                   "Synchronize a professional README",
-                   "Specify core tech stacks correctly",
-                   "Enable public repository access",
-                   "Tag for appropriate hub channels"
-                 ].map((tip, i) => (
-                   <li key={i} className="flex gap-4 text-sm font-bold text-slate-400 leading-relaxed group/li">
-                      <div className="h-2 w-2 rounded-full bg-primary mt-2 shrink-0 group-hover/li:scale-150 transition-transform" />
-                      {tip}
-                   </li>
-                 ))}
-              </ul>
-              <div className="absolute top-0 right-0 p-8 opacity-5 pointer-events-none group-hover:scale-110 transition-transform duration-1000">
-                 <Code2 size={250} />
-              </div>
-           </Card>
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.5 }}
+            >
+              <Card className="border-none shadow-2xl bg-slate-900 text-white rounded-[3.5rem] p-10 overflow-hidden relative group h-full">
+                <h3 className="text-2xl font-black mb-6 flex items-center gap-3 relative z-10">
+                  <Sparkles className="text-primary" />
+                  Submission Protocol
+                </h3>
+                <ul className="space-y-6 relative z-10">
+                   {[
+                     "Synchronize a professional README",
+                     "Specify core tech stacks correctly",
+                     "Enable public repository access",
+                     "Tag for appropriate hub channels"
+                   ].map((tip, i) => (
+                     <li key={i} className="flex gap-4 text-sm font-bold text-slate-300 leading-relaxed group/li">
+                        <div className="h-2 w-2 rounded-full bg-primary mt-2 shrink-0 group-hover/li:scale-150 transition-transform" />
+                        {tip}
+                     </li>
+                   ))}
+                </ul>
+                <div className="absolute top-0 right-0 p-8 opacity-5 pointer-events-none transition-transform duration-1000">
+                   <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 60, ease: 'linear' }}>
+                    <Code2 size={250} />
+                   </motion.div>
+                </div>
+              </Card>
+            </motion.div>
 
             <Card className="border-none shadow-[0_30px_80px_rgba(0,0,0,0.03)] bg-white rounded-[3.5rem] overflow-hidden border border-slate-100 group hover:border-primary/20 transition-all duration-500">
                <div className="h-48 w-full bg-slate-50 flex items-center justify-center p-10">

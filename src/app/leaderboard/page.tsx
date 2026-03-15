@@ -61,9 +61,17 @@ export default function LeaderboardPage() {
           <h1 className="text-4xl sm:text-7xl lg:text-9xl font-black tracking-tighter text-slate-900 leading-none truncate">
             Leader<span className="text-primary italic underline underline-offset-[16px] decoration-primary/10">board.</span>
           </h1>
-          <p className="text-slate-500 mt-10 text-xl font-bold max-w-xl leading-relaxed uppercase tracking-widest text-sm sm:text-base">
+          <p className="text-slate-600 mt-10 text-xl font-bold max-w-xl leading-relaxed uppercase tracking-widest text-sm sm:text-base">
             The elite players of the GfG RIT coding community.
           </p>
+        </div>
+        <div className="absolute top-0 right-0 p-8 opacity-[0.03] pointer-events-none translate-x-1/4 translate-y-[-10%]">
+          <motion.div
+            animate={{ rotate: -360 }}
+            transition={{ duration: 60, repeat: Infinity, ease: 'linear' }}
+          >
+            <Trophy size={600} />
+          </motion.div>
         </div>
         <div className="bg-white border border-slate-200 rounded-[3rem] px-10 py-10 flex items-center gap-8 shadow-[0_20px_50px_rgba(0,0,0,0.03)] w-full sm:w-auto shrink-0 relative overflow-hidden group">
            <div className="absolute top-0 left-0 w-full h-[3px] bg-primary/20" />
@@ -139,7 +147,7 @@ export default function LeaderboardPage() {
                      </div>
                      <div>
                         <h2 className="text-3xl font-black text-slate-900 leading-none">Hall of Fame</h2>
-                        <p className="text-[10px] uppercase font-black tracking-[0.4em] text-slate-400 mt-2">Verified Merit Index</p>
+                        <p className="text-[10px] uppercase font-black tracking-[0.4em] text-slate-500 mt-2">Verified Merit Index</p>
                      </div>
                   </div>
                   <div className="flex flex-wrap gap-2 sm:gap-3">
@@ -151,11 +159,11 @@ export default function LeaderboardPage() {
               <Table>
                <TableHeader className="bg-slate-50/50">
                 <TableRow className="border-b border-slate-100 hover:bg-transparent">
-                  <TableHead className="w-[150px] font-black uppercase tracking-[0.3em] text-[10px] px-10 py-8 text-slate-400">Rank</TableHead>
-                  <TableHead className="font-black uppercase tracking-[0.3em] text-[10px] px-10 py-8 text-slate-400">Contributor</TableHead>
-                  <TableHead className="font-black uppercase tracking-[0.3em] text-[10px] px-10 py-8 text-slate-400">Node Status</TableHead>
-                  <TableHead className="font-black uppercase tracking-[0.3em] text-[10px] px-10 py-8 text-center text-slate-400">Deployed Stacks</TableHead>
-                  <TableHead className="font-black uppercase tracking-[0.3em] text-[10px] px-10 py-8 text-right text-slate-400">Point Index</TableHead>
+                  <TableHead className="w-[150px] font-black uppercase tracking-[0.3em] text-[10px] px-10 py-8 text-slate-500">Rank</TableHead>
+                  <TableHead className="font-black uppercase tracking-[0.3em] text-[10px] px-10 py-8 text-slate-500">Contributor</TableHead>
+                  <TableHead className="font-black uppercase tracking-[0.3em] text-[10px] px-10 py-8 text-slate-500">Node Status</TableHead>
+                  <TableHead className="font-black uppercase tracking-[0.3em] text-[10px] px-10 py-8 text-center text-slate-500">Deployed Stacks</TableHead>
+                  <TableHead className="font-black uppercase tracking-[0.3em] text-[10px] px-10 py-8 text-right text-slate-500">Point Index</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
