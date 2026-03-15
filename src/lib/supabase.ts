@@ -47,7 +47,8 @@ export type Project = {
   title: string;
   description: string;
   github_url: string;
-  author_id: string;
-  likes: string[];
+  live_url: string;
+  owner_id: string;
+  tech_stack: string[];
   created_at: string;
 };

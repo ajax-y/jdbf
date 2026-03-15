@@ -30,14 +30,20 @@ export function RootWrapper({ children }: { children: React.ReactNode }) {
 
   const [session, setSession] = useState<string | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [userProfile, setUserProfile] = useState<any>(null);
   const [notifications, setNotifications] = useState<{id: string, text: string, time: string, read: boolean}[]>([]);
 
   useEffect(() => {
-    const checkSession = () => {
+    const checkSession = async () => {
       const s = document.cookie.split("; ").find(row => row.startsWith("gfg_session="))?.split("=")[1];
       const r = document.cookie.split("; ").find(row => row.startsWith("gfg_role="))?.split("=")[1];
       setSession(s || null);
       setIsAdmin(r === "admin");
+
+      if (s) {
+        const { data } = await supabase.from('profiles').select('*').eq('id', s).single();
+        if (data) setUserProfile(data);
+      }
     };
     checkSession();
   }, [pathname]);
@@ -180,7 +186,7 @@ export function RootWrapper({ children }: { children: React.ReactNode }) {
                                 {isAdmin ? 'Admin Node' : 'Geek Member'}
                               </p>
                               <p className="text-[8px] font-black uppercase tracking-widest text-primary mt-1">
-                                {isAdmin ? 'System Admin' : 'Gold Tier'}
+                                {isAdmin ? 'System Admin' : (userProfile?.tier || 'Bronze') + ' Tier'}
                               </p>
                            </div>
                           <Avatar className="h-10 w-10 ring-2 ring-primary/10 shadow-sm">

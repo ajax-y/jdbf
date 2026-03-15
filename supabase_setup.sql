@@ -143,6 +143,20 @@ CREATE TABLE IF NOT EXISTS projects (
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
+-- Patch: add missing columns to projects if table already existed
+DO $$
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='projects' AND column_name='live_url') THEN
+        ALTER TABLE projects ADD COLUMN live_url TEXT;
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='projects' AND column_name='tech_stack') THEN
+        ALTER TABLE projects ADD COLUMN tech_stack TEXT[];
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='projects' AND column_name='owner_id') THEN
+        ALTER TABLE projects ADD COLUMN owner_id UUID REFERENCES profiles(id);
+    END IF;
+END $$;
+
 -- 9. Likes Table
 CREATE TABLE IF NOT EXISTS likes (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),

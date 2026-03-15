@@ -132,8 +132,15 @@ export default function ProfilePage() {
               <h1 className="text-4xl sm:text-5xl lg:text-8xl font-black tracking-tighter text-slate-900 leading-none truncate">
                 {profile?.full_name?.split(' ')[0]} <span className="text-primary italic underline underline-offset-[12px] decoration-primary/20">{profile?.full_name?.split(' ')[1]}.</span>
               </h1>
-              <Badge className="bg-primary/10 text-primary border border-primary/20 font-black px-6 py-2.5 uppercase tracking-[0.3em] text-[10px] rounded-full shrink-0">
-                {profile?.tier || 'Member'}
+              <Badge className={`font-black px-6 py-2.5 uppercase tracking-[0.3em] text-[10px] rounded-full shrink-0 border ${
+                (profile?.points || 0) >= 100 ? 'bg-slate-900 text-white border-primary/20' :
+                (profile?.points || 0) >= 50 ? 'bg-amber-100/80 text-amber-700 border-amber-200 shadow-sm' :
+                (profile?.points || 0) >= 20 ? 'bg-slate-100 text-slate-600 border-slate-200' :
+                'bg-orange-100/80 text-orange-700 border-orange-200'
+              }`}>
+                {(profile?.points || 0) >= 100 ? 'Diamond' : 
+                 (profile?.points || 0) >= 50 ? 'Gold' :
+                 (profile?.points || 0) >= 20 ? 'Silver' : 'Bronze'} Node
               </Badge>
            </div>
            <p className="text-base sm:text-lg text-slate-600 font-bold mb-12 max-w-xl leading-relaxed mx-auto lg:mx-0 uppercase tracking-widest">
@@ -285,11 +292,14 @@ export default function ProfilePage() {
                    All changes are synchronized instantly with the cloud repository. Ensure your handles are unique across the campus network.
                 </p>
                 <div className="space-y-4">
-                   <div className="flex items-center gap-3 p-4 bg-white/10 rounded-2xl border border-white/10">
-                      <div className="h-2 w-2 rounded-full bg-white animate-pulse" />
-                      <span className="text-[10px] font-black uppercase tracking-widest text-white">Encryption Active</span>
+                   <div className="flex items-center justify-between p-6 bg-white/10 rounded-2xl border border-white/10 group-hover:bg-white/20 transition-all">
+                      <div className="flex items-center gap-3">
+                         <div className="h-2 w-2 rounded-full bg-primary animate-pulse" />
+                         <span className="text-[10px] font-black uppercase tracking-widest text-white">Merit Registry</span>
+                      </div>
+                      <span className="text-2xl font-black text-white">{profile?.points || 0}</span>
                    </div>
-                   <div className="flex items-center gap-3 p-4 bg-white/10 rounded-2xl border border-white/10">
+                   <div className="flex items-center gap-3 p-6 bg-white/10 rounded-2xl border border-white/10 group-hover:bg-white/20 transition-all">
                       <div className="h-2 w-2 rounded-full bg-emerald-300" />
                       <span className="text-[10px] font-black uppercase tracking-widest text-white">Public Manifest Verified</span>
                    </div>

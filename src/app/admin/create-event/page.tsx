@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { QRCodeSVG } from "qrcode.react";
@@ -16,7 +16,19 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Calendar, MapPin, Download, Save, QrCode, Play, Clock, CheckCircle2, AlertCircle } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { 
+  Calendar, 
+  MapPin, 
+  Download, 
+  Save, 
+  QrCode, 
+  Play, 
+  Clock, 
+  CheckCircle2, 
+  AlertCircle,
+  Loader2 
+} from "lucide-react";
 
 export default function CreateEventPage() {
   const [title, setTitle] = useState("");
@@ -28,6 +40,8 @@ export default function CreateEventPage() {
   const [showQR, setShowQR] = useState(false);
   const [isPublishing, setIsPublishing] = useState(false);
   const [toast, setToast] = useState<{ message: string, type: 'success' | 'error' } | null>(null);
+  const [events, setEvents] = useState<any[]>([]);
+  const [fetchingEvents, setFetchingEvents] = useState(true);
 
   const showNotification = (message: string, type: 'success' | 'error' = 'success') => {
     setToast({ message, type });
@@ -38,6 +52,20 @@ export default function CreateEventPage() {
     const s = Math.random().toString(36).substring(2, 15);
     setSecret(s);
   };
+
+  const fetchEvents = async () => {
+    setFetchingEvents(true);
+    const { data } = await supabase
+      .from('events')
+      .select('*')
+      .order('created_at', { ascending: false });
+    if (data) setEvents(data);
+    setFetchingEvents(false);
+  };
+
+  useEffect(() => {
+    fetchEvents();
+  }, []);
 
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -66,17 +94,30 @@ export default function CreateEventPage() {
 
       if (error) throw error;
 
-      // 2. Add Notification in Cloud
+      // 2. Add Notification for all members
       await supabase.from('notifications').insert([
-        { text: `New Event Created: ${title}`, type: 'success' }
+        { text: `🚀 New Node Synchronized: ${title}. Join now to earn 10 merit points!`, type: 'info' }
       ]);
 
       setShowQR(true);
       showNotification("Session Node Synchronized Successfully!");
+      fetchEvents();
     } catch (error: any) {
       showNotification(error.message || "Failed to sync node", "error");
     } finally {
       setIsPublishing(false);
+    }
+  };
+
+  const toggleEventStatus = async (id: string, currentStatus: boolean) => {
+    const { error } = await supabase
+      .from('events')
+      .update({ is_active: !currentStatus })
+      .eq('id', id);
+    
+    if (!error) {
+      showNotification(`Node ${!currentStatus ? 'Activated' : 'Closed'}`);
+      fetchEvents();
     }
   };
 
@@ -247,13 +288,13 @@ export default function CreateEventPage() {
                     <div className="p-8 bg-white rounded-[4rem] shadow-[0_40px_80px_rgba(0,0,0,0.15)] ring-4 ring-white/20">
                       <QRCodeSVG 
                         id="event-qr"
-                        value={JSON.stringify({ title, date, time, secret, location })} 
+                        value={JSON.stringify({ id: events[0]?.id || '', secret, title })} 
                         size={320}
                         fgColor="#2f8d46"
                         level="H"
                         includeMargin
                         imageSettings={{
-                          src: "/logo.png",
+                          src: "https://media.geeksforgeeks.org/gfg-gg-logo.svg",
                           height: 60,
                           width: 60,
                           excavate: true,
@@ -307,6 +348,70 @@ export default function CreateEventPage() {
              )}
           </Card>
         </motion.div>
+      </div>
+      <div className="mt-24 space-y-12">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
+           <div>
+              <h2 className="text-4xl font-black tracking-tighter text-slate-900 leading-none">Node <span className="text-primary italic">Archives.</span></h2>
+              <p className="text-slate-400 font-bold text-xs uppercase tracking-widest mt-3">Verified session registry across the cluster</p>
+           </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+           {fetchingEvents ? (
+             <div className="col-span-full py-20 flex justify-center"><Loader2 className="animate-spin text-primary" size={40} /></div>
+           ) : events.map((event) => (
+             <Card key={event.id} className="border-none shadow-[0_20px_60px_rgba(0,0,0,0.03)] bg-white rounded-[2.5rem] overflow-hidden group hover:border-primary/20 transition-all border border-slate-100">
+                <CardHeader className="p-8 pb-0">
+                   <div className="flex justify-between items-start">
+                      <div className={`h-12 w-12 rounded-2xl flex items-center justify-center ${event.is_active ? 'bg-primary/5 text-primary' : 'bg-slate-100 text-slate-400'} border border-slate-100`}>
+                         <QrCode size={22} />
+                      </div>
+                      <Badge className={`${event.is_active ? 'bg-primary/10 text-primary border-primary/20' : 'bg-slate-100 text-slate-500 border-slate-200'} font-black text-[9px] uppercase tracking-widest px-4 py-1 rounded-full border`}>
+                         {event.is_active ? 'Active Signal' : 'Closed Node'}
+                      </Badge>
+                   </div>
+                </CardHeader>
+                <CardContent className="p-8">
+                   <h3 className="text-2xl font-black text-slate-900 tracking-tight leading-none mb-4 group-hover:text-primary transition-colors">{event.title}</h3>
+                   <div className="space-y-4 mb-8">
+                      <div className="flex items-center gap-3 text-slate-500">
+                         <Calendar size={14} />
+                         <span className="text-[10px] font-black uppercase tracking-widest">{new Date(event.date).toLocaleDateString()}</span>
+                      </div>
+                      <div className="flex items-center gap-3 text-slate-500">
+                         <MapPin size={14} />
+                         <span className="text-[10px] font-black uppercase tracking-widest truncate">{event.location}</span>
+                      </div>
+                   </div>
+                   <div className="flex gap-3">
+                      <Button 
+                        onClick={() => toggleEventStatus(event.id, event.is_active)}
+                        variant={event.is_active ? "destructive" : "default"}
+                        className="flex-1 rounded-[1.2rem] h-12 font-black text-[10px] uppercase tracking-widest"
+                      >
+                         {event.is_active ? 'Close Node' : 'Activate Node'}
+                      </Button>
+                      <Button 
+                        onClick={() => {
+                          setTitle(event.title);
+                          setDate(event.date);
+                          setTime(event.time);
+                          setLocation(event.location);
+                          setSecret(event.qr_secret);
+                          setShowQR(true);
+                          window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }}
+                        variant="ghost" 
+                        className="rounded-[1.2rem] h-12 w-12 p-0 bg-slate-50 border border-slate-100 text-slate-400 hover:text-primary"
+                      >
+                         <QrCode size={18} />
+                      </Button>
+                   </div>
+                </CardContent>
+             </Card>
+           ))}
+        </div>
       </div>
     </div>
   );

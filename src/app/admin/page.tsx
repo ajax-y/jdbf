@@ -47,16 +47,17 @@ export default function AdminDashboard() {
       const { count: attendanceCount } = await supabase.from('attendance').select('*', { count: 'exact', head: true });
 
       setStats([
-        { title: "Total Members", value: memberCount?.toString() || "0", icon: Users, color: "text-blue-500", trend: "+12% this month" },
-        { title: "Active Members", value: attendanceCount?.toString() || "0", icon: Activity, color: "text-emerald-500", trend: "Live Now" },
-        { title: "Ongoing Event", value: activeEventCount?.toString() || "0", icon: Calendar, color: "text-amber-500", trend: "Active" },
-        { title: "Events Conducted", value: eventCount?.toString() || "0", icon: Globe, color: "text-indigo-500", trend: "All Time" },
+        { title: "Total Members", value: (memberCount || 0).toString(), icon: Users, color: "text-blue-500", trend: "+12% this month" },
+        { title: "Active Members", value: (attendanceCount || 0).toString(), icon: Activity, color: "text-emerald-500", trend: "Live Now" },
+        { title: "Ongoing Event", value: (activeEventCount || 0).toString(), icon: Calendar, color: "text-amber-500", trend: "Active" },
+        { title: "Events Conducted", value: (eventCount || 0).toString(), icon: Globe, color: "text-indigo-500", trend: "All Time" },
       ]);
 
-      // 2. Fetch Leaderboard
+      // 2. Fetch Leaderboard (EXCLUDE ADMINS)
       const { data: topProfiles } = await supabase
         .from('profiles')
         .select('*')
+        .neq('role', 'admin')
         .order('points', { ascending: false })
         .limit(5);
 

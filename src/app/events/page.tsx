@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, useSpring, useMotionValue, AnimatePresence } from "framer-motion";
 import { Html5Qrcode } from "html5-qrcode";
 import {
   Card,
@@ -60,27 +60,70 @@ export default function JoinEventPage() {
                
                if (data.id && userId) {
                  await stopScanner();
-                 
-                 // 1. Insert Attendance
-                 const { error: attendError } = await supabase
-                   .from('attendance')
-                   .insert([{ event_id: data.id, user_id: userId }]);
+                                  // 1. Fetch Event Info to check if active
+                  const { data: eventData } = await supabase
+                    .from('events')
+                    .select('*')
+                    .eq('id', data.id)
+                    .single();
 
-                 if (attendError) throw attendError;
+                  if (!eventData?.is_active) {
+                    setErrorHeader("Node Closed");
+                    setResult({ 
+                      status: 'error', 
+                      message: "This event node has been closed by the administration. Ingress is no longer permitted." 
+                    });
+                    return;
+                  }
 
-                 // 2. Fetch User Name for Message
-                 const { data: profile } = await supabase
-                   .from('profiles')
-                   .select('full_name')
-                   .eq('id', userId)
-                   .single();
+                  // 2. Insert Attendance
+                  const { error: attendError } = await supabase
+                    .from('attendance')
+                    .insert([{ event_id: data.id, user_id: userId }]);
 
-                 setResult({ 
-                   status: 'success', 
-                   message: `Successfully joined "${data.title || 'the event'}" as ${profile?.full_name || 'Member'}. 10 merit points added.` 
-                 });
-               }
-             } catch (e) {
+                  if (attendError) {
+                    if (attendError.code === '23505') { // Unique violation
+                      setErrorHeader("Duplicate Entry");
+                      setResult({ 
+                        status: 'error', 
+                        message: "You have already synchronized with this event node." 
+                      });
+                      return;
+                    }
+                    throw attendError;
+                  }
+
+                  // 3. Update User Points (+10)
+                  const { data: currentProfile } = await supabase
+                    .from('profiles')
+                    .select('points, full_name')
+                    .eq('id', userId)
+                    .single();
+
+                  const newPoints = (currentProfile?.points || 0) + 10;
+                  
+                  // Calculate New Tier based on points
+                  let newTier = 'Bronze';
+                  if (newPoints >= 100) newTier = 'Diamond';
+                  else if (newPoints >= 50) newTier = 'Gold';
+                  else if (newPoints >= 20) newTier = 'Silver';
+
+                  await supabase
+                    .from('profiles')
+                    .update({ points: newPoints, tier: newTier })
+                    .eq('id', userId);
+
+                  // 4. Create Notification
+                  await supabase.from('notifications').insert([
+                     { text: `✅ Entry Verified: Joined "${data.title}". Earned 10 merit points. Current Rank: ${newTier}.`, type: 'success' }
+                  ]);
+
+                  setResult({ 
+                    status: 'success', 
+                    message: `Successfully joined "${data.title || 'the event'}" as ${currentProfile?.full_name || 'Member'}. 10 merit points added to your cloud registry.` 
+                  });
+                }
+              } catch (e) {
                // Silently fail if not our QR
              }
           };

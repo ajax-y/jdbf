@@ -18,7 +18,8 @@ import {
   Calendar,
   Sparkles,
   ChevronRight,
-  Loader2
+  Loader2,
+  QrCode
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -29,6 +30,8 @@ export default function UserDashboard() {
   const [profile, setProfile] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [leaderboard, setLeaderboard] = useState<any[]>([]);
+  const [activeEvent, setActiveEvent] = useState<any>(null);
+  const [activities, setActivities] = useState<any[]>([]);
 
   useEffect(() => {
     setIsMounted(true);
@@ -52,10 +55,11 @@ export default function UserDashboard() {
         .select('*', { count: 'exact', head: true })
         .eq('user_id', session);
 
-      // 3. Fetch Leaderboard (Only show users with points > 0)
+      // 3. Fetch Leaderboard (Only show users with points > 0, EXCLUDE ADMINS)
       const { data: leaders } = await supabase
         .from('profiles')
         .select('id, full_name, points, username')
+        .neq('role', 'admin')
         .gt('points', 0)
         .order('points', { ascending: false })
         .limit(5);
@@ -86,6 +90,47 @@ export default function UserDashboard() {
       if (leaders) {
         setLeaderboard(leaders);
       }
+
+      // 4. Fetch Active Event
+      const { data: activeEv } = await supabase
+        .from('events')
+        .select('*')
+        .eq('is_active', true)
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .single();
+      if (activeEv) setActiveEvent(activeEv);
+
+      // 5. Fetch Global Activity (Recent 10)
+      // Joins can be complex in single calls without views, so we'll fetch recently updated profiles/attendance
+      const { data: recentAttendance } = await supabase
+        .from('attendance')
+        .select('created_at, profiles(full_name, username), events(title)')
+        .order('created_at', { ascending: false })
+        .limit(5);
+      
+      const { data: recentProjects } = await supabase
+        .from('projects')
+        .select('created_at, profiles(full_name, username), title')
+        .order('created_at', { ascending: false })
+        .limit(5);
+
+      const combined = [
+        ...(recentAttendance || []).map(a => ({
+          type: 'attendance',
+          time: a.created_at,
+          text: `${(a.profiles as any)?.full_name} joined "${(a.events as any)?.title}"`,
+          user: (a.profiles as any)?.username
+        })),
+        ...(recentProjects || []).map(p => ({
+          type: 'project',
+          time: p.created_at,
+          text: `${(p.profiles as any)?.full_name} published "${p.title}"`,
+          user: (p.profiles as any)?.username
+        }))
+      ].sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime()).slice(0, 8);
+
+      setActivities(combined);
 
       setIsLoading(false);
     }
@@ -131,14 +176,52 @@ export default function UserDashboard() {
 
   return (
     <div className="max-w-7xl mx-auto space-y-12 pb-20">
+      {activeEvent && (
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="relative group overflow-hidden rounded-[3rem] border border-primary/20 bg-white shadow-2xl shadow-primary/10"
+        >
+           <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-white to-transparent" />
+           <div className="relative z-10 p-8 sm:p-12 flex flex-col sm:flex-row items-center justify-between gap-8">
+              <div className="flex items-center gap-8">
+                 <div className="h-20 w-20 rounded-[2rem] bg-primary/10 flex items-center justify-center text-primary relative">
+                    <div className="absolute inset-0 bg-primary rounded-[2rem] animate-ping opacity-20" />
+                    <QrCode size={40} className="relative z-10" />
+                 </div>
+                 <div>
+                    <Badge className="bg-primary text-white border-none font-black text-[10px] uppercase tracking-widest px-4 py-1.5 rounded-full mb-4">Signal Detected</Badge>
+                    <h2 className="text-3xl sm:text-4xl font-black tracking-tighter text-slate-900 leading-none">
+                       {activeEvent.title} <span className="text-primary italic">is Live.</span>
+                    </h2>
+                    <p className="text-slate-500 font-bold uppercase tracking-widest text-xs mt-3">Node Location: {activeEvent.location}</p>
+                 </div>
+              </div>
+              <Link href="/events" className="w-full sm:w-auto">
+                 <Button className="w-full sm:w-auto h-20 rounded-[2rem] px-16 font-black text-xs uppercase tracking-[0.2em] gap-4 bg-primary text-white hover:scale-[1.05] transition-all shadow-xl shadow-primary/20">
+                    <ArrowUpRight size={24} />
+                    Sync Attendance
+                 </Button>
+              </Link>
+           </div>
+        </motion.div>
+      )}
+
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 px-4 sm:px-0">
         <div className="overflow-hidden">
           <h1 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tighter text-slate-900 leading-none">
             {isLoading ? "Synchronizing..." : `Welcome, ${profile?.full_name?.split(' ')[0] || 'Member'}.`}
           </h1>
           <div className="flex items-center gap-4 mt-6">
-             <Badge className="bg-primary/10 text-primary border border-primary/20 font-black text-[10px] uppercase tracking-widest px-4 py-1.5 rounded-full">
-                {profile?.tier || 'Standard Tier'}
+             <Badge className={`font-black text-[10px] uppercase tracking-widest px-4 py-1.5 rounded-full border ${
+                (profile?.points || 0) >= 100 ? 'bg-slate-900 text-white border-primary/20' :
+                (profile?.points || 0) >= 50 ? 'bg-amber-100/80 text-amber-700 border-amber-200 shadow-sm' :
+                (profile?.points || 0) >= 20 ? 'bg-slate-100 text-slate-600 border-slate-200' :
+                'bg-orange-100/80 text-orange-700 border-orange-200'
+              }`}>
+                {(profile?.points || 0) >= 100 ? 'Diamond' : 
+                 (profile?.points || 0) >= 50 ? 'Gold' :
+                 (profile?.points || 0) >= 20 ? 'Silver' : 'Bronze'} Node
              </Badge>
              <div className="h-1 w-1 rounded-full bg-slate-400" />
              <p className="text-slate-500 font-bold text-xs sm:text-sm uppercase tracking-widest">
@@ -194,9 +277,105 @@ export default function UserDashboard() {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <Card className="border-none shadow-[0_40px_100px_rgba(0,0,0,0.04)] bg-slate-900 text-white rounded-[2.5rem] sm:rounded-[3.5rem] overflow-hidden group">
-          <CardHeader className="p-8 sm:p-10 pb-0 shadow-sm relative z-10">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Activity Feed (Left Column) */}
+        <div className="lg:col-span-2 space-y-8">
+          <Card className="border-none shadow-[0_40px_100px_rgba(0,0,0,0.04)] bg-white rounded-[3.5rem] overflow-hidden border border-slate-100 flex flex-col h-full">
+            <CardHeader className="p-10 border-b border-slate-50 bg-slate-50/50">
+               <div className="flex justify-between items-center text-slate-900">
+                  <div>
+                     <CardTitle className="text-2xl font-black tracking-tight">Cluster Activity</CardTitle>
+                     <CardDescription className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Live Synchronization Events</CardDescription>
+                  </div>
+                  <Sparkles size={28} className="text-primary" />
+               </div>
+            </CardHeader>
+            <CardContent className="p-0 flex-1">
+               <div className="divide-y divide-slate-50">
+                  {activities.length > 0 ? activities.map((act, i) => (
+                    <div key={i} className="p-8 flex items-center justify-between hover:bg-slate-50 transition-colors group">
+                      <div className="flex items-center gap-6">
+                        <div className={`h-14 w-14 rounded-2xl flex items-center justify-center font-black border border-slate-100 shadow-sm group-hover:rotate-6 transition-all ${
+                          act.type === 'attendance' ? 'bg-primary/5 text-primary' : 'bg-amber-50 text-amber-500'
+                        }`}>
+                           {act.type === 'attendance' ? <Calendar size={24} /> : <Code2 size={24} />}
+                        </div>
+                        <div>
+                           <Link href={`/u/${act.user}`}>
+                             <p className="text-lg font-black text-slate-800 leading-none hover:text-primary transition-colors cursor-pointer">{act.text}</p>
+                           </Link>
+                           <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-2 flex items-center gap-2">
+                             <Sparkles size={10} /> {new Date(act.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} • @{act.user}
+                           </p>
+                        </div>
+                     </div>
+                       <ChevronRight size={20} className="text-slate-300 opacity-0 group-hover:opacity-100 transition-all translate-x-[-10px] group-hover:translate-x-0" />
+                    </div>
+                  )) : (
+                    <div className="p-24 text-center text-slate-300 font-bold uppercase tracking-widest text-xs">
+                       Retrieving node manifest...
+                    </div>
+                  )}
+               </div>
+            </CardContent>
+            <div className="p-8 bg-slate-50 mt-auto border-t border-slate-100 flex justify-center">
+               <Link href="/projects">
+                  <Button variant="ghost" className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 hover:text-primary transition-all">
+                     Explore Full Pipeline
+                  </Button>
+               </Link>
+            </div>
+          </Card>
+        </div>
+
+        {/* Global Hall of Fame (Right Column) */}
+        <Card className="border-none shadow-[0_30px_80px_rgba(0,0,0,0.03)] bg-slate-900 text-white rounded-[3.5rem] overflow-hidden flex flex-col">
+          <CardHeader className="p-10 pb-6">
+             <div className="flex justify-between items-center">
+                <div>
+                   <CardTitle className="text-2xl font-black tracking-tight">Hall of Fame</CardTitle>
+                   <CardDescription className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Elite Consensus</CardDescription>
+                </div>
+                <Trophy size={28} className="text-amber-500" />
+             </div>
+          </CardHeader>
+          <CardContent className="p-0 flex-1">
+             <div className="divide-y divide-white/5">
+                {leaderboard.slice(0, 5).map((user, i) => (
+                  <div key={user.id} className="p-8 flex items-center justify-between hover:bg-white/5 transition-colors group">
+                     <div className="flex items-center gap-4">
+                        <div className="h-10 w-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center font-black text-slate-500 text-xs">
+                           #{i + 1}
+                        </div>
+                        <div>
+                           <Link href={`/u/${user.username}`}>
+                             <p className="text-base font-black text-white leading-none hover:text-primary transition-colors cursor-pointer">{user.full_name}</p>
+                           </Link>
+                           <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest mt-1">Node @{user.username || 'member'}</p>
+                        </div>
+                     </div>
+                     <div className="text-right">
+                        <p className="text-xl font-black text-primary tracking-tighter leading-none">{user.points}</p>
+                        <p className="text-[8px] font-black text-slate-500 uppercase tracking-widest mt-1">Points</p>
+                     </div>
+                  </div>
+                ))}
+             </div>
+          </CardContent>
+          <div className="p-8 bg-white/5 mt-auto border-t border-white/5">
+             <Link href="/leaderboard">
+               <Button variant="ghost" className="w-full h-12 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-white transition-all gap-2">
+                  View Standings
+                  <ChevronRight size={14} />
+               </Button>
+             </Link>
+          </div>
+        </Card>
+      </div>
+
+      <div className="grid grid-cols-1 gap-8">
+        <Card className="border-none shadow-[0_40px_100px_rgba(0,0,0,0.04)] bg-white border border-slate-100 rounded-[2.5rem] sm:rounded-[3.5rem] overflow-hidden group relative">
+          <CardHeader className="p-10 sm:p-12 pb-0 shadow-sm relative z-10">
              <div className="flex justify-between items-start">
                <div>
                   <Badge className="bg-primary text-white border-none font-black text-[10px] uppercase tracking-widest px-4 py-1.5 rounded-full mb-6">Spotlight</Badge>
@@ -204,74 +383,33 @@ export default function UserDashboard() {
                     Project of the <br/><span className="text-primary italic">Week.</span>
                   </CardTitle>
                </div>
-               <div className="h-16 w-16 rounded-[1.5rem] sm:rounded-[2rem] bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
+               <div className="h-16 w-16 rounded-[1.5rem] sm:rounded-[2rem] bg-slate-50 border border-slate-100 flex items-center justify-center shrink-0">
                   <Code2 size={32} className="text-primary" />
                </div>
              </div>
           </CardHeader>
-          <CardContent className="p-8 sm:p-10 pt-8 relative z-10">
+          <CardContent className="p-10 sm:p-12 pt-8 relative z-10">
             <div className="space-y-6">
-               <h3 className="text-xl font-black text-white flex items-center gap-3">
+               <h3 className="text-2xl font-black text-slate-900 flex items-center gap-3">
                  {profile?.featured_project || 'Aurora Engine'}
                </h3>
-               <p className="text-slate-400 font-bold text-base leading-relaxed">
-                 Advanced cloud-native architecture optimized for real-time data streaming and secure member authorization.
+               <p className="text-slate-500 font-bold text-lg leading-relaxed max-w-2xl">
+                 Advanced cloud-native architecture optimized for real-time data streaming and secure member authorization nodes across the cluster.
                </p>
                <div className="flex flex-wrap gap-2">
-                  {['Supabase', 'TypeScript', 'Edge Runtime'].map(t => (
-                    <span key={t} className="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-[10px] font-black uppercase tracking-widest text-slate-300">{t}</span>
+                  {['Supabase', 'TypeScript', 'Edge Runtime', 'Tailwind'].map(t => (
+                    <span key={t} className="px-5 py-2 bg-slate-50 border border-slate-100 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-600">{t}</span>
                   ))}
                </div>
-               <Button className="w-full h-14 rounded-2xl font-black text-xs uppercase tracking-widest bg-white text-slate-950 hover:bg-slate-200 border-none transition-all">
-                 Live Demo
-               </Button>
+               <Link href="/projects">
+                 <Button className="w-full sm:w-auto h-16 rounded-2xl px-12 font-black text-xs uppercase tracking-widest bg-slate-900 text-white hover:bg-slate-800 border-none transition-all mt-6 shadow-xl">
+                   Explore Gallery
+                 </Button>
+               </Link>
             </div>
           </CardContent>
-          <div className="absolute top-0 right-0 p-8 opacity-[0.05] pointer-events-none translate-x-1/4 translate-y-[-10%]">
-             <Code2 size={400} />
-          </div>
-        </Card>
-
-        <Card className="border-none shadow-[0_30px_80px_rgba(0,0,0,0.03)] bg-white rounded-[3.5rem] overflow-hidden border border-slate-100 flex flex-col">
-          <CardHeader className="p-10 border-b border-slate-50 bg-slate-50/50">
-             <div className="flex justify-between items-center text-slate-900">
-                <div>
-                   <CardTitle className="text-2xl font-black tracking-tight">Cloud Leaderboard</CardTitle>
-                   <CardDescription className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Real-time point sync</CardDescription>
-                </div>
-                <Trophy size={28} className="text-amber-500" />
-             </div>
-          </CardHeader>
-          <CardContent className="p-0 flex-1">
-             <div className="divide-y divide-slate-50">
-                {leaderboard.length > 0 ? leaderboard.map((user, i) => (
-                  <div key={user.id} className="p-6 sm:p-8 flex items-center justify-between hover:bg-slate-50 transition-colors">
-                     <div className="flex items-center gap-4">
-                        <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-xl bg-slate-50 flex items-center justify-center font-black text-slate-400 border border-slate-100 text-xs shadow-sm">
-                           #{i + 1}
-                        </div>
-                        <div>
-                           <p className="text-sm sm:text-base font-black text-slate-900 leading-none">{user.full_name}</p>
-                           <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-1">@{user.username || 'member'}</p>
-                        </div>
-                     </div>
-                     <div className="text-right">
-                        <p className="text-xl sm:text-2xl font-black text-primary tracking-tighter leading-none">{user.points}</p>
-                        <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest mt-1">Points</p>
-                     </div>
-                  </div>
-                )) : (
-                  <div className="p-16 text-center text-slate-400 font-bold uppercase tracking-widest text-xs">
-                    Initializing cloud ranking...
-                  </div>
-                )}
-             </div>
-          </CardContent>
-          <div className="p-8 bg-slate-50 mt-auto border-t border-slate-100">
-             <Button variant="ghost" className="w-full h-12 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-primary transition-all gap-2 hover:bg-white">
-                Access Global Hall of Fame
-                <ChevronRight size={14} />
-             </Button>
+          <div className="absolute top-0 right-0 p-12 opacity-[0.02] pointer-events-none translate-x-1/4 translate-y-[-10%]">
+             <Code2 size={500} />
           </div>
         </Card>
       </div>

@@ -14,6 +14,7 @@ import { Badge } from "@/components/ui/badge";
 import { Trophy, Medal, Crown, TrendingUp, Loader2, Ghost } from "lucide-react";
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
+import Link from "next/link";
 
 export default function LeaderboardPage() {
   const [leaders, setLeaders] = useState<any[]>([]);
@@ -28,6 +29,7 @@ export default function LeaderboardPage() {
       const { data } = await supabase
         .from('profiles')
         .select('*')
+        .neq('role', 'admin') // Exclude Admin Nodes
         .gt('points', 0)
         .order('points', { ascending: false });
 
@@ -100,7 +102,7 @@ export default function LeaderboardPage() {
               >
                 {index === 0 && <Crown className="absolute top-8 right-8 h-20 w-20 text-primary opacity-5 rotate-12" />}
                 
-                <div className="relative">
+                <Link href={`/u/${leader.username}`} className="relative cursor-pointer group-hover:scale-105 transition-transform duration-500">
                   <Avatar className={`h-28 w-28 sm:h-36 sm:w-36 border-[8px] border-slate-50 shadow-xl ring-1 ring-slate-200`}>
                     <AvatarImage src={leader.avatar_url} />
                     <AvatarFallback className={`text-4xl sm:text-5xl font-black bg-slate-100 text-primary`}>
@@ -110,12 +112,21 @@ export default function LeaderboardPage() {
                   <div className="absolute -bottom-3 -right-3 h-12 w-12 sm:h-14 sm:w-14 rounded-[1.5rem] bg-primary text-white flex items-center justify-center text-xl font-black shadow-xl border-4 border-white">
                      {index + 1}
                   </div>
-                </div>
+                </Link>
 
                 <div className="z-10 mt-2">
-                  <h3 className={`text-3xl sm:text-4xl font-black tracking-tighter leading-none mb-4 text-slate-900`}>{leader.full_name}</h3>
-                  <Badge className={`mt-2 border border-primary/10 font-black uppercase tracking-[0.2em] text-[10px] px-6 py-2.5 rounded-full bg-primary/5 text-primary shadow-sm`}>
-                    {leader.tier || 'Standard'} Node
+                  <Link href={`/u/${leader.username}`}>
+                    <h3 className={`text-3xl sm:text-4xl font-black tracking-tighter leading-none mb-4 text-slate-900 hover:text-primary transition-colors cursor-pointer`}>{leader.full_name}</h3>
+                  </Link>
+                  <Badge className={`mt-2 border font-black uppercase tracking-[0.2em] text-[10px] px-6 py-2.5 rounded-full shadow-sm ${
+                    leader.points >= 100 ? 'bg-slate-900 text-white border-primary/20' :
+                    leader.points >= 50 ? 'bg-amber-100/50 text-amber-700 border-amber-200' :
+                    leader.points >= 20 ? 'bg-slate-100 text-slate-600 border-slate-200' :
+                    'bg-orange-100/50 text-orange-700 border-orange-200'
+                  }`}>
+                    {leader.points >= 100 ? 'Diamond' : 
+                     leader.points >= 50 ? 'Gold' :
+                     leader.points >= 20 ? 'Silver' : 'Bronze'} Node
                   </Badge>
                 </div>
 
@@ -176,19 +187,30 @@ export default function LeaderboardPage() {
                     </TableCell>
                     <TableCell className="px-10 py-10">
                       <div className="flex items-center gap-6">
-                        <Avatar className="h-16 w-16 border-4 border-white shadow-md transition-all group-hover:scale-110">
-                          <AvatarImage src={leader.avatar_url} />
-                          <AvatarFallback className="font-black bg-slate-50 text-slate-400">{leader.full_name?.charAt(0)}</AvatarFallback>
-                        </Avatar>
+                        <Link href={`/u/${leader.username}`}>
+                          <Avatar className="h-16 w-16 border-4 border-white shadow-md transition-all hover:scale-110 cursor-pointer">
+                            <AvatarImage src={leader.avatar_url} />
+                            <AvatarFallback className="font-black bg-slate-50 text-slate-400">{leader.full_name?.charAt(0)}</AvatarFallback>
+                          </Avatar>
+                        </Link>
                         <div>
-                          <p className="font-black text-2xl tracking-tighter text-slate-900 leading-none mb-2 group-hover:text-primary transition-colors">{leader.full_name}</p>
+                          <Link href={`/u/${leader.username}`}>
+                            <p className="font-black text-2xl tracking-tighter text-slate-900 leading-none mb-2 hover:text-primary transition-colors cursor-pointer">{leader.full_name}</p>
+                          </Link>
                           <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">@{leader.username || 'member'}</p>
                         </div>
                       </div>
                     </TableCell>
                     <TableCell className="px-10 py-10">
-                      <Badge variant="ghost" className="bg-slate-100 text-slate-500 font-black uppercase text-[11px] tracking-[0.2em] px-5 py-2 rounded-2xl">
-                        {leader.tier || 'Junior'}
+                      <Badge variant="ghost" className={`font-black uppercase text-[11px] tracking-[0.2em] px-5 py-2 rounded-2xl ${
+                        leader.points >= 100 ? 'bg-slate-900 text-white' :
+                        leader.points >= 50 ? 'bg-amber-100 text-amber-600' :
+                        leader.points >= 20 ? 'bg-slate-100 text-slate-500' :
+                        'bg-orange-100 text-orange-600'
+                      }`}>
+                        {leader.points >= 100 ? 'Diamond' : 
+                         leader.points >= 50 ? 'Gold' :
+                         leader.points >= 20 ? 'Silver' : 'Bronze'}
                       </Badge>
                     </TableCell>
                     <TableCell className="px-10 py-10 text-center font-black text-2xl text-slate-900 tabular-nums">{leader.project_count || 0}</TableCell>
