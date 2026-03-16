@@ -1,7 +1,8 @@
 # 🌐 Club Hub: The Decentralized Campus Node
 # TEAM : Dash Dominators
 
-> **Designed by Vector Matrix | Powered by GeeksforGeeks**
+
+> **Designed by Dash Dominators | Powered by GeeksforGeeks**
 > 
 > A next-generation, real-time ecosystem designed to scale campus communities. Club Hub transforms manual club management into a high-performance, automated "Node" system.
 
