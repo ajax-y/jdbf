@@ -1,4 +1,5 @@
 # 🌐 Club Hub: The Decentralized Campus Node
+# TEAM : Dash Dominators
 
 > **Designed by Vector Matrix | Powered by GeeksforGeeks**
 > 
