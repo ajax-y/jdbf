@@ -20,6 +20,7 @@ import {
   Trophy
 } from "lucide-react";
 import Link from "next/link";
+import Editor from "@monaco-editor/react";
 
 const PISTON_API_URL = "https://emkc.org/api/v2/piston/execute";
 
@@ -264,17 +265,31 @@ export default function UserDailyProblem() {
             )}
           </div>
           
-          <textarea
-            value={code}
-            onChange={(e) => setCode(e.target.value)}
-            disabled={isExecuting || hasSolved}
-            spellCheck={false}
-            className="flex-1 w-full bg-[#0d1117] text-[#58a6ff] font-mono text-[15px] p-6 focus:outline-none resize-none disabled:opacity-70 selection:bg-[#1f6feb]/30 leading-relaxed shadow-[inset_0_0_30px_rgba(0,0,0,0.8)] custom-scrollbar"
-            style={{ 
-              textShadow: "0 0 2px rgba(88, 166, 255, 0.4)", 
-              letterSpacing: "0.5px" 
-            }}
-          />
+          <div className="flex-1 relative w-full h-[calc(100%-140px)] min-h-[300px]">
+            {(isExecuting || hasSolved) && (
+              <div className="absolute inset-0 z-20 bg-slate-900/50 cursor-not-allowed" />
+            )}
+            <Editor
+              height="100%"
+              language={language.id === "c" || language.id === "cpp" ? "cpp" : language.id}
+              theme="vs-dark"
+              value={code}
+              onChange={(val) => setCode(val || "")}
+              options={{
+                minimap: { enabled: false },
+                fontSize: 15,
+                fontFamily: "monospace",
+                lineHeight: 1.6,
+                padding: { top: 24 },
+                scrollBeyondLastLine: false,
+                smoothScrolling: true,
+                cursorBlinking: "smooth",
+                cursorSmoothCaretAnimation: "on",
+                readOnly: isExecuting || hasSolved
+              }}
+              className="absolute inset-0 w-full h-full"
+            />
+          </div>
 
           <div className="p-6 border-t border-white/10 bg-black/20 flex flex-col gap-6">
             {executionResult && (
