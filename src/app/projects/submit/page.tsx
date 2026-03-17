@@ -16,6 +16,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Github, Upload, Rocket, Layout, Globe, Code2, Sparkles, CheckCircle2, ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
+import { toast } from "@/components/ui/toaster";
 
 export default function SubmitProjectPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -53,7 +54,7 @@ export default function SubmitProjectPage() {
       setShowSuccess(true);
       setTimeout(() => router.push("/projects"), 2000);
     } catch (err: any) {
-      alert(err.message || "Failed to submit node.");
+      toast(err.message || "Failed to submit node.", "error");
     } finally {
       setIsLoading(false);
     }

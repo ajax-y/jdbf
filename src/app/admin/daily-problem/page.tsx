@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { supabase } from "@/lib/supabase";
+import { toast } from "@/components/ui/toaster";
 import { 
   Card, 
   CardContent, 
@@ -77,7 +78,7 @@ export default function AdminDailyProblem() {
     
     setIsSubmitting(false);
     if (!error) {
-      alert("Problem Created Successfully!");
+      toast("Problem Created Successfully!", "success");
       setFormData({
         title: "",
         statement: "",
@@ -87,7 +88,7 @@ export default function AdminDailyProblem() {
       });
       fetchProblems();
     } else {
-      alert("Error creating problem.");
+      toast("Error creating problem.", "error");
     }
   };
 

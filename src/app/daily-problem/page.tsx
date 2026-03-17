@@ -24,11 +24,11 @@ import Link from "next/link";
 const PISTON_API_URL = "https://emkc.org/api/v2/piston/execute";
 
 const LANGUAGES = [
-  { id: "python", name: "Python", version: "3.10.0", defaultCode: "def solve():\n    # Read input from stdin\n    import sys\n    input_data = sys.stdin.read().strip()\n    \n    # Your logic here\n    print(input_data)\n\nif __name__ == '__main__':\n    solve()" },
-  { id: "c", name: "C", version: "10.2.0", defaultCode: "#include <stdio.h>\n\nint main() {\n    char buffer[1024];\n    if (scanf(\"%1023s\", buffer) == 1) {\n        printf(\"%s\\n\", buffer);\n    }\n    return 0;\n}" },
-  { id: "cpp", name: "C++", version: "10.2.0", defaultCode: "#include <iostream>\n#include <string>\n\nusing namespace std;\n\nint main() {\n    string input;\n    if (cin >> input) {\n        cout << input << endl;\n    }\n    return 0;\n}" },
-  { id: "java", name: "Java", version: "15.0.2", defaultCode: "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        if (scanner.hasNext()) {\n            System.out.println(scanner.next());\n        }\n    }\n}" },
-  { id: "go", name: "Go", version: "1.16.2", defaultCode: "package main\n\nimport (\n\t\"fmt\"\n)\n\nfunc main() {\n\tvar input string\n\tfmt.Scan(&input)\n\tfmt.Println(input)\n}" }
+  { id: "python", name: "Python", version: "3.10.0", defaultCode: "# Write your code here\nprint(input())" },
+  { id: "c", name: "C", version: "10.2.0", defaultCode: "#include <stdio.h>\nint main() {\n    char s[100];\n    scanf(\"%s\", s);\n    printf(\"%s\\n\", s);\n    return 0;\n}" },
+  { id: "cpp", name: "C++", version: "10.2.0", defaultCode: "#include <iostream>\nusing namespace std;\nint main() {\n    string s;\n    cin >> s;\n    cout << s << endl;\n    return 0;\n}" },
+  { id: "java", name: "Java", version: "15.0.2", defaultCode: "import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if(sc.hasNext()) System.out.println(sc.next());\n    }\n}" },
+  { id: "go", name: "Go", version: "1.16.2", defaultCode: "package main\nimport \"fmt\"\nfunc main() {\n    var s string\n    fmt.Scan(&s)\n    fmt.Println(s)\n}" }
 ];
 
 export default function UserDailyProblem() {
@@ -269,7 +269,11 @@ export default function UserDailyProblem() {
             onChange={(e) => setCode(e.target.value)}
             disabled={isExecuting || hasSolved}
             spellCheck={false}
-            className="flex-1 w-full bg-transparent text-slate-300 font-mono text-sm p-6 focus:outline-none resize-none disabled:opacity-70 selection:bg-primary/30"
+            className="flex-1 w-full bg-[#0d1117] text-[#58a6ff] font-mono text-[15px] p-6 focus:outline-none resize-none disabled:opacity-70 selection:bg-[#1f6feb]/30 leading-relaxed shadow-[inset_0_0_30px_rgba(0,0,0,0.8)] custom-scrollbar"
+            style={{ 
+              textShadow: "0 0 2px rgba(88, 166, 255, 0.4)", 
+              letterSpacing: "0.5px" 
+            }}
           />
 
           <div className="p-6 border-t border-white/10 bg-black/20 flex flex-col gap-6">

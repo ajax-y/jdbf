@@ -27,9 +27,9 @@ import {
   ExternalLink
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { supabase } from "@/lib/supabase";
-import { useRef } from "react";
+import { toast } from "@/components/ui/toaster";
 
 export default function ProfilePage() {
   const [loading, setLoading] = useState(true);
@@ -84,9 +84,9 @@ export default function ProfilePage() {
       .eq('id', profile.id);
 
     if (error) {
-      alert("Error saving profile: " + error.message);
+      toast("Error saving profile: " + error.message, "error");
     } else {
-      alert("Profile updated successfully!");
+      toast("Profile updated successfully!", "success");
       fetchProfile();
     }
     setSaving(false);
@@ -122,10 +122,10 @@ export default function ProfilePage() {
 
       if (updateError) throw updateError;
 
-      alert("Profile picture updated!");
+      toast("Profile picture updated!", "success");
       fetchProfile();
     } catch (error: any) {
-      alert("Error uploading: " + error.message);
+      toast("Error uploading: " + error.message, "error");
     } finally {
       setUploading(false);
     }
