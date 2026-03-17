@@ -19,7 +19,8 @@ import {
   Sparkles,
   ChevronRight,
   Loader2,
-  QrCode
+  QrCode,
+  Brain
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -55,6 +56,14 @@ export default function UserDashboard() {
         .select('*', { count: 'exact', head: true })
         .eq('user_id', session);
 
+      // 2b. Fetch Daily Problems Solved Count (unique problems with Passed status)
+      const { data: solvedProblems } = await supabase
+        .from('problem_submissions')
+        .select('problem_id')
+        .eq('user_id', session)
+        .eq('status', 'Passed');
+      const uniqueSolvedCount = solvedProblems ? new Set(solvedProblems.map((s: any) => s.problem_id)).size : 0;
+
       // 3. Fetch Leaderboard (Only show users with points > 0, EXCLUDE ADMINS)
       const { data: leaders } = await supabase
         .from('profiles')
@@ -74,6 +83,7 @@ export default function UserDashboard() {
         setProfile({
           ...profileData,
           attendance_count: attendanceCount || 0,
+          problems_solved: uniqueSolvedCount,
           points: profileData.points || 0,
           rank: (rankCount || 0) + 1
         });
@@ -83,6 +93,7 @@ export default function UserDashboard() {
           full_name: "Member",
           points: 0,
           attendance_count: attendanceCount || 0,
+          problems_solved: uniqueSolvedCount,
           rank: 0
         });
       }
@@ -155,6 +166,14 @@ export default function UserDashboard() {
       icon: Calendar,
       color: "text-blue-500",
       bg: "bg-blue-50",
+    },
+    {
+      title: "Problems Solved",
+      value: profile?.problems_solved || 0,
+      description: "Daily challenges cleared",
+      icon: Brain,
+      color: "text-violet-500",
+      bg: "bg-violet-50",
     },
     {
       title: "Projects Built",
