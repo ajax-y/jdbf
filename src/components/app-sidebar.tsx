@@ -41,6 +41,7 @@ import {
 const userItems = [
   { title: "Dashboard", icon: LayoutDashboard, url: "/dashboard" },
   { title: "Live Events", icon: Calendar, url: "/events" },
+  { title: "Daily Problem", icon: Trophy, url: "/daily-problem" },
   { title: "Project Gallery", icon: Image, url: "/projects" },
   { title: "Leaderboard", icon: Trophy, url: "/leaderboard" },
   { title: "My Profile", icon: User, url: "/profile" },
@@ -49,6 +50,8 @@ const userItems = [
 const adminItems = [
   { title: "Dashboard", icon: ShieldCheck, url: "/admin" },
   { title: "Create Event", icon: PlusCircle, url: "/admin/create-event" },
+  { title: "Daily Problem", icon: LayoutDashboard, url: "/admin/daily-problem" },
+  { title: "Event Feedback", icon: Calendar, url: "/admin/feedback" },
   { title: "Live Wall", icon: QrCode, url: "/admin/live-wall" },
 ];
 

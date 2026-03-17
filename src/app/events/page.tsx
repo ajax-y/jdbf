@@ -21,7 +21,34 @@ export default function JoinEventPage() {
   const [history, setHistory] = useState<any[]>([]);
   const [errorHeader, setErrorHeader] = useState<string | null>(null);
   const [loadingHistory, setLoadingHistory] = useState(true);
+  const [feedbackEventId, setFeedbackEventId] = useState<string | null>(null);
+  const [feedbackText, setFeedbackText] = useState("");
+  const [feedbackRating, setFeedbackRating] = useState<number>(5);
+  const [submittingFeedback, setSubmittingFeedback] = useState(false);
   const scannerRef = useRef<Html5Qrcode | null>(null);
+
+  const submitFeedback = async () => {
+    if (!feedbackEventId || !feedbackText.trim()) return;
+    setSubmittingFeedback(true);
+    const userId = document.cookie.split("; ").find(row => row.startsWith("gfg_session="))?.split("=")[1];
+
+    const { error } = await supabase.from('event_feedback').insert([{
+      event_id: feedbackEventId,
+      user_id: userId,
+      feedback_text: feedbackText,
+      rating: feedbackRating
+    }]);
+
+    if (!error) {
+      setFeedbackEventId(null);
+      setFeedbackText("");
+      setResult({ status: 'success', message: "Your feedback has been recorded in the databank!" });
+      setErrorHeader("Feedback Submitted");
+    } else {
+      setResult({ status: 'error', message: "Failed to transmit feedback signal." });
+    }
+    setSubmittingFeedback(false);
+  };
 
   const stopScanner = async () => {
     if (scannerRef.current) {
@@ -53,10 +80,13 @@ export default function JoinEventPage() {
       .select(`
         id,
         created_at,
+        event_id,
         events (
+          id,
           title,
           location,
-          date
+          date,
+          is_active
         )
       `)
       .eq('user_id', userId)
@@ -367,7 +397,20 @@ export default function JoinEventPage() {
                               <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">{new Date(item.created_at).toLocaleDateString()}</span>
                            </div>
                            <h4 className="font-black text-slate-900 tracking-tight text-lg leading-none mb-2">{item.events?.title || 'Unknown Event'}</h4>
-                           <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">{item.events?.location || 'RIT Node'}</p>
+                           <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-4">{item.events?.location || 'RIT Node'}</p>
+                           {!item.events?.is_active && (
+                             <Button 
+                               onClick={() => {
+                                 setFeedbackEventId(item.event_id);
+                                 setFeedbackText("");
+                                 setFeedbackRating(5);
+                               }}
+                               variant="outline" 
+                               className="w-full h-10 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-600 hover:text-primary transition-all border-slate-200"
+                             >
+                               Leave Feedback
+                             </Button>
+                           )}
                         </div>
                       ))}
                    </div>
@@ -387,6 +430,62 @@ export default function JoinEventPage() {
               </CardContent>
            </Card>
         </div>
+        <AnimatePresence>
+          {feedbackEventId && (
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm"
+            >
+              <motion.div 
+                initial={{ scale: 0.95, y: 20 }}
+                animate={{ scale: 1, y: 0 }}
+                exit={{ scale: 0.95, y: 20 }}
+                className="bg-white rounded-[3rem] shadow-2xl overflow-hidden w-full max-w-lg border border-slate-100 p-10"
+              >
+                <div className="flex justify-between items-center mb-8">
+                  <h3 className="text-3xl font-black text-slate-900 tracking-tighter">Event Feedback</h3>
+                  <Button variant="ghost" onClick={() => setFeedbackEventId(null)} className="h-10 w-10 p-0 rounded-full bg-slate-50 text-slate-400 hover:text-slate-900">
+                    <XCircle size={20} />
+                  </Button>
+                </div>
+                <div className="space-y-6">
+                  <div>
+                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-4 mb-2 block">Your Rating (1-5)</label>
+                    <div className="flex bg-slate-50 p-4 rounded-2xl items-center gap-4">
+                      <input 
+                        type="range" 
+                        min="1" max="5" 
+                        value={feedbackRating} 
+                        onChange={(e) => setFeedbackRating(Number(e.target.value))}
+                        className="w-full accent-primary"
+                      />
+                      <span className="font-black text-primary text-xl w-6 text-center">{feedbackRating}</span>
+                    </div>
+                  </div>
+                  <div>
+                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-4 mb-2 block">Comments</label>
+                    <textarea 
+                      value={feedbackText}
+                      onChange={(e) => setFeedbackText(e.target.value)}
+                      placeholder="Share your thoughts about this node..."
+                      className="w-full min-h-[120px] bg-slate-50 border border-slate-200 rounded-2xl p-6 text-sm font-bold text-slate-700 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all resize-none"
+                    />
+                  </div>
+                  <Button 
+                    onClick={submitFeedback}
+                    disabled={submittingFeedback}
+                    className="w-full h-16 rounded-[2rem] font-black text-xs uppercase tracking-widest bg-primary text-white shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all"
+                  >
+                    {submittingFeedback ? <Loader2 className="animate-spin mr-2" /> : null}
+                    Submit Feedback
+                  </Button>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );

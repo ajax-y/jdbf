@@ -228,3 +228,74 @@ BEGIN
     ALTER PUBLICATION supabase_realtime ADD TABLE events;
 EXCEPTION WHEN duplicate_object THEN NULL;
 END $$;
+
+-- 11. Daily Problems Table
+CREATE TABLE IF NOT EXISTS daily_problems (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    title TEXT NOT NULL,
+    statement TEXT NOT NULL,
+    sample_input TEXT NOT NULL,
+    sample_output TEXT NOT NULL,
+    problem_date DATE DEFAULT CURRENT_DATE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+ALTER TABLE daily_problems ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "Enable all for anyone" ON daily_problems;
+CREATE POLICY "Enable all for anyone" ON daily_problems FOR ALL USING (true) WITH CHECK (true);
+
+-- 12. Problem Submissions Table
+CREATE TABLE IF NOT EXISTS problem_submissions (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    problem_id UUID REFERENCES daily_problems(id) ON DELETE CASCADE,
+    user_id UUID REFERENCES profiles(id) ON DELETE CASCADE,
+    code TEXT NOT NULL,
+    language TEXT NOT NULL,
+    status TEXT NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+ALTER TABLE problem_submissions ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "Enable all for anyone" ON problem_submissions;
+CREATE POLICY "Enable all for anyone" ON problem_submissions FOR ALL USING (true) WITH CHECK (true);
+
+-- 13. Event Feedback Table
+CREATE TABLE IF NOT EXISTS event_feedback (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    event_id UUID REFERENCES events(id) ON DELETE CASCADE,
+    user_id UUID REFERENCES profiles(id) ON DELETE CASCADE,
+    feedback_text TEXT NOT NULL,
+    rating INTEGER CHECK (rating >= 1 AND rating <= 5),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+ALTER TABLE event_feedback ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "Enable all for anyone" ON event_feedback;
+CREATE POLICY "Enable all for anyone" ON event_feedback FOR ALL USING (true) WITH CHECK (true);
+
+-- Update events table to add end_time
+DO $$
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='events' AND column_name='end_time') THEN
+        ALTER TABLE events ADD COLUMN end_time TIME;
+    END IF;
+END $$;
+
+-- Enable Realtime
+DO $$
+BEGIN
+    ALTER PUBLICATION supabase_realtime ADD TABLE daily_problems;
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
+
+DO $$
+BEGIN
+    ALTER PUBLICATION supabase_realtime ADD TABLE problem_submissions;
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
+
+DO $$
+BEGIN
+    ALTER PUBLICATION supabase_realtime ADD TABLE event_feedback;
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;

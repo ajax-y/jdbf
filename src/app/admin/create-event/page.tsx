@@ -35,6 +35,7 @@ export default function CreateEventPage() {
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
+  const [endTime, setEndTime] = useState("");
   const [location, setLocation] = useState("");
   const [secret, setSecret] = useState("");
   const [showQR, setShowQR] = useState(false);
@@ -84,6 +85,7 @@ export default function CreateEventPage() {
             description, 
             date, 
             time, 
+            end_time: endTime,
             location, 
             qr_secret: eventSecret,
             is_active: true 
@@ -218,6 +220,19 @@ export default function CreateEventPage() {
                           className="h-16 rounded-2xl pl-16 bg-slate-50 border-slate-100 font-bold text-lg focus:border-primary/20 transition-all w-full text-slate-900 outline-none ring-0"
                           value={time}
                           onChange={(e) => setTime(e.target.value)}
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div className="space-y-4">
+                      <Label className="text-[10px] font-black uppercase tracking-[0.2em] ml-1 text-primary">End Time</Label>
+                      <div className="relative group">
+                        <Clock className="absolute left-6 top-1/2 -translate-y-1/2 h-6 w-6 text-slate-300 pointer-events-none group-focus-within:text-primary transition-colors" />
+                        <Input 
+                          type="time" 
+                          className="h-16 rounded-2xl pl-16 bg-slate-50 border-slate-100 font-bold text-lg focus:border-primary/20 transition-all w-full text-slate-900 outline-none ring-0"
+                          value={endTime}
+                          onChange={(e) => setEndTime(e.target.value)}
                           required
                         />
                       </div>
@@ -397,6 +412,7 @@ export default function CreateEventPage() {
                           setTitle(event.title);
                           setDate(event.date);
                           setTime(event.time);
+                          setEndTime(event.end_time || "");
                           setLocation(event.location);
                           setSecret(event.qr_secret);
                           setShowQR(true);
