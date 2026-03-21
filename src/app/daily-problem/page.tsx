@@ -319,7 +319,7 @@ export default function UserDailyProblem() {
               onChange={(val) => setCode(val || "")}
               options={{
                 minimap: { enabled: false },
-                fontSize: 15,
+                fontSize: 16,
                 fontFamily: "monospace",
                 lineHeight: 1.6,
                 padding: { top: 24 },
@@ -346,7 +346,7 @@ export default function UserDailyProblem() {
                    <XCircle size={16} />}
                   <h4 className="font-black text-xs uppercase tracking-widest leading-none">{executionResult.status}</h4>
                 </div>
-                <pre className="font-mono text-xs overflow-x-auto opacity-80 mt-2">
+                <pre className="font-mono text-sm font-medium overflow-x-auto mt-2">
                   {executionResult.output || '<No Output>'}
                 </pre>
               </div>
