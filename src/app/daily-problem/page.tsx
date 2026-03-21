@@ -337,10 +337,13 @@ export default function UserDailyProblem() {
             {executionResult && (
               <div className={`p-6 rounded-2xl border ${
                 executionResult.status === 'Passed' ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400' :
+                executionResult.status === 'Output' ? 'bg-blue-500/10 border-blue-500/20 text-blue-400' :
                 'bg-red-500/10 border-red-500/20 text-red-400'
               }`}>
                 <div className="flex items-center gap-2 mb-3">
-                  {executionResult.status === 'Passed' ? <CheckCircle2 size={16} /> : <XCircle size={16} />}
+                  {executionResult.status === 'Passed' ? <CheckCircle2 size={16} /> : 
+                   executionResult.status === 'Output' ? <TerminalSquare size={16} /> : 
+                   <XCircle size={16} />}
                   <h4 className="font-black text-xs uppercase tracking-widest leading-none">{executionResult.status}</h4>
                 </div>
                 <pre className="font-mono text-xs overflow-x-auto opacity-80 mt-2">
