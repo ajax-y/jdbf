@@ -19,19 +19,19 @@ export async function POST(req: NextRequest) {
     let wandboxCompiler = "";
     switch (language) {
       case "python":
-        wandboxCompiler = "cpython-head";
+        wandboxCompiler = "cpython-3.14.0";
         break;
       case "c":
-        wandboxCompiler = "gcc-head-c";
+        wandboxCompiler = "gcc-13.2.0-c";
         break;
       case "cpp":
-        wandboxCompiler = "gcc-head";
+        wandboxCompiler = "gcc-13.2.0";
         break;
       case "java":
-        wandboxCompiler = "openjdk-head";
+        wandboxCompiler = "openjdk-jdk-22+36";
         break;
       case "go":
-        wandboxCompiler = "go-head";
+        wandboxCompiler = "go-1.23.2";
         break;
       default:
         // Fallback for unsupported languages 
