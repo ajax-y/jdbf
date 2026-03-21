@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
     let wandboxCompiler = "";
     switch (language) {
       case "python":
-        wandboxCompiler = "cpython-3.10.x";
+        wandboxCompiler = "cpython-head";
         break;
       case "c":
         wandboxCompiler = "gcc-head-c";
@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
         wandboxCompiler = "gcc-head";
         break;
       case "java":
-        wandboxCompiler = "openjdk-jdk";
+        wandboxCompiler = "openjdk-head";
         break;
       case "go":
         wandboxCompiler = "go-head";
