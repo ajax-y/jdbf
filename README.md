@@ -1,6 +1,8 @@
+# 🔴 Live Preview: [https://jdbf.vercel.app/](https://jdbf.vercel.app/)
+
 # 🌐 Club Hub: The Decentralized Campus Node
 # TEAM : Dash Dominators
-#team members:ajay,abisheka,afridha,aden
+### team members:ajay,abisheka,afridha,aden
 
 
 > **Designed by Dash Dominators | Powered by GeeksforGeeks**

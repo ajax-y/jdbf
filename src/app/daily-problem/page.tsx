@@ -17,12 +17,13 @@ import {
   CheckCircle2, 
   XCircle, 
   Loader2,
-  Trophy
+  Trophy,
+  Send
 } from "lucide-react";
 import Link from "next/link";
 import Editor from "@monaco-editor/react";
 
-const PISTON_API_URL = "https://emkc.org/api/v2/piston/execute";
+const PISTON_API_URL = "/api/execute";
 
 const LANGUAGES = [
   { id: "python", name: "Python", version: "3.10.0", defaultCode: "# Write your code here\nprint(input())" },
@@ -40,6 +41,7 @@ export default function UserDailyProblem() {
   const [code, setCode] = useState(language.defaultCode);
   
   const [isExecuting, setIsExecuting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [executionResult, setExecutionResult] = useState<{status: string, output: string, error?: string} | null>(null);
   
   const [hasSolved, setHasSolved] = useState(false);
@@ -100,41 +102,85 @@ export default function UserDailyProblem() {
     }
   };
 
-  const executeCode = async () => {
-    if (!problem || !sessionInfo) return;
+  // Helper: call the Piston API and return parsed result
+  const callExecutionAPI = async () => {
+    const response = await fetch(PISTON_API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        language: language.id,
+        version: language.version,
+        files: [{ name: "main", content: code }],
+        stdin: problem.sample_input
+      })
+    });
+
+    if (!response.ok) {
+      const errorBody = await response.json().catch(() => null);
+      throw new Error(errorBody?.message || `Execution engine returned status ${response.status}`);
+    }
+
+    return await response.json();
+  };
+
+  // Helper: parse Piston result into status + output (without comparing expected output)
+  const parseResult = (result: any): { status: string; output: string } => {
+    if (result.compile && result.compile.code !== 0) {
+      return { status: "Compilation Error", output: result.compile.output || result.compile.stderr || "Compilation failed." };
+    }
+    if (!result.run) {
+      return { status: "Error", output: "Unexpected response from execution engine." };
+    }
+    if (result.run.code !== 0) {
+      return { status: "Runtime Error", output: result.run.stderr || result.run.output || "Runtime error occurred." };
+    }
+    return { status: "Success", output: result.run.output || "" };
+  };
+
+  // RUN: just execute and show the output — no DB write, no comparison
+  const runCode = async () => {
+    if (!problem) return;
 
     setIsExecuting(true);
     setExecutionResult(null);
 
     try {
-      const response = await fetch(PISTON_API_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          language: language.id,
-          version: language.version,
-          files: [{ name: "main", content: code }],
-          stdin: problem.sample_input
-        })
+      const result = await callExecutionAPI();
+      const parsed = parseResult(result);
+
+      setExecutionResult({
+        status: parsed.status === "Success" ? "Output" : parsed.status,
+        output: parsed.output
       });
+    } catch (err: any) {
+      setExecutionResult({
+        status: "Error",
+        output: err.message || "Failed to connect to execution engine. Please try again later."
+      });
+    }
 
-      const result = await response.json();
-      
-      let finalStatus = "Failed";
-      let outputText = result.run.output;
+    setIsExecuting(false);
+  };
 
-      if (result.compile && result.compile.code !== 0) {
-        finalStatus = "Compilation Error";
-        outputText = result.compile.output;
-      } else if (result.run.code !== 0) {
-        finalStatus = "Runtime Error";
-      } else {
-        // Compare output
-        const cleanActual = result.run.output.trim().replace(/\r\n/g, '\n');
-        const cleanExpected = problem.sample_output.trim().replace(/\r\n/g, '\n');
-        
+  // SUBMIT: execute, compare against expected output, save to DB, award points
+  const submitCode = async () => {
+    if (!problem || !sessionInfo) return;
+
+    setIsSubmitting(true);
+    setExecutionResult(null);
+
+    try {
+      const result = await callExecutionAPI();
+      const parsed = parseResult(result);
+
+      let finalStatus = parsed.status;
+      let outputText = parsed.output;
+
+      // Only compare output if execution succeeded
+      if (parsed.status === "Success") {
+        const cleanActual = outputText.trim().replace(/\r\n/g, '\n');
+        const cleanExpected = (problem.sample_output || "").trim().replace(/\r\n/g, '\n');
+
         if (cleanActual === cleanExpected) {
           finalStatus = "Passed";
           setHasSolved(true);
@@ -143,10 +189,7 @@ export default function UserDailyProblem() {
         }
       }
 
-      setExecutionResult({
-        status: finalStatus,
-        output: outputText
-      });
+      setExecutionResult({ status: finalStatus, output: outputText });
 
       // Insert submission to DB
       await supabase.from('problem_submissions').insert([{
@@ -158,21 +201,20 @@ export default function UserDailyProblem() {
       }]);
 
       if (finalStatus === "Passed" && !hasSolved) {
-         // Award 10 points for daily problem
-         const { data: profile } = await supabase.from('profiles').select('points').eq('id', sessionInfo.id).single();
-         if (profile) {
-            await supabase.from('profiles').update({ points: (profile.points || 0) + 10 }).eq('id', sessionInfo.id);
-         }
+        const { data: profile } = await supabase.from('profiles').select('points').eq('id', sessionInfo.id).single();
+        if (profile) {
+          await supabase.from('profiles').update({ points: (profile.points || 0) + 10 }).eq('id', sessionInfo.id);
+        }
       }
 
     } catch (err: any) {
       setExecutionResult({
         status: "Error",
-        output: err.message || "Failed to connect to execution engine."
+        output: err.message || "Failed to connect to execution engine. Please try again later."
       });
     }
 
-    setIsExecuting(false);
+    setIsSubmitting(false);
   };
 
   if (isLoading) {
@@ -266,7 +308,7 @@ export default function UserDailyProblem() {
           </div>
           
           <div className="flex-1 relative w-full h-[calc(100%-140px)] min-h-[300px]">
-            {(isExecuting || hasSolved) && (
+            {(isExecuting || isSubmitting || hasSolved) && (
               <div className="absolute inset-0 z-20 bg-slate-900/50 cursor-not-allowed" />
             )}
             <Editor
@@ -285,7 +327,7 @@ export default function UserDailyProblem() {
                 smoothScrolling: true,
                 cursorBlinking: "smooth",
                 cursorSmoothCaretAnimation: "on",
-                readOnly: isExecuting || hasSolved
+                readOnly: isExecuting || isSubmitting || hasSolved
               }}
               className="absolute inset-0 w-full h-full"
             />
@@ -307,20 +349,33 @@ export default function UserDailyProblem() {
               </div>
             )}
             
-            <div className="flex justify-end">
+            <div className="flex justify-end gap-3">
               <Button 
-                onClick={executeCode}
-                disabled={isExecuting || hasSolved}
-                className={`h-16 rounded-[2rem] px-12 font-black text-[12px] uppercase tracking-widest gap-3 shadow-xl hover:scale-105 active:scale-95 transition-all
-                  ${hasSolved ? 'bg-slate-800 text-slate-500 shadow-none' : 'bg-primary text-white shadow-primary/20'}
+                onClick={runCode}
+                disabled={isExecuting || isSubmitting || hasSolved}
+                className={`h-16 rounded-[2rem] px-8 font-black text-[12px] uppercase tracking-widest gap-3 shadow-xl hover:scale-105 active:scale-95 transition-all
+                  ${hasSolved ? 'bg-slate-800 text-slate-500 shadow-none' : 'bg-slate-700 text-white hover:bg-slate-600 shadow-slate-900/20'}
                 `}
               >
                 {isExecuting ? (
-                  <>Evaluating Node <Loader2 className="animate-spin" size={20} /></>
+                  <>Running <Loader2 className="animate-spin" size={20} /></>
+                ) : (
+                  <>Run Code <Play size={20} /></>
+                )}
+              </Button>
+              <Button 
+                onClick={submitCode}
+                disabled={isExecuting || isSubmitting || hasSolved}
+                className={`h-16 rounded-[2rem] px-8 font-black text-[12px] uppercase tracking-widest gap-3 shadow-xl hover:scale-105 active:scale-95 transition-all
+                  ${hasSolved ? 'bg-slate-800 text-slate-500 shadow-none' : 'bg-primary text-white shadow-primary/20'}
+                `}
+              >
+                {isSubmitting ? (
+                  <>Submitting <Loader2 className="animate-spin" size={20} /></>
                 ) : hasSolved ? (
                   <>Challenge Complete <CheckCircle2 size={20} /></>
                 ) : (
-                  <>Run & Submit Code <Play size={20} /></>
+                  <>Submit <Send size={20} /></>
                 )}
               </Button>
             </div>
