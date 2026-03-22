@@ -1,5 +1,8 @@
 # 🔴 Live Preview: [https://jdbf.vercel.app/](https://jdbf.vercel.app/)
 
+## FOR ADMIN LOGIN : user id : admin password : admin123
+## FOR USER LOGIN : user id : geeks password : member123
+
 # 🌐 Club Hub: The Decentralized Campus Node
 # TEAM : Dash Dominators
 ### team members:ajay,abisheka,afridha,aden
